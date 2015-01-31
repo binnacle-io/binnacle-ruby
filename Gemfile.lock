@@ -3,14 +3,12 @@ PATH
   specs:
     binnacle (0.0.1)
       faraday (~> 0.9.1)
-      hashie (~> 3.3, >= 3.3.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
-    hashie (3.3.2)
     httplog (0.2.7)
     multipart-post (2.0.0)
     rake (10.4.2)
