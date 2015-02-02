@@ -20,11 +20,31 @@ module Binnacle
       event.post
     end
 
-    def formatter
-      client_id, session_id = '', ''
+    #
+    # Ruby Logger Implementation
+    #
 
+    def formatter
       proc do |severity, datetime, progname, msg|
-        Binnacle::Event.new(account_id, app_id, logging_context_id, progname || 'log', client_id, session_id, severity, [], {message: msg})
+        client_id, session_id = '', ''
+        context_id = logging_context_id
+        event_name = 'log'
+        tags = []
+        json = { message: msg }
+
+        if progname
+          if progname.is_a?(Hash)
+            client_id = progname[:client_id] || client_id
+            session_id = progname[:session_id] || session_id
+            context_id = progname[:context_id] || context_id
+            event_name =  progname[:event_name] || event_name
+            tags = progname[:tags] || tags
+            json.merge!(progname[:json]) if progname[:json]
+          elsif progname.is_a?(String)
+            event_name = progname
+          end
+        end
+        Binnacle::Event.new(account_id, app_id,context_id, event_name, client_id, session_id, severity, tags, json)
       end
     end
 
