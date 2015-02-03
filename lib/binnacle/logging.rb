@@ -8,6 +8,7 @@ module Binnacle
 
       if defined?(ActiveSupport::TaggedLogging)
         logger = ActiveSupport::TaggedLogging.new(Logger.new(client))
+        logger.formatter = client.formatter
       elsif defined?(ActiveSupport::Logger)
         logger = ActiveSupport::Logger.new(client)
         logger.formatter = client.formatter
@@ -15,7 +16,6 @@ module Binnacle
         logger = Logger.new(client)
         logger.formatter = client.formatter
       end
-
       logger
     end
 
