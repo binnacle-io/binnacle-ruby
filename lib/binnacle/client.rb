@@ -6,6 +6,8 @@ module Binnacle
     attr_accessor :account_id, :app_id
     attr_accessor :connection
     attr_accessor :logging_context_id
+    attr_accessor :client_id
+    attr_accessor :session_id
 
     def initialize(account_id = nil, app_id = nil, url = nil, logging_context_id = nil)
       self.account_id = account_id || ENV['BINNACLE_ACCOUNT']
@@ -26,7 +28,8 @@ module Binnacle
 
     def formatter
       proc do |severity, datetime, progname, msg|
-        client_id, session_id = '', ''
+        client_id = self.client_id || ''
+        session_id = self.session_id || ''
         context_id = logging_context_id
         event_name = 'log'
         tags = []
