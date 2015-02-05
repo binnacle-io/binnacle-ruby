@@ -7,11 +7,34 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    codeclimate-test-reporter (0.4.6)
+      simplecov (>= 0.7.1, < 1.0.0)
+    diff-lcs (1.2.5)
+    docile (1.1.5)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     httplog (0.2.7)
+    multi_json (1.10.1)
     multipart-post (2.0.0)
     rake (10.4.2)
+    rspec (3.2.0)
+      rspec-core (~> 3.2.0)
+      rspec-expectations (~> 3.2.0)
+      rspec-mocks (~> 3.2.0)
+    rspec-core (3.2.0)
+      rspec-support (~> 3.2.0)
+    rspec-expectations (3.2.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-mocks (3.2.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-support (3.2.1)
+    simplecov (0.9.1)
+      docile (~> 1.1.0)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.8.0)
+    simplecov-html (0.8.0)
 
 PLATFORMS
   ruby
@@ -19,5 +42,7 @@ PLATFORMS
 DEPENDENCIES
   binnacle!
   bundler (~> 1.7)
+  codeclimate-test-reporter
   httplog (~> 0.2.7)
   rake (~> 10.0)
+  rspec (~> 3.2.0)

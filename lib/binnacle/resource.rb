@@ -1,4 +1,3 @@
-require 'hashie'
 require 'json'
 
 module Binnacle
