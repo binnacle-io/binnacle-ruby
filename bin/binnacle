@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'binnacle'
+
+begin
+  Binnacle::Commands.send(ARGV[0].downcase.to_sym)
+rescue
+  puts "I don't the command '#{ARGV[0].downcase}'"
+end
