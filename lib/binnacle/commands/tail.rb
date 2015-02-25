@@ -5,21 +5,30 @@ require 'json'
 module Binnacle::Commands
   def self.tail
     opts = Trollop::options do
-      opt :f, "Monitors a Binnacle Channel"
       opt :channel, "Binnacle Channel", :type => :string
+      opt :host, "Binnacle Server", :type => :string
+
+      opt :follow, 'Monitors a Binnacle Channel', :short => '-f'
+      opt :lines, "Get the last n events on the Channel", :type => :int, :short => '-n'
+      opt :since, "Number of minutes in the past to search for events", :type => :int, :short => '-s'
     end
 
-    monitor(opts[:channel]) if opts[:f] && opts[:channel_given]
+    if opts[:host_given] && opts[:channel_given]
+      monitor(opts[:host], opts[:channel]) if opts[:follow_given] && opts[:follow]
+      lines(opts[:host], opts[:channel], opts[:lines], opts[:since]) if opts[:lines_given]
+    else
+      puts "Error. No channel given"
+    end
   end
 
   #
-  # tail -f --channel=my_channel
-  def self.monitor(channel)
+  # tail --follow --host=my_host --channel=my_channel
+  def self.monitor(host, channel)
     EM.run do
       Signal.trap("INT")  { EventMachine.stop }
       Signal.trap("TERM") { EventMachine.stop }
 
-      ws = Faye::WebSocket::Client.new("ws://localhost:8080/api/subscribe/#{channel}/?X-Atmosphere-tracking-id=0&X-Atmosphere-Framework=2.2.7-jquery&X-Atmosphere-Transport=websocket&Content-Type=application/json&X-atmo-protocol=true")
+      ws = Faye::WebSocket::Client.new("ws://#{host}/api/subscribe/#{channel}/?X-Atmosphere-tracking-id=0&X-Atmosphere-Framework=2.2.7-jquery&X-Atmosphere-Transport=websocket&Content-Type=application/json&X-atmo-protocol=true")
 
       ws.on :open do |event|
         puts "Monitoring channel #{channel}..."
@@ -36,6 +45,18 @@ module Binnacle::Commands
       ws.on :close do |event|
         ws = nil
       end
+    end
+  end
+
+  #
+  # tail --lines=50 --since=10 --host=my_host --channel=my_channel
+  def self.lines(host, channel, lines, since = nil)
+    account_id, app_id, context_id = channel.split('-')
+
+    client = Binnacle::Client.new(account_id, app_id, "http://#{host}")
+
+    client.recents(lines, since, context_id).each do |e|
+      puts %[#{e.log_level} \[#{e.event_time}\] #{e.event_name} :: clientId=#{e.client_id}, sessionId=#{e.session_id}, tags=#{e.tags}]
     end
   end
 end

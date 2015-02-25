@@ -12,8 +12,9 @@ module Binnacle
     attr_accessor :log_level
     attr_accessor :tags
     attr_accessor :json
+    attr_accessor :event_time
 
-    def initialize(account_id, app_id, context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
+    def configure(account_id, app_id, context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
       self.account_id = account_id
       self.app_id = app_id
       self.context_id = context_id
@@ -25,6 +26,23 @@ module Binnacle
       self.log_level = log_level
       self.tags = tags
       self.json = json
+    end
+
+    def self.from_hash(h)
+      event = self.new()
+      event.account_id = h['accountId']
+      event.app_id = h['appId']
+      event.context_id = h['contextId']
+      event.event_name = h['eventName']
+      event.client_id = h['clientId']
+      event.session_id = h['sessionId']
+      event.ip_address = h['ipAddress']
+      event.log_level = h['logLevel']
+      event.event_time = Time.at(h['eventTime']/1000)
+      event.tags = h['tags']
+      event.json = h['json']
+
+      event
     end
 
     def to_json
@@ -46,6 +64,16 @@ module Binnacle
 
     def route
       "/api/events/#{account_id}/#{app_id}/#{context_id}"
+    end
+
+    def self.route(account_id, app_id, context_id = nil)
+      ["/api/events/#{account_id}/#{app_id}", context_id].compact.join('/')
+    end
+
+    def self.recents(connection, lines, account_id, app_id, since = nil, context_id = nil)
+      path = [self.route(account_id, app_id, context_id), 'recents'].compact.join('/')
+
+      get(connection, path, {'limit' => lines, 'since' => since})
     end
   end
 end

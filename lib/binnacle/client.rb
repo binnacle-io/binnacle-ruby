@@ -17,9 +17,14 @@ module Binnacle
     end
 
     def signal(context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
-      event = Binnacle::Event.new(account_id, app_id, context_id, event_name, client_id, session_id, log_level, tags, json)
+      event = Binnacle::Event.new()
+      event.configure(account_id, app_id, context_id, event_name, client_id, session_id, log_level, tags, json)
       event.connection = connection
       event.post
+    end
+
+    def recents(lines, since = nil, context_id = nil)
+      Binnacle::Event.recents(connection, lines, account_id, app_id, since, context_id)
     end
 
     #
