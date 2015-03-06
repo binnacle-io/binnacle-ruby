@@ -4,15 +4,18 @@ module Binnacle
   class Client
 
     attr_accessor :account_id, :app_id
+    attr_accessor :api_key, :api_secret
     attr_accessor :connection
     attr_accessor :logging_context_id
     attr_accessor :client_id
     attr_accessor :session_id
 
-    def initialize(account_id = nil, app_id = nil, url = nil, logging_context_id = nil)
+    def initialize(account_id = nil, app_id = nil, api_key = nil, api_secret = nil, url = nil, logging_context_id = nil)
       self.account_id = account_id || ENV['BINNACLE_ACCOUNT']
       self.app_id = app_id || ENV['BINNACLE_APP']
-      self.connection = Connection.new(url)
+      self.api_key = api_key || ENV['BINNACLE_API_KEY']
+      self.api_secret = api_secret || ENV['BINNACLE_API_SECRET']
+      self.connection = Connection.new(self.api_key, self.api_secret, url)
       self.logging_context_id = logging_context_id || ENV['BINNACLE_CTX']
     end
 
