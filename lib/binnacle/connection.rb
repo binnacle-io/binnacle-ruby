@@ -20,10 +20,7 @@ module Binnacle
         faraday.request  :url_encoded             # form-encode POST params
         #faraday.response :logger                  # log requests to STDOUT TODO set a client log file
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
-      end
-      #
-      # @connection.basic_auth api_key, api_secret
-      # @connection
+      end 
     end
   end
 
