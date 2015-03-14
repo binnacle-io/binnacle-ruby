@@ -55,7 +55,7 @@ module Binnacle
             event_name = progname
           end
         end
-        Binnacle::Event.new(account_id, app_id,context_id, event_name, client_id, session_id, severity, tags, json)
+        signal(context_id, event_name, client_id, session_id, severity, tags, json)
       end
     end
 
