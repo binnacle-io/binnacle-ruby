@@ -59,6 +59,11 @@ module Binnacle
       end
     end
 
+    def write(event)
+      event.connection = connection
+      event.post
+    end
+
     def close
       nil
     end
