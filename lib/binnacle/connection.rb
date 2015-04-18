@@ -33,10 +33,10 @@ module Binnacle
       JSON.parse(response.body)
     end
 
-    def randomize_endpoint()
+    def randomize_endpoint
       list = endpoints
       if endpoints.size > 1
-        uri = URI.parse(url)
+        uri = URI.parse(@contact_url)
         endpoint = endpoints.sample
         @active_url = "#{uri.scheme}://#{endpoint}:#{uri.port}"
         build_connection()
