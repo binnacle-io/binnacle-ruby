@@ -28,6 +28,10 @@ module Binnacle
       self.json = json
     end
 
+    def timestamp=(ts)
+      self.client_event_time = ts.strftime("%Y-%m-%dT%H:%M:%S%z")
+    end
+
     def self.from_hash(h)
       event = self.new()
       event.account_id = h['accountId']

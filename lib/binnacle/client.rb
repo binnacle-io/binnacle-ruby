@@ -26,6 +26,13 @@ module Binnacle
       event.post
     end
 
+    def signal_asynch(context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
+      event = Binnacle::Event.new()
+      event.configure(account_id, app_id, context_id, event_name, client_id, session_id, log_level, tags, json)
+      event.connection = connection
+      event.post_asynch
+    end
+
     def recents(lines, since = nil, context_id = nil)
       Binnacle::Event.recents(connection, lines, account_id, app_id, since, context_id)
     end
@@ -38,9 +45,14 @@ module Binnacle
       proc do |severity, datetime, progname, msg|
         client_id = self.client_id || ''
         session_id = self.session_id || ''
-        context_id = logging_context_id
+        context_id = self.logging_context_id
         event_name = 'log'
         tags = []
+
+        if defined?(ActiveSupport::TaggedLogging)
+          session_id, client_id = Thread.current[:activesupport_tagged_logging_tags].last(2)
+        end
+
         json = { message: msg }
 
         if progname
@@ -56,14 +68,15 @@ module Binnacle
           end
         end
         event = Binnacle::Event.new()
-        event.configure(account_id, app_id, context_id, event_name, client_id, session_id, log_level, tags, json)
+        event.configure(account_id, app_id, context_id, event_name, client_id, session_id, severity, tags, json)
+        event.timestamp = datetime
         event
       end
     end
 
     def write(event)
       event.connection = connection
-      event.post
+      event.post_asynch
     end
 
     def close

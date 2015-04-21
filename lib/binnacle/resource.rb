@@ -5,6 +5,16 @@ module Binnacle
     attr_reader :route
     attr_writer :connection
 
+    def post_asynch()
+      Thread.new do
+        response = @connection.post do |req|
+          req.url self.route
+          req.headers['Content-Type'] = 'application/json'
+          req.body = self.to_json
+        end
+      end
+    end
+
     def post()
       response = @connection.post do |req|
         req.url self.route
