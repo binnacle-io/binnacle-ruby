@@ -7,24 +7,20 @@ module Binnacle
       end
 
       def call(env)
+        response = @app.call(env)
+      rescue Exception => exception
         if Binnacle.configuration.trap?
-          begin
-            response = @app.call(env)
-          rescue Exception => exception
-            exception_class_name = exception.class.name
-            unless Configuration::IGNORED_EXCEPTIONS.include?(exception_class_name)
-              begin
-                Binnacle.logger.debug "Binnacle: reporting exception #{exception_class_name}"
-                Binnacle.report_exception(exception, env)
-              rescue
-                # prevent the observer effect
-              end
+          exception_class_name = exception.class.name
+          unless Configuration::IGNORED_EXCEPTIONS.include?(exception_class_name)
+            begin
+              Binnacle.logger.debug "Binnacle: reporting exception #{exception_class_name}"
+              Binnacle.report_exception(exception, env)
+            rescue
+              # prevent the observer effect
             end
-          ensure
-            raise exception
           end
         else
-          super(env)
+          raise exception
         end
       end
 
