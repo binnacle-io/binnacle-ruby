@@ -12,11 +12,11 @@ module Binnacle
 
     def_delegators :@connection, :get, :post, :put, :delete, :head, :patch, :options
 
-    def initialize(api_key, api_secret, url = nil)
-      @contact_url = url || ENV['BINNACLE_URL']
+    def initialize(api_key = nil, api_secret = nil, url = nil)
+      @contact_url = url || Binnacle.configuration.url
       @active_url = @contact_url
-      @api_key = api_key
-      @api_secret = api_secret
+      @api_key = api_key || Binnacle.configuration.api_key
+      @api_secret = api_secret || Binnacle.configuration.api_secret
 
       raise Binnacle::ConfigurationError.new("Binnacle URL not provided, set BINNACLE_URL or provided in the constructor") unless @contact_url
 
@@ -30,7 +30,12 @@ module Binnacle
         req.headers['Content-Type'] = 'application/json'
       end
 
-      JSON.parse(response.body)
+      if response.status == 401
+        Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
+        []
+      else
+        JSON.parse(response.body)
+      end
     end
 
     def randomize_endpoint
@@ -48,7 +53,7 @@ module Binnacle
         faraday.request :basic_auth, @api_key, @api_secret
         faraday.request  :url_encoded             # form-encode POST params
         #faraday.response :logger                  # log requests to STDOUT TODO set a client log file
-        faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
+        faraday.adapter :httpclient
       end
     end
 

@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "binnacle"
   spec.version       = Binnacle::VERSION
   spec.authors       = ["Brian Sam-Bodden"]
-  spec.email         = ["bsbodden@integrallis.com"]
+  spec.email         = ["brian@binnacle.com"]
   spec.summary       = %q{ Ruby client for the Binnacle API }
   spec.description   = %q{ Binnacle Distributed Logging and Push Service. See http://binnacle.io }
   spec.homepage      = "http://binnacle.io/api"
@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.add_runtime_dependency 'httpclient', '~> 2.6.0.1'
   spec.add_runtime_dependency 'faraday', '~> 0.9.1'
   spec.add_runtime_dependency 'faye-websocket', '~> 0.9.2'
   spec.add_runtime_dependency 'trollop', '~> 2.1.2'

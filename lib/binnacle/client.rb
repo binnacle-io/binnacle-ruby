@@ -1,4 +1,5 @@
 require 'binnacle/resources/event'
+require 'binnacle/trap/exception_event'
 
 module Binnacle
   class Client
@@ -11,12 +12,12 @@ module Binnacle
     attr_accessor :session_id
 
     def initialize(account_id = nil, app_id = nil, api_key = nil, api_secret = nil, url = nil, logging_context_id = nil)
-      self.account_id = account_id || ENV['BINNACLE_ACCOUNT']
-      self.app_id = app_id || ENV['BINNACLE_APP']
-      self.api_key = api_key || ENV['BINNACLE_API_KEY']
-      self.api_secret = api_secret || ENV['BINNACLE_API_SECRET']
+      self.account_id = account_id || Binnacle.configuration.account
+      self.app_id = app_id || Binnacle.configuration.app
+      self.api_key = api_key || Binnacle.configuration.api_key
+      self.api_secret = api_secret || Binnacle.configuration.api_secret
       self.connection = Connection.new(self.api_key, self.api_secret, url)
-      self.logging_context_id = logging_context_id || ENV['BINNACLE_CTX']
+      self.logging_context_id = logging_context_id || Binnacle.configuration.ctx
     end
 
     def signal(context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
@@ -35,6 +36,12 @@ module Binnacle
 
     def recents(lines, since = nil, context_id = nil)
       Binnacle::Event.recents(connection, lines, account_id, app_id, since, context_id)
+    end
+
+    def report_exception(exception, env)
+      event = Binnacle::Trap::ExceptionEvent.new(exception, env)
+      event.connection = connection
+      event.post_asynch
     end
 
     #
