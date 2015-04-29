@@ -57,7 +57,11 @@ module Binnacle
         tags = []
 
         if defined?(ActiveSupport::TaggedLogging)
-          session_id, client_id = Thread.current[:activesupport_tagged_logging_tags].last(2)
+          if Thread.current[:activesupport_tagged_logging_tags]
+            session_id, client_id = Thread.current[:activesupport_tagged_logging_tags].last(2)
+          else
+            session_id, client_id = "", ""
+          end
         end
 
         json = { message: msg }
