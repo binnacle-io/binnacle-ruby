@@ -60,8 +60,7 @@ module Binnacle
     end
 
     def ready?
-      self.url && self.account && self.app &&
-      self.ctx && self.api_key && self.api_secret
+      self.url && self.account && self.app && self.api_key && self.api_secret
     end
 
     def can_setup_logger?
