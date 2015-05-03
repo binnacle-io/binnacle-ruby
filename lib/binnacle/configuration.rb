@@ -44,6 +44,10 @@ module Binnacle
     # Whether to report exceptions to Binnacle
     attr_accessor :report_exceptions
 
+    # Whethe to skip reporting exceptions where the headers['X-Cascade'] is set
+    # to 'pass'. In Rails typically it means route was not found (404 error).
+    attr_accessor :ignore_cascade_pass
+
     def initialize
       self.url         ||= ENV['BINNACLE_URL']
       self.account     ||= ENV['BINNACLE_ACCOUNT']
@@ -57,6 +61,7 @@ module Binnacle
       self.intercept_rails_logging ||= false
       self.report_exceptions       ||= ENV['BINNACLE_REPORT_EXCEPTIONS']
       self.report_exceptions       ||= false
+      self.ignore_cascade_pass     ||= true
     end
 
     def ready?
@@ -69,6 +74,10 @@ module Binnacle
 
     def trap?
       self.report_exceptions && self.error_ctx
+    end
+
+    def ignore_cascade_pass?
+      self.ignore_cascade_pass
     end
 
     def to_s

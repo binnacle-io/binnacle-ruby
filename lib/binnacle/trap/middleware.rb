@@ -7,20 +7,36 @@ module Binnacle
       end
 
       def call(env)
-        response = @app.call(env)
+        _, headers, _ = response = @app.call(env)
+        response
       rescue Exception => exception
-        if Binnacle.configuration.trap?
-          exception_class_name = exception.class.name
-          unless Configuration::IGNORED_EXCEPTIONS.include?(exception_class_name)
-            begin
-              Binnacle.logger.debug "Binnacle: reporting exception #{exception_class_name}"
-              Binnacle.report_exception(exception, env)
-            rescue
-              # prevent the observer effect
-            end
+        if report?(exception, headers)
+          begin
+            Binnacle.logger.debug "Binnacle: reporting exception #{exception.class.name}"
+            Binnacle.report_exception(exception, env)
+          rescue
+            # prevent the observer effect
+          ensure
+            raise
           end
         else
-          raise exception
+          raise
+        end
+      end
+
+      def report?(exception, headers)
+        exception_class_name = exception.class.name
+        if Binnacle.configuration.trap?
+          if Binnacle.configuration.ignore_cascade_pass?
+            if headers && headers['X-Cascade']
+              report = headers['X-Cascade'] != 'pass'
+            else
+              report = true
+            end
+          end
+          Configuration::IGNORED_EXCEPTIONS.include?(exception_class_name) ? false : report
+        else
+          false
         end
       end
 

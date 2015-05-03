@@ -33,8 +33,13 @@ module Binnacle
 
     if configuration.ready?
       logger.info "Instantiating Binnacle Client..."
-      @client = Client.new()
-      if configuration.can_setup_logger?
+      begin
+        @client = Client.new()
+      rescue Faraday::ConnectionFailed => fcf
+        logger.error "Failed to connect to Binnacle. Check your settings!"
+      end
+
+      if @client && configuration.can_setup_logger?
         logger.info "Configuring Binnacle Rails logger..."
         @rails_logger = Logging.new(@client, configuration.logging_ctx, Rails.application.config)
         @rails_logger.level = 1
