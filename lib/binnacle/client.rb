@@ -50,44 +50,50 @@ module Binnacle
 
     def formatter
       proc do |severity, datetime, progname, msg|
-        client_id = self.client_id || ''
-        session_id = self.session_id || ''
-        context_id = self.logging_context_id
-        event_name = 'log'
-        tags = []
+        assets_log_prefix = "Started GET \"#{Rails.application.config.assets.prefix}"
 
-        if defined?(ActiveSupport::TaggedLogging)
-          if Thread.current[:activesupport_tagged_logging_tags]
-            session_id, client_id = Thread.current[:activesupport_tagged_logging_tags].last(2)
-          else
-            session_id, client_id = "", ""
+        unless msg.start_with? assets_log_prefix
+          client_id = self.client_id || ''
+          session_id = self.session_id || ''
+          context_id = self.logging_context_id
+          event_name = 'log'
+          tags = []
+
+          if defined?(ActiveSupport::TaggedLogging)
+            if Thread.current[:activesupport_tagged_logging_tags]
+              session_id, client_id = Thread.current[:activesupport_tagged_logging_tags].last(2)
+            else
+              session_id, client_id = "", ""
+            end
           end
-        end
 
-        json = { message: msg }
+          json = { message: msg }
 
-        if progname
-          if progname.is_a?(Hash)
-            client_id = progname[:client_id] || client_id
-            session_id = progname[:session_id] || session_id
-            context_id = progname[:context_id] || context_id
-            event_name =  progname[:event_name] || event_name
-            tags = progname[:tags] || tags
-            json.merge!(progname[:json]) if progname[:json]
-          elsif progname.is_a?(String)
-            event_name = progname
+          if progname
+            if progname.is_a?(Hash)
+              client_id = progname[:client_id] || client_id
+              session_id = progname[:session_id] || session_id
+              context_id = progname[:context_id] || context_id
+              event_name =  progname[:event_name] || event_name
+              tags = progname[:tags] || tags
+              json.merge!(progname[:json]) if progname[:json]
+            elsif progname.is_a?(String)
+              event_name = progname
+            end
           end
+          event = Binnacle::Event.new()
+          event.configure(account_id, app_id, context_id, event_name, client_id, session_id, severity, tags, json)
+          event.timestamp = datetime
+          event
         end
-        event = Binnacle::Event.new()
-        event.configure(account_id, app_id, context_id, event_name, client_id, session_id, severity, tags, json)
-        event.timestamp = datetime
-        event
       end
     end
 
     def write(event)
-      event.connection = connection
-      event.post_asynch
+      if event
+        event.connection = connection
+        event.post_asynch
+      end
     end
 
     def close
