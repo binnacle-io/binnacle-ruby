@@ -57,9 +57,9 @@ module Binnacle
       self.error_ctx   ||= ENV['BINNACLE_APP_ERR_CTX']
       self.api_key     ||= ENV['BINNACLE_API_KEY']
       self.api_secret  ||= ENV['BINNACLE_API_SECRET']
-      self.intercept_rails_logging ||= ENV['BINNACLE_RAILS_LOG']
+      self.intercept_rails_logging ||= ENV['BINNACLE_RAILS_LOG'].downcase == 'true'
       self.intercept_rails_logging ||= false
-      self.report_exceptions       ||= ENV['BINNACLE_REPORT_EXCEPTIONS']
+      self.report_exceptions       ||= ENV['BINNACLE_REPORT_EXCEPTIONS'].downcase == 'true'
       self.report_exceptions       ||= false
       self.ignore_cascade_pass     ||= true
     end
