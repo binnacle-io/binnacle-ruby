@@ -23,7 +23,7 @@ module Binnacle
         extract_session_id
         extract_client_id
 
-        log_level = "ERROR"
+        self.log_level = "EXCEPTION"
         self.tags = []
         build_json_payload
 
