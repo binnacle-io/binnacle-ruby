@@ -50,20 +50,18 @@ module Binnacle
     end
 
     def to_json
-      %[
-        {
-          "accountId": "#{account_id}",
-          "appId": "#{app_id}",
-          "contextId": "#{context_id}",
-          "sessionId": "#{session_id}",
-          "clientEventTime": "#{client_event_time}",
-          "eventName": "#{event_name}",
-          "clientId": "#{client_id}",
-          "logLevel": "#{log_level}",
-          "tags": #{tags},
-          "json": #{json.to_json}
-        }
-      ]
+      {
+        "accountId": account_id,
+        "appId": app_id,
+        "contextId": context_id,
+        "sessionId": session_id,
+        "clientEventTime": client_event_time,
+        "eventName": event_name,
+        "clientId": client_id,
+        "logLevel": log_level,
+        "tags": tags,
+        "json": json
+      }.to_json
     end
 
     def route
