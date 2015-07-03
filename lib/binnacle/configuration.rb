@@ -1,7 +1,7 @@
 module Binnacle
   class Configuration
 
-    IGNORED_EXCEPTIONS = [
+    DEFAULT_IGNORED_EXCEPTIONS = [
       'ActiveRecord::RecordNotFound',
       'ActionController::RoutingError',
       'ActionController::InvalidAuthenticityToken',
@@ -44,6 +44,9 @@ module Binnacle
     # Whether to report exceptions to Binnacle
     attr_accessor :report_exceptions
 
+    # Exceptions that do not get reported to Binnacle
+    attr_accessor :ignored_exceptions
+
     # Whethe to skip reporting exceptions where the headers['X-Cascade'] is set
     # to 'pass'. In Rails typically it means route was not found (404 error).
     attr_accessor :ignore_cascade_pass
@@ -59,6 +62,7 @@ module Binnacle
       self.api_secret  ||= ENV['BINNACLE_API_SECRET']
       self.intercept_rails_logging = ENV['BINNACLE_RAILS_LOG'] ? ENV['BINNACLE_RAILS_LOG'].downcase == 'true' : false
       self.report_exceptions = ENV['BINNACLE_REPORT_EXCEPTIONS'] ? ENV['BINNACLE_REPORT_EXCEPTIONS'].downcase == 'true' : false
+      self.ignored_exceptions ||= ENV['BINNACLE_IGNORED_EXCEPTIONS'] ? DEFAULT_IGNORED_EXCEPTIONS + ENV['BINNACLE_IGNORED_EXCEPTIONS'].split(',') : DEFAULT_IGNORED_EXCEPTIONS
       self.ignore_cascade_pass     ||= true
     end
 

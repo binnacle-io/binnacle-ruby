@@ -34,7 +34,7 @@ module Binnacle
               report = true
             end
           end
-          Configuration::IGNORED_EXCEPTIONS.include?(exception_class_name) ? false : report
+          Binnacle.configuration.ignored_exceptions.include?(exception_class_name) ? false : report
         else
           false
         end
