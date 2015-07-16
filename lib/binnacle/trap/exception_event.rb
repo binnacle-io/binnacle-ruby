@@ -128,7 +128,13 @@ module Binnacle
       end
 
       def extract_client_id
-        self.client_id = ""
+        session = @env["rack.session"].to_hash
+        warden_info = session.find { |k,v| k.start_with?('warden.') }
+        if warden_info
+          self.client_id = warden_info.last.first.first
+        else
+          self.client_id = ""
+        end
       end
 
       def build_json_payload
