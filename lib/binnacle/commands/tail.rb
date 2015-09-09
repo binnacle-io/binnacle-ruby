@@ -50,10 +50,9 @@ module Binnacle::Commands
 
   #
   # tail --lines=50 --since=10 --host=my_host --channel=my_channel
-  def self.lines(host, channel, lines, since = nil)
-    account_id, app_id, context_id = channel.split('-')
+  def self.lines(host, context_id, lines, since = nil)
 
-    client = Binnacle::Client.new(account_id, app_id, "http://#{host}")
+    client = Binnacle::Client.for_host("http://#{host}")
 
     client.recents(lines, since, context_id).each do |e|
       puts %[#{e.log_level} \[#{e.event_time}\] #{e.event_name} :: clientId=#{e.client_id}, sessionId=#{e.session_id}, tags=#{e.tags}]

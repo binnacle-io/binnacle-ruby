@@ -28,8 +28,6 @@ module Binnacle
         build_json_payload
 
         configure(
-          Binnacle.configuration.account,
-          Binnacle.configuration.app,
           Binnacle.configuration.error_ctx,
           self.event_name,
           self.client_id,

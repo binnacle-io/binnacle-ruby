@@ -4,38 +4,43 @@ require 'binnacle/trap/exception_event'
 module Binnacle
   class Client
 
-    attr_accessor :account_id, :app_id
     attr_accessor :api_key, :api_secret
     attr_accessor :connection
     attr_accessor :logging_context_id
     attr_accessor :client_id
     attr_accessor :session_id
 
-    def initialize(account_id = nil, app_id = nil, api_key = nil, api_secret = nil, url = nil, logging_context_id = nil)
-      self.account_id = account_id || Binnacle.configuration.account
-      self.app_id = app_id || Binnacle.configuration.app
+    def initialize(api_key = nil, api_secret = nil, url = nil, logging_context_id = nil)
       self.api_key = api_key || Binnacle.configuration.api_key
       self.api_secret = api_secret || Binnacle.configuration.api_secret
       self.connection = Connection.new(self.api_key, self.api_secret, url)
-      self.logging_context_id = logging_context_id || Binnacle.configuration.ctx
+      self.logging_context_id = logging_context_id
+    end
+
+    def self.for_host(url = nil)
+      api_key = Binnacle.configuration.api_key
+      api_secret = Binnacle.configuration.api_secret
+      connection_url = url || "http://localhost:8080"
+
+      self.new(api_key, api_secret, connection_url)
     end
 
     def signal(context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
       event = Binnacle::Event.new()
-      event.configure(account_id, app_id, context_id, event_name, client_id, session_id, log_level, tags, json)
+      event.configure(context_id, event_name, client_id, session_id, log_level, tags, json)
       event.connection = connection
       event.post
     end
 
     def signal_asynch(context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
       event = Binnacle::Event.new()
-      event.configure(account_id, app_id, context_id, event_name, client_id, session_id, log_level, tags, json)
+      event.configure(context_id, event_name, client_id, session_id, log_level, tags, json)
       event.connection = connection
       event.post_asynch
     end
 
     def recents(lines, since = nil, context_id = nil)
-      Binnacle::Event.recents(connection, lines, account_id, app_id, since, context_id)
+      Binnacle::Event.recents(connection, lines, since, context_id)
     end
 
     def report_exception(exception, env)
@@ -82,7 +87,7 @@ module Binnacle
             end
           end
           event = Binnacle::Event.new()
-          event.configure(account_id, app_id, context_id, event_name, client_id, session_id, severity, tags, json)
+          event.configure(context_id, event_name, client_id, session_id, severity, tags, json)
           event.timestamp = datetime
           event
         end

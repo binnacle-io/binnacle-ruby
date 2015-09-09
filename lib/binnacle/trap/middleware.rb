@@ -12,7 +12,7 @@ module Binnacle
       rescue Exception => exception
         if report?(exception, headers)
           begin
-            Binnacle.logger.debug "Binnacle: reporting exception #{exception.class.name}"
+            Binnacle.logger.debug "Binnacle: reporting exception: #{exception.class.name}"
             Binnacle.report_exception(exception, env)
           rescue
             # prevent the observer effect
