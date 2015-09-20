@@ -18,7 +18,7 @@ module Binnacle
       @api_key = api_key || Binnacle.configuration.api_key
       @api_secret = api_secret || Binnacle.configuration.api_secret
 
-      raise Binnacle::ConfigurationError.new("Binnacle URL not provided, set BINNACLE_URL or provided in the constructor") unless @contact_url
+      raise Binnacle::ConfigurationError.new("Binnacle URL not provided, set BINNACLE_URL or provide in the constructor") unless @contact_url
 
       build_connection
       randomize_endpoint
@@ -41,9 +41,8 @@ module Binnacle
     def randomize_endpoint
       list = endpoints
       if endpoints.size > 1
-        uri = URI.parse(@contact_url)
         endpoint = endpoints.sample
-        @active_url = "#{uri.scheme}://#{endpoint}:#{uri.port}"
+        @active_url = Binnacle::Configuration.build_url(endpoint)
         build_connection()
       end
     end

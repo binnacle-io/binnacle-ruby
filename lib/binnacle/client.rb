@@ -10,17 +10,21 @@ module Binnacle
     attr_accessor :client_id
     attr_accessor :session_id
 
-    def initialize(api_key = nil, api_secret = nil, url = nil, logging_context_id = nil)
+    def initialize(api_key = nil, api_secret = nil, endpoint = nil, logging_context_id = nil)
       self.api_key = api_key || Binnacle.configuration.api_key
       self.api_secret = api_secret || Binnacle.configuration.api_secret
-      self.connection = Connection.new(self.api_key, self.api_secret, url)
+      if endpoint
+        self.connection = Connection.new(self.api_key, self.api_secret, Binnacle::Configuration.build_url(endpoint))
+      else
+        self.connection = Connection.new(self.api_key, self.api_secret)
+      end
       self.logging_context_id = logging_context_id
     end
 
     def self.for_host(url = nil)
       api_key = Binnacle.configuration.api_key
       api_secret = Binnacle.configuration.api_secret
-      connection_url = url || "http://localhost:8080"
+      connection_url = url || Binnacle::Configuration.build_url('localhost')
 
       self.new(api_key, api_secret, connection_url)
     end

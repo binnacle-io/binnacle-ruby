@@ -14,8 +14,14 @@ module Binnacle
       'Sinatra::NotFound'
     ].map(&:freeze).freeze
 
-    # The Binnacle Endpoint URL (BINNACLE_URL)
-    attr_accessor :url
+    DEFAULT_PORT = '8080'
+    DEFAULT_PROTOCOL = 'http'
+
+    # The Binnacle Endpoint (BINNACLE_ENDPOINT) single IP or Array of IPs
+    attr_accessor :endpoint
+
+    # The Binnacle Endpoint PORT (BINNACLE_PORT), defaults to 8080
+    attr_accessor :port
 
     # The application logger Binnacle Context (BINNACLE_APP_LOG_CTX)
     attr_accessor :logging_ctx
@@ -43,7 +49,8 @@ module Binnacle
     attr_accessor :ignore_cascade_pass
 
     def initialize
-      self.url         ||= ENV['BINNACLE_URL']
+      self.endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
+      self.port        ||= ENV['BINNACLE_PORT'] || DEFAULT_PORT
       self.logging_ctx ||= ENV['BINNACLE_APP_LOG_CTX']
       self.error_ctx   ||= ENV['BINNACLE_APP_ERR_CTX']
       self.api_key     ||= ENV['BINNACLE_API_KEY']
@@ -52,10 +59,20 @@ module Binnacle
       self.report_exceptions = ENV['BINNACLE_REPORT_EXCEPTIONS'] ? ENV['BINNACLE_REPORT_EXCEPTIONS'].downcase == 'true' : false
       self.ignored_exceptions ||= ENV['BINNACLE_IGNORED_EXCEPTIONS'] ? DEFAULT_IGNORED_EXCEPTIONS + ENV['BINNACLE_IGNORED_EXCEPTIONS'].split(',') : DEFAULT_IGNORED_EXCEPTIONS
       self.ignore_cascade_pass     ||= true
+
+      @urls = self.endpoint.is_a?(Array) ? self.endpoint.map { |ep| Configuration.build_url(ep) } : Configuration.build_url(endpoint)
+    end
+
+    def url
+      @urls.is_a?(Array) ? @urls.sample : @urls
+    end
+
+    def urls
+      @urls
     end
 
     def ready?
-      self.url && self.api_key && self.api_secret
+      self.endpoint && self.api_key && self.api_secret
     end
 
     def can_setup_logger?
@@ -71,7 +88,7 @@ module Binnacle
     end
 
     def to_s
-      [ :url,
+      [ :endpoint,
         :logging_ctx,
         :error_ctx,
         :api_key,
@@ -79,6 +96,10 @@ module Binnacle
         :intercept_rails_logging,
         :report_exceptions
       ].map { |m| "#{m}: #{self.send(m)}" }.join(', ')
+    end
+
+    def self.build_url(endpoint)
+      "#{DEFAULT_PROTOCOL}://#{endpoint}:#{DEFAULT_PORT}"
     end
   end
 end
