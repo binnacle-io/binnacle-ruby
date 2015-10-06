@@ -7,6 +7,7 @@ require 'binnacle/resource'
 require 'binnacle/client'
 require 'binnacle/logging'
 require 'binnacle/commands/commands'
+require 'rack-timeout'
 
 module Binnacle
   extend Forwardable
