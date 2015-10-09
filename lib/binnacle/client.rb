@@ -9,6 +9,7 @@ module Binnacle
     attr_accessor :logging_context_id
     attr_accessor :client_id
     attr_accessor :session_id
+    attr_writer   :ready
 
     def initialize(api_key = nil, api_secret = nil, endpoint = nil, logging_context_id = nil)
       self.api_key = api_key || Binnacle.configuration.api_key
@@ -107,6 +108,10 @@ module Binnacle
 
     def close
       nil
+    end
+
+    def ready?
+      @ready
     end
 
   end

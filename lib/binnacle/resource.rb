@@ -13,6 +13,8 @@ module Binnacle
           req.body = self.to_json
         end
 
+        puts "POST_ASYNCH RESPONSE ==> #{response.status}"
+
         if response.status == 401
           Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
         end
@@ -25,6 +27,9 @@ module Binnacle
         req.headers['Content-Type'] = 'application/json'
         req.body = self.to_json
       end
+
+      puts "POST RESPONSE ==> #{response.status}"
+
       if response.status == 401
         Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
       else

@@ -49,7 +49,9 @@ module Binnacle
     attr_accessor :ignore_cascade_pass
 
     def initialize
-      self.endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
+      if ENV['BINNACLE_ENDPOINT']
+        self.endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
+      end
       self.port        ||= ENV['BINNACLE_PORT'] || DEFAULT_PORT
       self.logging_ctx ||= ENV['BINNACLE_APP_LOG_CTX']
       self.error_ctx   ||= ENV['BINNACLE_APP_ERR_CTX']
@@ -60,11 +62,15 @@ module Binnacle
       self.ignored_exceptions ||= ENV['BINNACLE_IGNORED_EXCEPTIONS'] ? DEFAULT_IGNORED_EXCEPTIONS + ENV['BINNACLE_IGNORED_EXCEPTIONS'].split(',') : DEFAULT_IGNORED_EXCEPTIONS
       self.ignore_cascade_pass     ||= true
 
-      @urls = self.endpoint.is_a?(Array) ? self.endpoint.map { |ep| Configuration.build_url(ep) } : Configuration.build_url(endpoint)
+      if self.endpoint
+        @urls = self.endpoint.is_a?(Array) ? self.endpoint.map { |ep| Configuration.build_url(ep) } : Configuration.build_url(endpoint)
+      end
     end
 
     def url
-      @urls.is_a?(Array) ? @urls.sample : @urls
+      if @urls
+        @urls.is_a?(Array) ? @urls.sample : @urls
+      end
     end
 
     def urls
@@ -72,7 +78,11 @@ module Binnacle
     end
 
     def ready?
-      self.endpoint && self.api_key && self.api_secret
+      urls? && self.api_key && self.api_secret
+    end
+
+    def urls?
+      (!@urls.nil? && !@urls.is_a?(Array)) || (@urls.is_a?(Array) && !@urls.empty?)
     end
 
     def can_setup_logger?

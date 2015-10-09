@@ -25,16 +25,21 @@ module Binnacle
     end
 
     def endpoints
-      response = @connection.get do |req|
-        req.url "/api/endpoints"
-        req.headers['Content-Type'] = 'application/json'
-      end
+      begin
+        response = @connection.get do |req|
+          req.url "/api/endpoints"
+          req.headers['Content-Type'] = 'application/json'
+        end
 
-      if response.status == 401
-        Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
+        if response.status == 401
+          Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
+          []
+        else
+          JSON.parse(response.body)
+        end
+      rescue Faraday::Error::ConnectionFailed => cf
+        Binnacle.logger.error("Error communicating with Binnacle: #{cf.message}")
         []
-      else
-        JSON.parse(response.body)
       end
     end
 
@@ -48,11 +53,15 @@ module Binnacle
     end
 
     def build_connection
-      @connection ||= Faraday.new(:url => @active_url) do |faraday|
-        faraday.request :basic_auth, @api_key, @api_secret
-        faraday.request  :url_encoded             # form-encode POST params
-        #faraday.response :logger                  # log requests to STDOUT TODO set a client log file
-        faraday.adapter :httpclient
+      begin
+        @connection ||= Faraday.new(:url => @active_url) do |faraday|
+          faraday.request :basic_auth, @api_key, @api_secret
+          faraday.request  :url_encoded             # form-encode POST params
+          #faraday.response :logger                  # log requests to STDOUT TODO set a client log file
+          faraday.adapter :httpclient
+        end
+      rescue Error => cf#Faraday::Error::ConnectionFailed => cf
+        Binnacle.logger.error("Error communicating with Binnacle: #{cf.message}")
       end
     end
 
