@@ -15,7 +15,6 @@ module Binnacle
     ].map(&:freeze).freeze
 
     DEFAULT_PORT = '8080'
-    DEFAULT_PROTOCOL = 'http'
 
     # The Binnacle Endpoint (BINNACLE_ENDPOINT) single IP or Array of IPs
     attr_accessor :endpoint
@@ -48,6 +47,9 @@ module Binnacle
     # to 'pass'. In Rails typically it means route was not found (404 error).
     attr_accessor :ignore_cascade_pass
 
+    # Whether to make the requests over HTTPS, default is HTTP
+    attr_reader :encrypted
+
     def initialize
       if ENV['BINNACLE_ENDPOINT']
         self.endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
@@ -57,14 +59,13 @@ module Binnacle
       self.error_ctx   ||= ENV['BINNACLE_APP_ERR_CTX']
       self.api_key     ||= ENV['BINNACLE_API_KEY']
       self.api_secret  ||= ENV['BINNACLE_API_SECRET']
-      self.intercept_rails_logging = ENV['BINNACLE_RAILS_LOG'] ? ENV['BINNACLE_RAILS_LOG'].downcase == 'true' : false
-      self.report_exceptions = ENV['BINNACLE_REPORT_EXCEPTIONS'] ? ENV['BINNACLE_REPORT_EXCEPTIONS'].downcase == 'true' : false
+      self.intercept_rails_logging = Configuration.set_boolean_flag_for(ENV['BINNACLE_RAILS_LOG'])
+      self.report_exceptions = Configuration.set_boolean_flag_for(ENV['BINNACLE_REPORT_EXCEPTIONS'])
       self.ignored_exceptions ||= ENV['BINNACLE_IGNORED_EXCEPTIONS'] ? DEFAULT_IGNORED_EXCEPTIONS + ENV['BINNACLE_IGNORED_EXCEPTIONS'].split(',') : DEFAULT_IGNORED_EXCEPTIONS
       self.ignore_cascade_pass     ||= true
+      @encrypted = Configuration.set_boolean_flag_for(ENV['BINNACLE_ENCRYPTED'])
 
-      if self.endpoint
-        @urls = self.endpoint.is_a?(Array) ? self.endpoint.map { |ep| Configuration.build_url(ep) } : Configuration.build_url(endpoint)
-      end
+      set_urls
     end
 
     def url
@@ -97,6 +98,31 @@ module Binnacle
       self.ignore_cascade_pass
     end
 
+    def encrypted?
+      self.encrypted
+    end
+
+    def build_url(ip_or_host)
+      "#{protocol}://#{ip_or_host}:#{port}"
+    end
+
+    def protocol
+      self.encrypted? ? 'HTTPS' : 'HTTP'
+    end
+
+    def set_urls
+      if self.endpoint
+        @urls = self.endpoint.is_a?(Array) ? self.endpoint.map { |ep| build_url(ep) } : build_url(endpoint)
+      end
+    end
+
+    def encrypted=(value)
+      if @encrypted != value
+        @encrypted == value
+        set_urls
+      end
+    end
+
     def to_s
       [ :endpoint,
         :logging_ctx,
@@ -108,8 +134,13 @@ module Binnacle
       ].map { |m| "#{m}: #{self.send(m)}" }.join(', ')
     end
 
-    def self.build_url(endpoint)
-      "#{DEFAULT_PROTOCOL}://#{endpoint}:#{DEFAULT_PORT}"
+    def self.set_boolean_flag_for(value, default = false)
+      if value
+        value.downcase == 'true'
+      else
+        default
+      end
     end
+
   end
 end
