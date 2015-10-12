@@ -44,10 +44,10 @@ module Binnacle
     end
 
     def randomize_endpoint
-      list = endpoints
-      if endpoints.size > 1
-        endpoint = endpoints.sample
-        @active_url = Binnacle::Configuration.build_url(endpoint)
+      fresh_endpoints = endpoints
+      if fresh_endpoints.size > 1
+        Binnacle.configuration.endpoint = fresh_endpoints
+        @active_url = Binnacle.configuration.url
         build_connection()
       end
     end

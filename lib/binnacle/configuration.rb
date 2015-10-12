@@ -17,7 +17,7 @@ module Binnacle
     DEFAULT_PORT = '8080'
 
     # The Binnacle Endpoint (BINNACLE_ENDPOINT) single IP or Array of IPs
-    attr_accessor :endpoint
+    attr_reader :endpoint
 
     # The Binnacle Endpoint PORT (BINNACLE_PORT), defaults to 8080
     attr_accessor :port
@@ -52,7 +52,7 @@ module Binnacle
 
     def initialize
       if ENV['BINNACLE_ENDPOINT']
-        self.endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
+        @endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
       end
       self.port        ||= ENV['BINNACLE_PORT'] || DEFAULT_PORT
       self.logging_ctx ||= ENV['BINNACLE_APP_LOG_CTX']
@@ -114,6 +114,11 @@ module Binnacle
       if self.endpoint
         @urls = self.endpoint.is_a?(Array) ? self.endpoint.map { |ep| build_url(ep) } : build_url(endpoint)
       end
+    end
+
+    def endpoint=(value)
+      @endpoint = value
+      set_urls
     end
 
     def encrypted=(value)
