@@ -107,7 +107,7 @@ module Binnacle
     end
 
     def protocol
-      self.encrypted? ? 'HTTPS' : 'HTTP'
+      self.encrypted? ? 'https' : 'http'
     end
 
     def set_urls
