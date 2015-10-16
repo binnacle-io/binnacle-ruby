@@ -15,7 +15,7 @@ module Binnacle
       self.api_key = api_key || Binnacle.configuration.api_key
       self.api_secret = api_secret || Binnacle.configuration.api_secret
       if endpoint
-        self.connection = Connection.new(self.api_key, self.api_secret, Binnacle::Configuration.build_url(endpoint))
+        self.connection = Connection.new(self.api_key, self.api_secret, Binnacle.configuration.build_url(endpoint))
       else
         self.connection = Connection.new(self.api_key, self.api_secret)
       end
@@ -25,7 +25,7 @@ module Binnacle
     def self.for_host(url = nil)
       api_key = Binnacle.configuration.api_key
       api_secret = Binnacle.configuration.api_secret
-      connection_url = url || Binnacle::Configuration.build_url('localhost')
+      connection_url = url || Binnacle.configuration.build_url('localhost')
 
       self.new(api_key, api_secret, connection_url)
     end
