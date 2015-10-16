@@ -40,10 +40,10 @@ module Binnacle
       Binnacle::Event.recents(connection, lines, since, context_id)
     end
 
-    def report_exception(exception, env)
+    def report_exception(exception, env, asynch = true)
       event = Binnacle::Trap::ExceptionEvent.new(exception, env)
       event.connection = connection
-      event.post #_asynch
+      asynch ? event.post_asynch : event.post
     end
 
     #

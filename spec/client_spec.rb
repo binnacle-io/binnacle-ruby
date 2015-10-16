@@ -65,7 +65,7 @@ describe Binnacle::Client do
 
       exception = ZeroDivisionError.new
       env = Rack::MockRequest.env_for(client.connection.active_url)
-      client.report_exception(exception, env)
+      client.report_exception(exception, env, false)
 
       expect(a_request(:get, 'http://localhost:8080/api/endpoints'))
       expect(
