@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8080/api/endpoints
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept:
+      - "*/*"
+      Date:
+      - Fri, 16 Oct 2015 05:12:55 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Oct 2015 05:12:55 GMT
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '["68.2.239.31"]'
+    http_version: 
+  recorded_at: Fri, 16 Oct 2015 05:12:55 GMT
+- request:
+    method: post
+    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
+    body:
+      encoding: UTF-8
+      string: '{"contextId":"icoc0tnol3obe8pas207","sessionId":"My Sess","clientEventTime":"2015-10-15T22:12:55-0700","eventName":"TEST_EVT","clientId":"binnacle-rb","logLevel":"INFO","tags":[],"json":{}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.1
+      Accept:
+      - "*/*"
+      Date:
+      - Fri, 16 Oct 2015 05:12:55 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Oct 2015 05:12:55 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"message":"Signaled: io.binnacle.models.BinnacleEvent(8184dc08-fa21-44ea-af5a-0b857f76c78c,
+        bv4sfcz28up6q6bophx4, n7f05b76tr4xsc6slstl, icoc0tnol3obe8pas207, 2015-10-15,
+        My Sess, Thu Oct 15 22:12:55 MST 2015, TEST_EVT, Thu Oct 15 22:12:55 MST 2015,
+        binnacle-rb, /0:0:0:0:0:0:0:1, INFO, null, [], null, {})"}'
+    http_version: 
+  recorded_at: Fri, 16 Oct 2015 05:12:55 GMT
+recorded_with: VCR 2.9.3

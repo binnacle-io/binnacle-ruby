@@ -28,4 +28,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.2.0'
   spec.add_development_dependency 'codeclimate-test-reporter'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'vcr', '~> 2.9.3'
+  spec.add_development_dependency 'webmock', '~> 1.20.4'
+  spec.add_development_dependency 'fivemat'
+  spec.add_development_dependency 'activesupport'
 end
