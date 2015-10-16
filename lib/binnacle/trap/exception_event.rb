@@ -57,7 +57,7 @@ module Binnacle
       # who was affected by the exception (Warden, Devise, etc. should be used
       # if available to get this information)
       def extract_session_id
-        self.session_id = @env["rack.session"]["session_id"] || @request.ip
+        self.session_id = (@env["rack.session"] ? @env["rack.session"]["session_id"] : nil) || @request.ip
       end
 
       def extract_backtrace
@@ -126,7 +126,7 @@ module Binnacle
       end
 
       def extract_client_id
-        session = @env["rack.session"].to_hash
+        session = @env["rack.session"] ? @env["rack.session"].to_hash : {}
         warden_info = session.find { |k,v| k.start_with?('warden.') }
         if warden_info
           self.client_id = warden_info.last.first.first

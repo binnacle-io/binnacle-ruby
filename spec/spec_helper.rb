@@ -4,6 +4,7 @@ CodeClimate::TestReporter.start
 require 'binnacle'
 require 'vcr'
 require 'webmock/rspec'
+require 'rack'
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/vcr'

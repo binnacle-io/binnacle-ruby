@@ -64,7 +64,7 @@ module Binnacle
       "/api/events/#{context_id}"
     end
 
-    def self.recents(connection, lines, since = nil, context_id)
+    def self.recents(connection, lines, since, context_id)
       path = [self.route(context_id), 'recents'].compact.join('/')
 
       get(connection, path, {'limit' => lines, 'since' => since})

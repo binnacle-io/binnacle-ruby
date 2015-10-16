@@ -22,14 +22,6 @@ module Binnacle
       self.logging_context_id = logging_context_id
     end
 
-    def self.for_host(url = nil)
-      api_key = Binnacle.configuration.api_key
-      api_secret = Binnacle.configuration.api_secret
-      connection_url = url || Binnacle.configuration.build_url('localhost')
-
-      self.new(api_key, api_secret, connection_url)
-    end
-
     def signal(context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
       event = Binnacle::Event.new()
       event.configure(context_id, event_name, client_id, session_id, log_level, tags, json)
@@ -44,14 +36,14 @@ module Binnacle
       event.post_asynch
     end
 
-    def recents(lines, since = nil, context_id = nil)
+    def recents(lines, since, context_id)
       Binnacle::Event.recents(connection, lines, since, context_id)
     end
 
     def report_exception(exception, env)
       event = Binnacle::Trap::ExceptionEvent.new(exception, env)
       event.connection = connection
-      event.post_asynch
+      event.post #_asynch
     end
 
     #

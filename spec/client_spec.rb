@@ -55,4 +55,33 @@ describe Binnacle::Client do
       ).to(have_been_made.times(1))
     end
   end
+
+  describe 'report_exception' do
+    it 'invokes the events api signal', :vcr do
+
+      Binnacle.configure do |config|
+        config.error_ctx = 'id0czm8eryfffcgp875c'
+      end
+
+      exception = ZeroDivisionError.new
+      env = Rack::MockRequest.env_for(client.connection.active_url)
+      client.report_exception(exception, env)
+
+      expect(a_request(:get, 'http://localhost:8080/api/endpoints'))
+      expect(
+        a_request(:post, "http://localhost:8080/api/events/id0czm8eryfffcgp875c").
+        with(body: hash_including({
+          "contextId": "id0czm8eryfffcgp875c",
+          "eventName":"ZeroDivisionError",
+          "logLevel":"EXCEPTION"
+        }))
+      ).to(have_been_made.times(1))
+
+      # TODO: need a way to check nested partial hash in the body for:
+      # "json": hash_including({
+      #   "exception":"ZeroDivisionError",
+      #   "message":"ZeroDivisionError"
+      # })
+    end
+  end
 end
