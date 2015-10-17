@@ -26,32 +26,43 @@ module Binnacle
   end
 
   def self.configure(options = {})
-    options.each do |k,v|
-      configuration.send("#{k}=", v) rescue nil if configuration.respond_to?("#{k}=")
-    end
+    set_options(options)
 
     yield(configuration) if block_given?
 
     if configuration.ready?
-      logger.info "Instantiating Binnacle Client..."
-      begin
-        @client = Client.new()
-      rescue Faraday::ConnectionFailed => fcf
-        logger.error "Failed to connect to Binnacle. Check your settings!"
-      end
-
-      if @client && configuration.can_setup_logger?
-        logger.info "Configuring Binnacle Rails logger..."
-        @rails_logger = Logging.new(@client, configuration.logging_ctx, Rails.application.config)
-        @rails_logger.level = 1
-        Rails.logger.extend(ActiveSupport::Logger.broadcast(@rails_logger))
-        Rack::Timeout.unregister_state_change_observer(:logger) if Rails.env.development?
-      end
+      create_client
+      setup_logger
     end
   end
 
   def self.logger
     @logger ||= defined?(Rails) ? Rails.logger : Logger.new(STDOUT)
+  end
+
+  def self.set_options(options)
+    options.each do |k,v|
+      configuration.send("#{k}=", v) rescue nil if configuration.respond_to?("#{k}=")
+    end
+  end
+
+  def self.create_client
+    logger.info "Instantiating Binnacle Client..."
+    begin
+      @client = Client.new()
+    rescue Faraday::ConnectionFailed => fcf
+      logger.error "Failed to connect to Binnacle. Check your settings!"
+    end
+  end
+
+  def self.setup_logger
+    if @client && configuration.can_setup_logger?
+      logger.info "Configuring Binnacle Rails logger..."
+      @rails_logger = Logging.new(@client, configuration.logging_ctx, Rails.application.config)
+      @rails_logger.level = 1
+      Rails.logger.extend(ActiveSupport::Logger.broadcast(@rails_logger))
+      Rack::Timeout.unregister_state_change_observer(:logger) if Rails.env.development?
+    end
   end
 
 end
