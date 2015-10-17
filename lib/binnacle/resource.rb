@@ -7,11 +7,7 @@ module Binnacle
 
     def post_asynch
       Thread.new do
-        response = @connection.post do |req|
-          req.url self.route
-          req.headers['Content-Type'] = 'application/json'
-          req.body = self.to_json
-        end
+        response = response_from_post(@connection, self.route, self.to_json)
 
         if response.status == 401
           Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
@@ -20,11 +16,7 @@ module Binnacle
     end
 
     def post
-      response = @connection.post do |req|
-        req.url self.route
-        req.headers['Content-Type'] = 'application/json'
-        req.body = self.to_json
-      end
+      response = response_from_post(@connection, self.route, self.to_json)
 
       if response.status == 401
         Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
@@ -46,6 +38,16 @@ module Binnacle
         Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
       else
         JSON.parse(response.body).map { |r| self.from_hash(r) }
+      end
+    end
+
+    protected
+
+    def response_from_post(connection, route, body)
+      connection.post do |req|
+        req.url route
+        req.headers['Content-Type'] = 'application/json'
+        req.body = body
       end
     end
   end
