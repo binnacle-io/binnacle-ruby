@@ -22,18 +22,15 @@ module Binnacle
       self.logging_context_id = logging_context_id
     end
 
-    def signal(context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
+    def signal(context_id, event_name, client_id, session_id, log_level, tags = [], json = {}, asynch = false)
       event = Binnacle::Event.new()
       event.configure(context_id, event_name, client_id, session_id, log_level, tags, json)
       event.connection = connection
-      event.post
+      asynch ? event.post_asynch : event.post
     end
 
     def signal_asynch(context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
-      event = Binnacle::Event.new()
-      event.configure(context_id, event_name, client_id, session_id, log_level, tags, json)
-      event.connection = connection
-      event.post_asynch
+      signal(context_id, event_name, client_id, session_id, log_level, tags, json, true)
     end
 
     def recents(lines, since, context_id)
