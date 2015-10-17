@@ -50,6 +50,9 @@ module Binnacle
     # Whether to make the requests over HTTPS, default is HTTP
     attr_reader :encrypted
 
+    # Whether to log asynchronoushly via the Ruby logger
+    attr_accessor :asynch_logging
+
     def initialize
       if ENV['BINNACLE_ENDPOINT']
         @endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
@@ -63,6 +66,7 @@ module Binnacle
       self.report_exceptions = Configuration.set_boolean_flag_for(ENV['BINNACLE_REPORT_EXCEPTIONS'])
       self.ignored_exceptions ||= ENV['BINNACLE_IGNORED_EXCEPTIONS'] ? DEFAULT_IGNORED_EXCEPTIONS + ENV['BINNACLE_IGNORED_EXCEPTIONS'].split(',') : DEFAULT_IGNORED_EXCEPTIONS
       self.ignore_cascade_pass     ||= true
+      self.asynch_logging = Configuration.set_boolean_flag_for(ENV['BINNACLE_RAILS_LOG_ASYNCH'], true)
       @encrypted = Configuration.set_boolean_flag_for(ENV['BINNACLE_ENCRYPTED'])
 
       set_urls

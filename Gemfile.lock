@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    binnacle (0.2.9)
+    binnacle (0.3.0)
       faraday (~> 0.9.1)
       faye-websocket (~> 0.10.0)
       httpclient (~> 2.6.0.1)

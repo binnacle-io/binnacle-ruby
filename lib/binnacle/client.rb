@@ -52,9 +52,9 @@ module Binnacle
 
     def formatter
       proc do |severity, datetime, progname, msg|
-        assets_log_prefix = "Started GET \"#{Rails.application.config.assets.prefix}"
+        assets_log_prefix = "Started GET \"#{Rails.application.config.assets.prefix}" if defined?(Rails)
 
-        unless msg.start_with? assets_log_prefix
+        unless assets_log_prefix && msg.start_with?(assets_log_prefix)
           client_id = self.client_id || ''
           session_id = self.session_id || ''
           context_id = self.logging_context_id
@@ -94,7 +94,7 @@ module Binnacle
     def write(event)
       if event
         event.connection = connection
-        event.post_asynch
+        Binnacle.configuration.asynch_logging ? event.post_asynch : event.post
       end
     end
 
