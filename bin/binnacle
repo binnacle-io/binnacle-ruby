@@ -10,5 +10,4 @@ begin
   end
 rescue => e
   puts "I don't know the subcommand command '#{ARGV[0].downcase}'"
-  puts e.inspect
 end

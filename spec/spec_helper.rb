@@ -4,6 +4,7 @@ CodeClimate::TestReporter.start
 require 'binnacle'
 require 'vcr'
 require 'webmock/rspec'
+require 'rspec/collection_matchers'
 require 'rack'
 
 VCR.configure do |c|

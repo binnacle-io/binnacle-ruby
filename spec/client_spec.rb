@@ -46,13 +46,17 @@ describe Binnacle::Client do
   end
 
   describe 'recents' do
-    it 'invokes the events api recents', :vcr do
-      client.recents(10, 500, 'icoc0tnol3obe8pas207')
+    before { @recents = client.recents(10, 500, 'icoc0tnol3obe8pas207') }
 
+    it 'invokes the events api recents', :vcr do
       expect(a_request(:get, 'http://localhost:8080/api/endpoints'))
       expect(
         a_request(:get, "http://localhost:8080/api/events/icoc0tnol3obe8pas207/recents?limit=10&since=500")
       ).to(have_been_made.times(1))
+    end
+
+    it 'returns a collection of event objects', :vcr do
+      expect(@recents).to have(10).events
     end
   end
 
