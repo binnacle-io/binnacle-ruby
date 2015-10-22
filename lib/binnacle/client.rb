@@ -33,8 +33,8 @@ module Binnacle
       signal(context_id, event_name, client_id, session_id, log_level, tags, json, true)
     end
 
-    def recents(lines, since, context_id)
-      Binnacle::Event.recents(connection, lines, since, context_id)
+    def recents(lines, since, context)
+      Binnacle::Event.recents(connection, lines, since, context)
     end
 
     def report_exception(exception, env, asynch = true)

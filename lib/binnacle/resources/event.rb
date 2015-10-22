@@ -60,12 +60,12 @@ module Binnacle
       "/api/events/#{context_id}"
     end
 
-    def self.route(context_id)
-      "/api/events/#{context_id}"
+    def self.route(context)
+      "/api/events/#{context}"
     end
 
-    def self.recents(connection, lines, since, context_id)
-      path = [self.route(context_id), 'recents'].compact.join('/')
+    def self.recents(connection, lines, since, context)
+      path = [route(context), 'recents'].compact.join('/')
 
       get(connection, path, {'limit' => lines, 'since' => since})
     end

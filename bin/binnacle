@@ -3,7 +3,12 @@
 require 'binnacle'
 
 begin
-  Binnacle::Commands.send(ARGV[0].downcase.to_sym)
-rescue
-  puts "I don't know the command '#{ARGV[0].downcase}'"
+  if ARGV && !ARGV.empty?
+    Binnacle::Commands.send(ARGV[0].downcase.to_sym)
+  else
+    puts "binnacle command requires a subcommand"
+  end
+rescue => e
+  puts "I don't know the subcommand command '#{ARGV[0].downcase}'"
+  puts e.inspect
 end
