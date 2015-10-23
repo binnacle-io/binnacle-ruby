@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8080/api/endpoints
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 22 Oct 2015 21:32:41 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic anpyNWQ1a2dqNGozbDhmbTkwdHI6YnozZTN3NDRvMzMyM2R5cHA4ZDc=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 22 Oct 2015 21:32:41 GMT
+      Content-Type:
+      - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '["98.174.197.28"]'
+    http_version: 
+  recorded_at: Thu, 22 Oct 2015 21:32:41 GMT
+- request:
+    method: get
+    uri: http://localhost:8080/api/events/ylhcn28x7skv6av8q93m/recents?limit=10&since=60
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 22 Oct 2015 21:32:41 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic anpyNWQ1a2dqNGozbDhmbTkwdHI6YnozZTN3NDRvMzMyM2R5cHA4ZDc=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 22 Oct 2015 21:32:41 GMT
+      Content-Type:
+      - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"accountId":"bv4sfcz28up6q6bophx4","appId":"qaq3df9nl4qafv5aqcyh","json":{},"id":"5ddc41ea-ccaf-4a5b-aa0f-592d70572276","contextId":"ylhcn28x7skv6av8q93m","date":"2015-10-22","sessionId":"SESS_01","eventTime":1445546248199,"eventName":"TEST_EVT2","clientEventTime":1445546248000,"clientId":"io","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":["account","upgrade"],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"qaq3df9nl4qafv5aqcyh","json":{},"id":"4315e33e-353b-475b-b986-0bfe01de21c4","contextId":"ylhcn28x7skv6av8q93m","date":"2015-10-22","sessionId":"SESS_01","eventTime":1445546252140,"eventName":"TEST_EVT2","clientEventTime":1445546252000,"clientId":"io","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":["account","upgrade"],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"qaq3df9nl4qafv5aqcyh","json":{},"id":"04897a77-a162-4fea-8da7-bb6ce37d196b","contextId":"ylhcn28x7skv6av8q93m","date":"2015-10-22","sessionId":"SESS_01","eventTime":1445546252956,"eventName":"TEST_EVT2","clientEventTime":1445546252000,"clientId":"io","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":["account","upgrade"],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"qaq3df9nl4qafv5aqcyh","json":{},"id":"128692e0-ecd6-47f2-9b8b-60f81e99d503","contextId":"ylhcn28x7skv6av8q93m","date":"2015-10-22","sessionId":"SESS_01","eventTime":1445546253754,"eventName":"TEST_EVT2","clientEventTime":1445546253000,"clientId":"io","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":["account","upgrade"],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"qaq3df9nl4qafv5aqcyh","json":{},"id":"70684ef0-51e7-4a19-b0c0-cf1009c479e8","contextId":"ylhcn28x7skv6av8q93m","date":"2015-10-22","sessionId":"SESS_01","eventTime":1445546256540,"eventName":"TEST_EVT2","clientEventTime":1445546256000,"clientId":"io","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":["account","upgrade"],"dismissed":null}]'
+    http_version: 
+  recorded_at: Thu, 22 Oct 2015 21:32:41 GMT
+recorded_with: VCR 2.9.3
