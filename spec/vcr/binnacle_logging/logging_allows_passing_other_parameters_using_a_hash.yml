@@ -1,0 +1,82 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8080/api/endpoints
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Fri, 23 Oct 2015 19:07:38 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 23 Oct 2015 19:07:38 GMT
+      Content-Type:
+      - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '["68.2.239.31"]'
+    http_version: 
+  recorded_at: Fri, 23 Oct 2015 19:07:38 GMT
+- request:
+    method: post
+    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
+    body:
+      encoding: UTF-8
+      string: '{"contextId":"icoc0tnol3obe8pas207","sessionId":"8675309","clientEventTime":"2015-10-23T12:07:38-0700","eventName":"failed_transfer","clientId":"","logLevel":"INFO","tags":[],"json":{"message":"transfer
+        failed, bad RTN"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Fri, 23 Oct 2015 19:07:38 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 23 Oct 2015 19:07:38 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"message":"Signaled: io.binnacle.models.BinnacleEvent(5790b9f3-dfb2-4a68-b75d-d972fe938d5a,
+        bv4sfcz28up6q6bophx4, n7f05b76tr4xsc6slstl, icoc0tnol3obe8pas207, 2015-10-23,
+        8675309, Fri Oct 23 12:07:38 MST 2015, failed_transfer, Fri Oct 23 12:07:38
+        MST 2015, , /0:0:0:0:0:0:0:1, INFO, null, [], null, {\"message\":\"transfer
+        failed, bad RTN\"})"}'
+    http_version: 
+  recorded_at: Fri, 23 Oct 2015 19:07:38 GMT
+recorded_with: VCR 2.9.3

@@ -20,6 +20,9 @@ module Binnacle
         self.connection = Connection.new(self.api_key, self.api_secret)
       end
       self.logging_context_id = logging_context_id
+
+      self.client_id = ""
+      self.session_id = ""
     end
 
     def signal(context_id, event_name, client_id, session_id, log_level, tags = [], json = {}, asynch = false)
@@ -49,40 +52,19 @@ module Binnacle
 
     def formatter
       proc do |severity, datetime, progname, msg|
-        assets_log_prefix = "Started GET \"#{Rails.application.config.assets.prefix}" if defined?(Rails)
 
         unless assets_log_prefix && msg.start_with?(assets_log_prefix)
-          client_id = self.client_id || ''
-          session_id = self.session_id || ''
-          context_id = self.logging_context_id
-          event_name = 'log'
-          tags = []
+          session_id, client_id = session_and_client_ids
 
-          if defined?(ActiveSupport::TaggedLogging)
-            if Thread.current[:activesupport_tagged_logging_tags]
-              session_id, client_id = Thread.current[:activesupport_tagged_logging_tags].last(2)
-            else
-              session_id, client_id = "", ""
-            end
-          end
-
-          json = { message: msg }
+          event = Binnacle::Event.new()
 
           if progname
-            if progname.is_a?(Hash)
-              client_id = progname[:client_id] || client_id
-              session_id = progname[:session_id] || session_id
-              context_id = progname[:context_id] || context_id
-              event_name =  progname[:event_name] || event_name
-              tags = progname[:tags] || tags
-              json.merge!(progname[:json]) if progname[:json]
-            elsif progname.is_a?(String)
-              event_name = progname
-            end
+            event.configure_from_logging_progname(progname, logging_context_id, 'log', client_id, session_id, severity, [], { message: msg })
+          else
+            event.configure(logging_context_id, 'log', client_id, session_id, severity, [], { message: msg })
           end
-          event = Binnacle::Event.new()
-          event.configure(context_id, event_name, client_id, session_id, severity, tags, json)
           event.timestamp = datetime
+          
           event
         end
       end
@@ -101,6 +83,22 @@ module Binnacle
 
     def ready?
       @ready
+    end
+
+    protected
+
+    def assets_log_prefix
+      @assets_log_prefix ||= "Started GET \"#{Rails.application.config.assets.prefix}" if defined?(Rails)
+    end
+
+    def session_and_client_ids
+      if defined?(ActiveSupport::TaggedLogging) && Thread.current[:activesupport_tagged_logging_tags]
+        session_id, client_id = Thread.current[:activesupport_tagged_logging_tags].last(2)
+      else
+        session_id, client_id = self.session_id, self.client_id
+      end
+
+      [ session_id, client_id ]
     end
 
   end

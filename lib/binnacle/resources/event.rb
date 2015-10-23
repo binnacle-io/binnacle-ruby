@@ -18,10 +18,26 @@ module Binnacle
       self.client_id = client_id
       self.session_id = session_id
       self.client_event_time = Time.now.strftime("%Y-%m-%dT%H:%M:%S%z")
-      self.ip_address = ip_address
       self.log_level = log_level
       self.tags = tags
       self.json = json
+    end
+
+    def configure_from_logging_progname(progname, context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
+      if progname.is_a?(Hash)
+        self.client_id = progname[:client_id] || client_id
+        self.session_id = progname[:session_id] || session_id
+        self.context_id = progname[:context_id] || context_id
+        self.event_name =  progname[:event_name] || event_name
+        self.tags = progname[:tags] || tags
+        self.json = json
+        self.json.merge!(progname[:json]) if progname[:json]
+      elsif progname.is_a?(String)
+        self.event_name = progname
+      end
+
+      self.client_event_time = Time.now.strftime("%Y-%m-%dT%H:%M:%S%z")
+      self.log_level = log_level
     end
 
     def timestamp=(ts)
