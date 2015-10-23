@@ -32,11 +32,11 @@ describe "binnacle command" do
 
     expected_output = [
       %[Retrieving last 10 lines since 60 minutes ago from Context ylhcn28x7skv6av8q93m ...],
-      %[INFO [2015-10-22 13:37:28 -0700] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
-      %[INFO [2015-10-22 13:37:32 -0700] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
-      %[INFO [2015-10-22 13:37:32 -0700] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
-      %[INFO [2015-10-22 13:37:33 -0700] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
-      %[INFO [2015-10-22 13:37:36 -0700] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]\n]
+      %[INFO [#{Time.strptime("2015-10-22 13:37:28 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
+      %[INFO [#{Time.strptime("2015-10-22 13:37:32 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
+      %[INFO [#{Time.strptime("2015-10-22 13:37:32 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
+      %[INFO [#{Time.strptime("2015-10-22 13:37:33 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
+      %[INFO [#{Time.strptime("2015-10-22 13:37:36 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]\n]
     ].join("\n")
 
     expect { BinnacleCommand.new.run(args) }.to output(expected_output).to_stdout
