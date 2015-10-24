@@ -2,6 +2,10 @@ require 'spec_helper'
 require 'open3'
 
 describe "binnacle command" do
+  it 'requires a subcommand' do
+    expect(`binnacle`).to eq("The binnacle command requires a subcommand\n")
+  end
+
   it 'returns an error message for unknown subcommands' do
     expect(`binnacle foo`).to eq("I don't know the subcommand command 'foo'\n")
   end
