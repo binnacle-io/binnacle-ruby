@@ -94,6 +94,30 @@ describe Binnacle::Configuration do
     end
   end
 
+  describe '#to_s' do
+    before { reset_env }
+
+    it 'returns a representation of the config object' do
+      ENV['BINNACLE_ENDPOINT'] = '127.0.0.1'
+      ENV['BINNACLE_APP_LOG_CTX'] = 'icoc0tnol3obe8pas207'
+      ENV['BINNACLE_APP_ERR_CTX'] = 'id0czm8eryfffcgp875c'
+      ENV['BINNACLE_API_KEY'] = 'vceth4xcwqfoowpz2esi'
+      ENV['BINNACLE_API_SECRET'] = '1grttyb8ozbe9axt88ji'
+
+      config = Binnacle::Configuration.new
+      expect(config.to_s).to eq("endpoint: 127.0.0.1,"\
+                                " logging_ctx: icoc0tnol3obe8pas207,"\
+                                " error_ctx: id0czm8eryfffcgp875c,"\
+                                " api_key: vceth4xcwqfoowpz2esi,"\
+                                " api_secret: 1grttyb8ozbe9axt88ji,"\
+                                " intercept_rails_logging: false,"\
+                                " report_exceptions: false,"\
+                                " ignore_cascade_pass: true,"\
+                                " encrypted: false,"\
+                                " asynch_logging: true")
+    end
+  end
+
   private
 
   def reset_env
