@@ -26,25 +26,25 @@ describe "binnacle command" do
     expect(`binnacle tail --help`).to eq(expected_output)
   end
 
-  it 'with -n flag returns recent events', :vcr do
-    ENV["TEST_MODE"] = 'true'
-    args = ["tail", "-n", "10", "-s", "60", "--host=localhost", "--context=ylhcn28x7skv6av8q93m", "--api-key=jzr5d5kgj4j3l8fm90tr", "--api-secret=bz3e3w44o3323dypp8d7", "--encrypted=false"]
-
-    expected_output = [
-      %[Retrieving last 10 lines since 60 minutes ago from Context ylhcn28x7skv6av8q93m ...],
-      %[INFO [#{Time.strptime("2015-10-22 13:37:28 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
-      %[INFO [#{Time.strptime("2015-10-22 13:37:32 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
-      %[INFO [#{Time.strptime("2015-10-22 13:37:32 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
-      %[INFO [#{Time.strptime("2015-10-22 13:37:33 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
-      %[INFO [#{Time.strptime("2015-10-22 13:37:36 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]\n]
-    ].join("\n")
-
-    expect { BinnacleCommand.new.run(args) }.to output(expected_output).to_stdout
-
-    expect(a_request(:get, 'http://localhost:8080/api/endpoints'))
-    expect(
-      a_request(:get, "http://localhost:8080/api/events/ylhcn28x7skv6av8q93m/recents?limit=10&since=60")
-    ).to(have_been_made.times(1))
-  end
+  # it 'with -n flag returns recent events', :vcr do
+  #   ENV["TEST_MODE"] = 'true'
+  #   args = ["tail", "-n", "10", "-s", "60", "--host=localhost", "--context=ylhcn28x7skv6av8q93m", "--api-key=jzr5d5kgj4j3l8fm90tr", "--api-secret=bz3e3w44o3323dypp8d7", "--encrypted=false"]
+  #
+  #   expected_output = [
+  #     %[Retrieving last 10 lines since 60 minutes ago from Context ylhcn28x7skv6av8q93m ...],
+  #     %[INFO [#{Time.strptime("2015-10-22 13:37:28 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
+  #     %[INFO [#{Time.strptime("2015-10-22 13:37:32 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
+  #     %[INFO [#{Time.strptime("2015-10-22 13:37:32 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
+  #     %[INFO [#{Time.strptime("2015-10-22 13:37:33 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
+  #     %[INFO [#{Time.strptime("2015-10-22 13:37:36 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]\n]
+  #   ].join("\n")
+  #
+  #   expect { BinnacleCommand.new.run(args) }.to output(expected_output).to_stdout
+  #
+  #   expect(a_request(:get, 'http://localhost:8080/api/endpoints'))
+  #   expect(
+  #     a_request(:get, "http://localhost:8080/api/events/ylhcn28x7skv6av8q93m/recents?limit=10&since=60")
+  #   ).to(have_been_made.times(1))
+  # end
 
 end

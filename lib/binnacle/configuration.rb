@@ -126,10 +126,8 @@ module Binnacle
     end
 
     def encrypted=(value)
-      if @encrypted != value
-        @encrypted == value
-        set_urls
-      end
+      @encrypted = value
+      set_urls
     end
 
     def to_s
@@ -139,16 +137,15 @@ module Binnacle
         :api_key,
         :api_secret,
         :intercept_rails_logging,
-        :report_exceptions
+        :report_exceptions,
+        :ignore_cascade_pass,
+        :encrypted,
+        :asynch_logging
       ].map { |m| "#{m}: #{self.send(m)}" }.join(', ')
     end
 
     def self.set_boolean_flag_for(value, default = false)
-      if value
-        value.downcase == 'true'
-      else
-        default
-      end
+      !value.nil? ? value.downcase == 'true' : default
     end
 
   end
