@@ -25,6 +25,21 @@ describe Binnacle::Client do
     end
   end
 
+  describe '#ready?' do
+    before { Binnacle.logger.pause }
+    after  { Binnacle.logger.continue }
+    
+    it 'returns true if a connection has been successfully established', :vcr do
+      Binnacle.configure do |config|
+        config.endpoint = 'localhost'
+        config.api_key = 'vceth4xcwqfoowpz2esi'
+        config.api_secret = '1grttyb8ozbe9axt88ji'
+      end
+
+      expect(Binnacle.client.ready?).to be true
+    end
+  end
+
   describe 'signal_asynch' do
     it 'invokes the events api signal', :vcr do
       client.signal_asynch('icoc0tnol3obe8pas207', 'ASYNCH_TEST_EVT', 'binnacle-rb', 'My Sess', 'INFO')

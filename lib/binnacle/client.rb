@@ -64,7 +64,7 @@ module Binnacle
             event.configure(logging_context_id, 'log', client_id, session_id, severity, [], { message: msg })
           end
           event.timestamp = datetime
-          
+
           event
         end
       end
@@ -82,7 +82,7 @@ module Binnacle
     end
 
     def ready?
-      @ready
+      !connection.nil?
     end
 
     protected
