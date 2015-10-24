@@ -91,11 +91,11 @@ module Binnacle
     end
 
     def can_setup_logger?
-      self.intercept_rails_logging && self.logging_ctx
+      !self.intercept_rails_logging.nil? && !self.logging_ctx.nil?
     end
 
     def trap?
-      self.report_exceptions && self.error_ctx
+      !self.report_exceptions.nil? && !self.error_ctx.nil?
     end
 
     def ignore_cascade_pass?
