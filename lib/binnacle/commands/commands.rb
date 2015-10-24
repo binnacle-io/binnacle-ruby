@@ -12,7 +12,7 @@ class BinnacleCommand
       else
         puts "binnacle command requires a subcommand"
       end
-    rescue => e
+    rescue NoMethodError => nme
       puts "I don't know the subcommand command '#{subcommand}'"
     end
   end

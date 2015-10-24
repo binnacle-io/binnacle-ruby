@@ -67,7 +67,7 @@ module Binnacle
       self.ignored_exceptions ||= ENV['BINNACLE_IGNORED_EXCEPTIONS'] ? DEFAULT_IGNORED_EXCEPTIONS + ENV['BINNACLE_IGNORED_EXCEPTIONS'].split(',') : DEFAULT_IGNORED_EXCEPTIONS
       self.ignore_cascade_pass     ||= true
       self.asynch_logging = Configuration.set_boolean_flag_for(ENV['BINNACLE_RAILS_LOG_ASYNCH'], true)
-      @encrypted = Configuration.set_boolean_flag_for(ENV['BINNACLE_ENCRYPTED'])
+      @encrypted = Configuration.set_boolean_flag_for(ENV['BINNACLE_ENCRYPTED'], false)
 
       set_urls
     end

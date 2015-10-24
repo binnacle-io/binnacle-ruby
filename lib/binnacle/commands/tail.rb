@@ -50,7 +50,7 @@ module Binnacle::Commands
     end
 
     # tail --lines
-    lines(opts[:host], opts[:api_key], opts[:api_secret], opts[:context], opts[:lines], opts[:since], opts[:encrypted_given]) if opts[:lines_given]
+    lines(opts[:host], opts[:api_key], opts[:api_secret], opts[:context], opts[:lines], opts[:since], opts[:encrypted_given] ? opts[:encrypted] : false) if opts[:lines_given]
   end
 
   #
