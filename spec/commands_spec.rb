@@ -29,6 +29,22 @@ describe "binnacle command" do
     ].join("\n")
     expect(`binnacle tail --help`).to eq(expected_output)
   end
+end
+
+describe BinnacleCommand do
+  describe 'tail command' do
+    it 'requires a subcommand argument' do
+      ENV["TEST_MODE"] = 'true'
+
+      expect { BinnacleCommand.new.run([])}.to output("The binnacle command requires a subcommand\n").to_stdout
+    end
+
+    it 'requires a known subcommand argument' do
+      ENV["TEST_MODE"] = 'true'
+
+      expect { BinnacleCommand.new.run(['foobar'])}.to output("I don't know the subcommand command 'foobar'\n").to_stdout
+    end
+  end
 
   it 'with -n flag returns recent events', :vcr do
     ENV["TEST_MODE"] = 'true'
