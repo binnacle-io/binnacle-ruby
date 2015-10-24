@@ -6,6 +6,7 @@ require 'vcr'
 require 'webmock/rspec'
 require 'rspec/collection_matchers'
 require 'rack'
+require 'logger'
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/vcr'
@@ -57,4 +58,30 @@ class Hash
     keys.map! { |key| convert_key(key) } if respond_to?(:convert_key, true)
     keys.each_with_object(self.class.new) { |k, hash| hash[k] = self[k] if has_key?(k) }
   end
+end
+
+
+
+class Logger
+  def pause
+    @_logdev, @logdev = @logdev, nil
+  end
+
+  def continue
+    @logdev = @_logdev
+  end
+end
+
+def reset_env
+ [ 'BINNACLE_ENDPOINT',
+   'BINNACLE_PORT',
+   'BINNACLE_APP_LOG_CTX',
+   'BINNACLE_APP_ERR_CTX',
+   'BINNACLE_API_KEY',
+   'BINNACLE_API_SECRET',
+   'BINNACLE_RAILS_LOG',
+   'BINNACLE_REPORT_EXCEPTIONS',
+   'BINNACLE_IGNORED_EXCEPTIONS',
+   'BINNACLE_RAILS_LOG_ASYNCH',
+   'BINNACLE_ENCRYPTED' ].each { |key| ENV[key] = nil }
 end

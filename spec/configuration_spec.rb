@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Binnacle::Configuration do
 
   describe 'initialize' do
+    before { reset_env }
+    
     it 'can be configured via ENV variables' do
       ENV['BINNACLE_ENDPOINT'] = '127.0.0.1'
       ENV['BINNACLE_PORT'] = '8080'
@@ -118,19 +120,4 @@ describe Binnacle::Configuration do
     end
   end
 
-  private
-
-  def reset_env
-   [ 'BINNACLE_ENDPOINT',
-     'BINNACLE_PORT',
-     'BINNACLE_APP_LOG_CTX',
-     'BINNACLE_APP_ERR_CTX',
-     'BINNACLE_API_KEY',
-     'BINNACLE_API_SECRET',
-     'BINNACLE_RAILS_LOG',
-     'BINNACLE_REPORT_EXCEPTIONS',
-     'BINNACLE_IGNORED_EXCEPTIONS',
-     'BINNACLE_RAILS_LOG_ASYNCH',
-     'BINNACLE_ENCRYPTED' ].each { |key| ENV[key] = nil }
-  end
 end

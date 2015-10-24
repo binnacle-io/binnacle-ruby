@@ -65,6 +65,10 @@ module Binnacle
     end
   end
 
+  def self.client
+    @client
+  end
+
 end
 
 if defined?(Rails::Railtie)

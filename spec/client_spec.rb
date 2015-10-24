@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Binnacle::Client do
+  before { reset_env }
   let(:client) { Binnacle::Client.new('vceth4xcwqfoowpz2esi', '1grttyb8ozbe9axt88ji', 'localhost') }
 
   describe 'signal' do
@@ -61,6 +62,9 @@ describe Binnacle::Client do
   end
 
   describe 'report_exception' do
+    before { Binnacle.logger.pause }
+    after  { Binnacle.logger.continue }
+
     it 'invokes the events api signal', :vcr do
 
       Binnacle.configure do |config|
