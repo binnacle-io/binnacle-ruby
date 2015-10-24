@@ -26,7 +26,7 @@ module Binnacle::Commands
       errors.each { |e| puts "  - #{e}" }
       puts "\nSUBCOMMAND"
       puts "      tail -- listen to a Binnacle context or app\n\n"
-      Trollop::educate
+      Trollop::educate unless ENV["TEST_MODE"] == 'true'
     end
   end
 
