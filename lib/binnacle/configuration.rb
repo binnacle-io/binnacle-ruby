@@ -16,6 +16,15 @@ module Binnacle
 
     DEFAULT_PORT = '8080'
 
+    DEFAULT_BACKTRACE_FILTERS = [
+      lambda { |line| line.gsub(/^\.\//, "") },
+      lambda { |line|
+        Gem.path.each{ |path| line.sub!(/#{path}/, "[GEM_ROOT]") unless path.to_s.strip.empty? } if defined?(Gem)
+        line
+      },
+      lambda { |line| line if line !~ %r{lib/binnacle} }
+    ].freeze
+
     # The Binnacle Endpoint (BINNACLE_ENDPOINT) single IP or Array of IPs
     attr_reader :endpoint
 
