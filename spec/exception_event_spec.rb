@@ -47,4 +47,26 @@ describe Binnacle::Trap::ExceptionEvent do
       expect(exception_event.exception).to be(continued_exception)
     end
   end
+
+  describe 'build_json_payload' do
+    it 'creates a valid JSON payload' do
+      exception = ZeroDivisionError.new
+      env = {}
+      env['action_dispatch.request.parameters'] = {}
+      env['action_dispatch.request.parameters'][:controller] = 'dashboard'
+      env['action_dispatch.request.parameters'][:action] = 'analytics'
+      env['action_dispatch.request.parameters'][:module] = 'dashboard'
+
+      exception_event = Binnacle::Trap::ExceptionEvent.new(exception, env)
+
+      json = {
+        :exception=>"ZeroDivisionError",
+        :message=>"ZeroDivisionError",
+        :component=>"dashboard",
+        :method=>"analytics"
+      }
+
+      expect(exception_event.json).to match(a_hash_including(json))
+    end
+  end
 end

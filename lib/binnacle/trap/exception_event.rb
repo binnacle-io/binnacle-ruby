@@ -68,7 +68,6 @@ module Binnacle
         backtrace.lines.map do |line|
           { number: line.number, file: line.file, method: line.method_name }
         end
-        backtrace
       end
 
       def extract_headers
