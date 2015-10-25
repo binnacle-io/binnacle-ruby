@@ -22,6 +22,13 @@ describe Binnacle::Connection do
                                                      'http://45.55.141.159:8080',
                                                      'http://104.131.75.74:8080')
     end
+
+    it 'fails with bad endpoint', :vcr do
+      expected_output = %[ERROR -- : Error communicating with Binnacle: Connection refused - connect(2) for "104.131.41.124" port 8080 (http://104.131.41.124:8080)]
+      connection = Binnacle::Connection.new('vceth4xcwqfoowpz2esi', '1grttyb8ozbe9axt88ji', 'http://104.131.41.124:8080')
+      expect(a_request(:get, 'http://104.131.41.124:8080/api/endpoints'))
+      expect(Binnacle.logger.messages).to include(expected_output)
+    end
   end
 
 end

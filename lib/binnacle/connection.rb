@@ -60,7 +60,7 @@ module Binnacle
           #faraday.response :logger                  # log requests to STDOUT TODO set a client log file
           faraday.adapter :httpclient
         end
-      rescue Error => cf#Faraday::Error::ConnectionFailed => cf
+      rescue Faraday::Error::ConnectionFailed => cf
         Binnacle.logger.error("Error communicating with Binnacle: #{cf.message}")
       end
     end
