@@ -6,6 +6,9 @@ module Binnacle
       attr_reader :exception
       attr_reader :env
       attr_reader :request
+      attr_reader :component
+      attr_reader :method
+      attr_reader :module
 
       def initialize(exception, env)
         @exception = unwrap_exception(exception)
