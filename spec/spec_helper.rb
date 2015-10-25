@@ -72,6 +72,17 @@ class Logger
   end
 end
 
+class TestLogger < Logger
+  def initialize
+    @strio = StringIO.new
+    super(@strio)
+  end
+
+  def messages
+    @strio.string
+  end
+end
+
 def reset_env
  [ 'BINNACLE_ENDPOINT',
    'BINNACLE_PORT',

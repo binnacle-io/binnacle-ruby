@@ -40,6 +40,10 @@ module Binnacle
     @logger ||= defined?(Rails) ? Rails.logger : Logger.new(STDOUT)
   end
 
+  def self.logger=(logger)
+    @logger = logger
+  end
+
   def self.set_options(options)
     options.each do |k,v|
       configuration.send("#{k}=", v) rescue nil if configuration.respond_to?("#{k}=")
