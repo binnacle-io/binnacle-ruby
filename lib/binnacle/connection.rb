@@ -53,15 +53,11 @@ module Binnacle
     end
 
     def build_connection
-      begin
-        @connection ||= Faraday.new(:url => @active_url) do |faraday|
-          faraday.request :basic_auth, @api_key, @api_secret
-          faraday.request  :url_encoded             # form-encode POST params
-          #faraday.response :logger                  # log requests to STDOUT TODO set a client log file
-          faraday.adapter :httpclient
-        end
-      rescue Faraday::Error::ConnectionFailed => cf
-        Binnacle.logger.error("Error communicating with Binnacle: #{cf.message}")
+      @connection ||= Faraday.new(:url => @active_url) do |faraday|
+        faraday.request :basic_auth, @api_key, @api_secret
+        faraday.request  :url_encoded             # form-encode POST params
+        #faraday.response :logger                  # log requests to STDOUT TODO set a client log file
+        faraday.adapter :httpclient
       end
     end
 
