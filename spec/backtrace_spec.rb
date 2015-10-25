@@ -28,6 +28,19 @@ describe Binnacle::Trap::Backtrace do
     end
   end
 
+  describe 'to_s' do
+    it 'returns a representation of the backtrace`' do
+      array = [
+        "app/models/user.rb:13:in `magic'",
+        "app/controllers/users_controller.rb:8:in `index'"
+      ]
+
+      backtrace = Binnacle::Trap::Backtrace.parse(array)
+
+      expect(backtrace.to_s).to eq(%[app/models/user.rb:13:in `magic'\napp/controllers/users_controller.rb:8:in `index'])
+    end
+  end
+
   describe '==' do
     it 'is true for equivalent backtraces' do
       original_backtrace = Binnacle::Trap::Backtrace.parse(["one:1:in `one'"])
@@ -38,7 +51,7 @@ describe Binnacle::Trap::Backtrace do
 
     it 'is false if one of the object does not respond to #lines' do
       backtrace = Binnacle::Trap::Backtrace.parse(["one:1:in `one'"])
-      not_a_backtrace = "What?"
+      not_a_backtrace = 8675309
 
       expect(backtrace == not_a_backtrace).to be false
     end
