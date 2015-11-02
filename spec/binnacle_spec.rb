@@ -14,6 +14,7 @@ describe Binnacle do
         config.endpoint = 'localhost'
         config.api_key = 'vceth4xcwqfoowpz2esi'
         config.api_secret = '1grttyb8ozbe9axt88ji'
+        config.encrypted = false
       end
 
       expect(a_request(:get, 'http://localhost:8080/api/endpoints'))

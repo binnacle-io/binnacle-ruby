@@ -4,7 +4,7 @@ describe Binnacle::Configuration do
 
   describe 'initialize' do
     before { reset_env }
-    
+
     it 'can be configured via ENV variables' do
       ENV['BINNACLE_ENDPOINT'] = '127.0.0.1'
       ENV['BINNACLE_PORT'] = '8080'
@@ -40,6 +40,7 @@ describe Binnacle::Configuration do
     it 'configures urls given one endpoint' do
       config = Binnacle::Configuration.new
       config.endpoint = '127.0.0.1'
+      config.encrypted = false
 
       expect(config.url).to eq('http://127.0.0.1:8080')
     end
@@ -47,6 +48,7 @@ describe Binnacle::Configuration do
     it 'configures urls given multiple endpoints' do
       config = Binnacle::Configuration.new
       config.endpoint = ['127.0.0.1', 'localhost', '192.168.0.1']
+      config.encrypted = false
 
       expect(config.urls).to include('http://127.0.0.1:8080', 'http://localhost:8080', 'http://192.168.0.1:8080')
     end
@@ -105,6 +107,7 @@ describe Binnacle::Configuration do
       ENV['BINNACLE_APP_ERR_CTX'] = 'id0czm8eryfffcgp875c'
       ENV['BINNACLE_API_KEY'] = 'vceth4xcwqfoowpz2esi'
       ENV['BINNACLE_API_SECRET'] = '1grttyb8ozbe9axt88ji'
+      ENV['BINNACLE_ENCRYPTED'] = 'FALSE'
 
       config = Binnacle::Configuration.new
       expect(config.to_s).to eq("endpoint: 127.0.0.1,"\
