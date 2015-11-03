@@ -52,6 +52,13 @@ describe Binnacle::Configuration do
 
       expect(config.urls).to include('http://127.0.0.1:8080', 'http://localhost:8080', 'http://192.168.0.1:8080')
     end
+
+    it 'configures urls given multiple endpoints via ENV var' do
+      ENV['BINNACLE_ENDPOINT'] = 'api1.binnacle-api.io,api2.binnacle-api.io,api3.binnacle-api.io'
+      config = Binnacle::Configuration.new
+
+      expect(config.urls).to include('https://api1.binnacle-api.io', 'https://api2.binnacle-api.io', 'https://api3.binnacle-api.io')
+    end
   end
 
   describe 'encrypted' do
