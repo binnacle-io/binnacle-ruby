@@ -57,12 +57,19 @@ describe Binnacle::Configuration do
   describe 'encrypted' do
     before { reset_env }
 
-    it 'urls use HTTP is the encrypted flag is false' do
+    it 'uses HTTP protocol if the encrypted flag is false' do
       config = Binnacle::Configuration.new
       config.endpoint = '127.0.0.1'
       config.encrypted = false
 
       expect(config.url).to eq('http://127.0.0.1:8080')
+    end
+
+    it 'uses HTTPS protocol by default without a port' do
+      config = Binnacle::Configuration.new
+      config.endpoint = 'api1.binnacle-api.io'
+
+      expect(config.url).to eq('https://api1.binnacle-api.io')
     end
   end
 

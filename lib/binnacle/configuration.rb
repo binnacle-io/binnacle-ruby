@@ -28,7 +28,7 @@ module Binnacle
     # The Binnacle Endpoint (BINNACLE_ENDPOINT) single IP or Array of IPs
     attr_reader :endpoint
 
-    # The Binnacle Endpoint PORT (BINNACLE_PORT), defaults to 8080
+    # The Binnacle Endpoint PORT (BINNACLE_PORT), defaults to 8080 if not encrypted
     attr_accessor :port
 
     # The application logger Binnacle Context (BINNACLE_APP_LOG_CTX)
@@ -66,7 +66,7 @@ module Binnacle
       if ENV['BINNACLE_ENDPOINT']
         @endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
       end
-      self.port        ||= ENV['BINNACLE_PORT'] || DEFAULT_PORT
+
       self.logging_ctx ||= ENV['BINNACLE_APP_LOG_CTX']
       self.error_ctx   ||= ENV['BINNACLE_APP_ERR_CTX']
       self.api_key     ||= ENV['BINNACLE_API_KEY']
@@ -78,6 +78,7 @@ module Binnacle
       self.asynch_logging = Configuration.set_boolean_flag_for(ENV['BINNACLE_RAILS_LOG_ASYNCH'], true)
       @encrypted = Configuration.set_boolean_flag_for(ENV['BINNACLE_ENCRYPTED'], true)
 
+      set_default_port
       set_urls
     end
 
@@ -116,7 +117,7 @@ module Binnacle
     end
 
     def build_url(ip_or_host)
-      "#{protocol}://#{ip_or_host}:#{port}"
+      ["#{protocol}://#{ip_or_host}", port].compact.join(":")
     end
 
     def protocol
@@ -136,6 +137,7 @@ module Binnacle
 
     def encrypted=(value)
       @encrypted = value
+      set_default_port
       set_urls
     end
 
@@ -155,6 +157,10 @@ module Binnacle
 
     def self.set_boolean_flag_for(value, default = false)
       !value.nil? ? value.downcase == 'true' : default
+    end
+
+    def set_default_port
+      self.port ||= ENV['BINNACLE_PORT'] || (self.encrypted? ? nil : DEFAULT_PORT)
     end
 
   end
