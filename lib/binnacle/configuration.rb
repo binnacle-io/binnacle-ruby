@@ -101,7 +101,7 @@ module Binnacle
     end
 
     def can_setup_logger?
-      !self.intercept_rails_logging.nil? && !self.logging_ctx.nil?
+      self.intercept_rails_logging == true && !self.logging_ctx.nil?
     end
 
     def trap?
