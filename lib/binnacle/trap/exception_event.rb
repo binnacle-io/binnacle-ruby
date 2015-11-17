@@ -9,6 +9,7 @@ module Binnacle
       attr_reader :component
       attr_reader :method
       attr_reader :module
+      attr_reader :backtrace
 
       def initialize(exception, env)
         @exception = unwrap_exception(exception)
@@ -25,6 +26,7 @@ module Binnacle
         extract_event_name
         extract_session_id
         extract_client_id
+        extract_backtrace
 
         self.log_level = "EXCEPTION"
         self.tags = []
@@ -65,7 +67,7 @@ module Binnacle
 
       def extract_backtrace
         backtrace = Backtrace.parse(@exception.backtrace)
-        backtrace.lines.map do |line|
+        @backtrace = backtrace.lines.map do |line|
           { number: line.number, file: line.file, method: line.method_name }
         end
       end
@@ -154,7 +156,7 @@ module Binnacle
           headers: extract_headers,
           cookies: @request.cookies,
           dependencies: extract_libraries_loaded,
-          backtrace: extract_backtrace
+          backtrace: @backtrace
         }
       end
 
