@@ -28,7 +28,7 @@ describe Binnacle::Client do
   describe '#ready?' do
     before { Binnacle.logger.pause }
     after  { Binnacle.logger.continue }
-    
+
     it 'returns true if a connection has been successfully established', :vcr do
       Binnacle.configure do |config|
         config.endpoint = 'localhost'
@@ -74,6 +74,23 @@ describe Binnacle::Client do
     it 'returns a collection of event objects', :vcr do
       expect(@recents).to have(10).events
     end
+  end
+
+  describe 'events' do
+    before { @events = client.events('icoc0tnol3obe8pas207', '2015-12-29', 8, 9, 500) }
+
+    it 'invokes the events api', :vcr do
+      expect(a_request(:get, 'http://localhost:8080/api/endpoints'))
+      expect(
+        a_request(:get, "http://localhost:8080/api/events/icoc0tnol3obe8pas207/2015-12-29?end_hour=9&limit=500&start_hour=8")
+      ).to(have_been_made.times(1))
+    end
+
+    it 'returns a collection of event objects', :vcr do
+      expect(@events).to have(40).events
+      expect(@events).to all(satisfy { |e| e.event_time.strftime("%Y-%m-%d") == '2015-12-29' })
+    end
+
   end
 
   describe 'report_exception' do

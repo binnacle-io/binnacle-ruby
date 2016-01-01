@@ -40,6 +40,10 @@ module Binnacle
       Binnacle::Event.recents(connection, lines, since, context)
     end
 
+    def events(context, date, start_hour, end_hour, lines)
+      Binnacle::Event.events(connection, context, date, start_hour, end_hour, lines)
+    end
+
     def report_exception(exception, env, asynch = true)
       event = Binnacle::Trap::ExceptionEvent.new(exception, env)
       event.connection = connection

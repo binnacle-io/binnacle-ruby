@@ -85,5 +85,11 @@ module Binnacle
 
       get(connection, path, {'limit' => lines, 'since' => since})
     end
+
+    def self.events(connection, context, date, start_hour, end_hour, lines)
+      path = [route(context), date].compact.join('/')
+
+      get(connection, path, {'start_hour' => start_hour, 'end_hour' => end_hour, 'limit' => lines})
+    end
   end
 end
