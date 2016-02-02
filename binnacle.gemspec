@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.2', '>= 3.2.0'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.1', '>= 1.1.2'
   spec.add_development_dependency 'rspec-wait', '~> 0.0.8'
-  spec.add_development_dependency 'codeclimate-test-reporter'
+  spec.add_development_dependency 'codeclimate-test-reporter', '~> 0.4.8'
   spec.add_development_dependency 'simplecov', '~> 0.11.1'
   spec.add_development_dependency 'vcr', '~> 2.9', '>= 2.9.3'
   spec.add_development_dependency 'webmock', '~> 1.22', '>= 1.22.6'
