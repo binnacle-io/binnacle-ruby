@@ -18,9 +18,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency 'httpclient', '~> 2.6.0.1'
-  spec.add_runtime_dependency 'faraday', '~> 0.9.1'
-  spec.add_runtime_dependency 'faye-websocket', '~> 0.10.0'
+  spec.add_runtime_dependency 'httpclient', '~> 2.7.1'
+  spec.add_runtime_dependency 'faraday', '~> 0.9.2'
+  spec.add_runtime_dependency 'faye-websocket', '~> 0.10.2'
   spec.add_runtime_dependency 'trollop', '~> 2.1.2'
   spec.add_runtime_dependency 'rack-timeout', '~> 0.3.2'
 
@@ -28,10 +28,20 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.2.0'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.1', '>= 1.1.2'
+  spec.add_development_dependency 'rspec-wait', '~> 0.0.8'
   spec.add_development_dependency 'codeclimate-test-reporter'
-  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'simplecov', '~> 0.11.1'
   spec.add_development_dependency 'vcr', '~> 2.9.3'
-  spec.add_development_dependency 'webmock', '~> 1.20.4'
-  spec.add_development_dependency 'fivemat'
-  spec.add_development_dependency 'rack'
+  spec.add_development_dependency 'webmock', '~> 1.22.6'
+  spec.add_development_dependency 'fivemat', '~> 1.3.2'
+  spec.add_development_dependency 'rack', '~> 1.6.4'
+
+  # For outgoing HTTP logging testing
+  spec.add_development_dependency 'httparty', '~> 0.13.7'
+  spec.add_development_dependency 'excon', '~> 0.45.4'
+  spec.add_development_dependency 'typhoeus', '~> 1.0.1'
+  spec.add_development_dependency 'ethon', '~> 0.8.1'
+  spec.add_development_dependency 'patron', '~> 0.5.0'
+  spec.add_development_dependency 'http', '~> 1.0.2'
+  spec.add_development_dependency 'thin', '~> 1.6.4'
 end

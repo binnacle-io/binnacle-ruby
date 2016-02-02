@@ -83,9 +83,8 @@ describe Binnacle::Configuration do
   describe '#can_setup_logger?' do
     before { reset_env }
 
-    it 'return true is log interception and logging context are set' do
+    it 'returns true if logging context is set' do
       ENV['BINNACLE_APP_LOG_CTX'] = 'icoc0tnol3obe8pas207'
-      ENV['BINNACLE_RAILS_LOG'] = 'TRUE'
 
       config = Binnacle::Configuration.new
       expect(config.can_setup_logger?).to be true

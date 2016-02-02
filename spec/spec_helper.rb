@@ -1,12 +1,32 @@
+ENV['RAILS_ENV'] ||= 'test'
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
-require 'binnacle'
-require 'vcr'
 require 'webmock/rspec'
+require 'httpclient'
+require 'excon'
+require 'typhoeus'
+require 'ethon'
+require 'patron'
+require 'http'
+require 'vcr'
+require 'binnacle'
 require 'rspec/collection_matchers'
+require 'rspec/wait'
 require 'rack'
 require 'logger'
+
+require 'adapters/http_base_adapter'
+Dir["#{File.dirname(__FILE__)}/adapters/*.rb"].each { |f| require f }
+Dir["./spec/support/**/*.rb"].each { |f| require f }
+
+# Start a local rack server to serve up test pages.
+if ENV['SERVE_TEST_ASSETS'] == 'true'
+  @server_thread = Thread.new do
+    Rack::Handler::Thin.run HttpLogger::Test::Server.new, :Port => 9292
+  end
+  sleep(3) # wait a moment for the server to be booted
+end
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/vcr'
@@ -17,7 +37,6 @@ VCR.configure do |c|
 end
 
 RSpec.configure do |config|
-
   config.around(:each, :vcr) do |example|
     name = example.metadata[:full_description].gsub(/\A(\S*)([\.])/, '\1 ').split(/\s+/, 2).join("/").underscore.gsub(/[^\w\/]+/, "_")
     options = example.metadata.slice(:record, :match_requests_on).except(:example_group)

@@ -1,5 +1,6 @@
 require 'binnacle/resources/event'
 require 'binnacle/trap/exception_event'
+require 'socket'
 
 module Binnacle
   class Client
@@ -19,7 +20,7 @@ module Binnacle
       else
         self.connection = Connection.new(self.api_key, self.api_secret)
       end
-      self.logging_context_id = logging_context_id
+      self.logging_context_id = logging_context_id || Binnacle.configuration.logging_ctx
 
       self.client_id = ""
       self.session_id = ""
@@ -27,7 +28,7 @@ module Binnacle
 
     def signal(context_id, event_name, client_id, session_id, log_level, tags = [], json = {}, asynch = false)
       event = Binnacle::Event.new()
-      event.configure(context_id, event_name, client_id, session_id, log_level, tags, json)
+      event.configure(context_id, event_name, client_id, session_id, log_level, nil, tags, json)
       event.connection = connection
       asynch ? event.post_asynch : event.post
     end
@@ -63,11 +64,10 @@ module Binnacle
           event = Binnacle::Event.new()
 
           if progname
-            event.configure_from_logging_progname(progname, logging_context_id, 'log', client_id, session_id, severity, [], { message: msg })
+            event.configure_from_logging_progname(progname, logging_context_id, 'log', client_id, session_id, severity, datetime, [], { message: msg })
           else
-            event.configure(logging_context_id, 'log', client_id, session_id, severity, [], { message: msg })
+            event.configure(logging_context_id, 'log', client_id, session_id, severity, datetime, [], { message: msg })
           end
-          event.timestamp = datetime
 
           event
         end
@@ -89,6 +89,24 @@ module Binnacle
       !connection.nil?
     end
 
+    def log_rails_event(data)
+      session_id, client_id = session_and_client_ids
+      event_name = %[#{data[:method]} #{data[:path]}]
+
+      event = Binnacle::Event.new()
+      event.configure(logging_context_id, event_name, client_id, session_id, 'log', data[:time], [], data)
+      write(event)
+    end
+
+    def log_http_event(data)
+      session_id, client_id = session_and_client_ids
+      event_name = %[#{data[:method]} #{data[:url]}]
+
+      event = Binnacle::Event.new()
+      event.configure(logging_context_id, event_name, client_id, session_id, 'log', data[:time], [], data)
+      write(event)
+    end
+
     protected
 
     def assets_log_prefix
@@ -100,6 +118,11 @@ module Binnacle
         session_id, client_id = Thread.current[:activesupport_tagged_logging_tags].last(2)
       else
         session_id, client_id = self.session_id, self.client_id
+      end
+
+      unless client_id
+        # set it to the first non-loopback IP in the list
+        client_id = Socket.ip_address_list.find { |ai| ai.ipv4? && !ai.ipv4_loopback? }.ip_address
       end
 
       [ session_id, client_id ]

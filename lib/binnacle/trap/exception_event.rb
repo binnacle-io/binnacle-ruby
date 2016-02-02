@@ -38,6 +38,7 @@ module Binnacle
           self.client_id,
           self.session_id,
           self.log_level,
+          nil,
           self.tags,
           self.json
         )

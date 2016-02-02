@@ -26,7 +26,7 @@ module Binnacle
     ].freeze
 
     # The Binnacle Endpoint (BINNACLE_ENDPOINT) single IP or Array of IPs
-    attr_reader :endpoint
+    attr_accessor :endpoint
 
     # The Binnacle Endpoint PORT (BINNACLE_PORT), defaults to 8080 if not encrypted
     attr_accessor :port
@@ -46,6 +46,9 @@ module Binnacle
     # Whether to redirect rails logging to Binnacle (BINNACLE_RAILS_LOG)
     attr_accessor :intercept_rails_logging
 
+    # Whether to pipe Rails logs as they are (verbose as shit) or just grab action_controller events and single line them (BINNACLE_RAILS_LOG_VERBOSE)
+    attr_accessor :rails_verbose_logging
+
     # Whether to report exceptions to Binnacle (BINNACLE_REPORT_EXCEPTIONS)
     attr_accessor :report_exceptions
 
@@ -62,9 +65,18 @@ module Binnacle
     # Whether to log asynchronoushly via the Ruby logger
     attr_accessor :asynch_logging
 
+    # Array of Events to skip, e.g. ['home#index', 'webhooks#test']
+    attr_writer :ignore_actions
+
+    # HTTP outgoing logging options
+    attr_accessor :url_whitelist_patterns
+    attr_accessor :url_blacklist_patterns
+    attr_reader :url_whitelist_pattern
+    attr_reader :url_blacklist_pattern
+
     def initialize
       if ENV['BINNACLE_ENDPOINT']
-        @endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
+        self.endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
       end
 
       self.logging_ctx ||= ENV['BINNACLE_APP_LOG_CTX']
@@ -72,14 +84,26 @@ module Binnacle
       self.api_key     ||= ENV['BINNACLE_API_KEY']
       self.api_secret  ||= ENV['BINNACLE_API_SECRET']
       self.intercept_rails_logging = Configuration.set_boolean_flag_for(ENV['BINNACLE_RAILS_LOG'])
+      self.rails_verbose_logging = Configuration.set_boolean_flag_for(ENV['BINNACLE_RAILS_LOG_VERBOSE'])
       self.report_exceptions = Configuration.set_boolean_flag_for(ENV['BINNACLE_REPORT_EXCEPTIONS'])
       self.ignored_exceptions ||= ENV['BINNACLE_IGNORED_EXCEPTIONS'] ? DEFAULT_IGNORED_EXCEPTIONS + ENV['BINNACLE_IGNORED_EXCEPTIONS'].split(',') : DEFAULT_IGNORED_EXCEPTIONS
       self.ignore_cascade_pass     ||= true
       self.asynch_logging = Configuration.set_boolean_flag_for(ENV['BINNACLE_RAILS_LOG_ASYNCH'], true)
       @encrypted = Configuration.set_boolean_flag_for(ENV['BINNACLE_ENCRYPTED'], true)
 
+      self.url_whitelist_patterns ||= ENV['BINNACLE_HTTP_LOGGING_WHITELIST'] ? ENV['BINNACLE_HTTP_LOGGING_WHITELIST'].split(',') : []
+      self.url_blacklist_patterns ||= ENV['BINNACLE_HTTP_LOGGING_BLACKLIST'] ? ENV['BINNACLE_HTTP_LOGGING_BLACKLIST'].split(',') : []
+      @url_whitelist_pattern = /.*/
+      @url_blacklist_pattern = nil
+
+      prepare!
+    end
+
+    def prepare!
       set_default_port
       set_urls
+      set_blacklist_patterns
+      set_whitelist_patterns
     end
 
     def url
@@ -101,7 +125,15 @@ module Binnacle
     end
 
     def can_setup_logger?
-      self.intercept_rails_logging == true && !self.logging_ctx.nil?
+      !self.logging_ctx.nil?
+    end
+
+    def intercept_rails_logging?
+      self.intercept_rails_logging && !self.logging_ctx.nil?
+    end
+
+    def rails_verbose_logging?
+      self.rails_verbose_logging
     end
 
     def trap?
@@ -127,6 +159,39 @@ module Binnacle
     def set_urls
       if self.endpoint
         @urls = self.endpoint.is_a?(Array) ? self.endpoint.map { |ep| build_url(ep) } : build_url(endpoint)
+      end
+    end
+
+    def set_blacklist_patterns
+      blacklist_patterns = []
+
+      # don't log binnacle's posts
+      if @urls.is_a?(Array)
+        @urls.each do |url|
+          blacklist_patterns << /#{url}/ if url
+        end
+      elsif @urls
+        blacklist_patterns << /#{@urls}/
+      end
+
+      self.url_blacklist_patterns.each do |pattern|
+        blacklist_patterns << pattern
+      end
+
+      unless blacklist_patterns.empty?
+        @url_blacklist_pattern = Regexp.union(blacklist_patterns)
+      end
+    end
+
+    def set_whitelist_patterns
+      whitelist_patterns = []
+
+      self.url_whitelist_patterns.each do |pattern|
+        whitelist_patterns << pattern
+      end
+
+      unless whitelist_patterns.empty?
+        @whitelist_pattern = Regexp.union(whitelist_patterns)
       end
     end
 
@@ -161,6 +226,41 @@ module Binnacle
 
     def set_default_port
       self.port ||= ENV['BINNACLE_PORT'] || (self.encrypted? ? nil : DEFAULT_PORT)
+    end
+
+    # Set conditions for events that should be ignored
+    #
+    # Currently supported formats are:
+    #  - A single string representing a controller action, e.g. 'users#sign_in'
+    #  - An array of strings representing controller actions
+    #  - An object that responds to call with an event argument and returns
+    #    true iff the event should be ignored.
+    #
+    # The action ignores are given to 'ignore_actions'. The callable ignores
+    # are given to 'ignore'.  Both methods can be called multiple times, which
+    # just adds more ignore conditions to a list that is checked before logging.
+
+    def ignore_actions(actions)
+      ignore(lamba do |event|
+        params = event.payload[:params]
+        Array(actions).include?("#{params['controller']}##{params['action']}")
+      end)
+    end
+
+    def ignore_tests
+      @ignore_tests ||= []
+    end
+
+    def ignore(test)
+      ignore_tests.push(test) if test
+    end
+
+    def ignore_nothing
+      @ignore_tests = []
+    end
+
+    def ignore?(event)
+      ignore_tests.any? { |ignore_test| ignore_test.call(event) }
     end
 
   end

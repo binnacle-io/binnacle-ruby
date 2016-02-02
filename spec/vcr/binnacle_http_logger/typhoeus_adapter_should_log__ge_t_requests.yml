@@ -1,0 +1,124 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:8080/api/endpoints
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Tue, 02 Feb 2016 02:47:05 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 02 Feb 2016 02:47:05 GMT
+      Content-Type:
+      - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '["ip68-2-239-31.ph.ph.cox.net"]'
+    http_version: 
+  recorded_at: Tue, 02 Feb 2016 02:47:05 GMT
+- request:
+    method: get
+    uri: http://localhost:9292/index.html?bar=foo&foo=bar
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Typhoeus - https://github.com/typhoeus/typhoeus
+      Accept:
+      - "*/*"
+      Foo:
+      - bar
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/html
+      Connection:
+      - close
+      Server:
+      - thin
+    body:
+      encoding: UTF-8
+      string: |-
+        <html>
+          <head>
+            <title>Test Page</title>
+          </head>
+          <body>
+            <h1>This is the test page.</h1>
+          </body>
+        </html>
+    http_version: 
+  recorded_at: Tue, 02 Feb 2016 02:47:05 GMT
+- request:
+    method: post
+    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
+    body:
+      encoding: UTF-8
+      string: '{"contextId":"icoc0tnol3obe8pas207","sessionId":"","clientEventTime":"2016-02-01T19:47:05-0700","eventName":"GET
+        http://localhost:9292/index.html","clientId":"","logLevel":"log","tags":[],"json":{"url":"http://localhost:9292/index.html","method":"GET","host":"localhost","port":9292,"path":"/index.html","query":"foo=bar&bar=foo","format":"text/html","time":"2016-02-01
+        19:47:05 -0700","status":200,"duration":9.859e-06,"headers":{"foo":"bar","bar":"foo"},"body":"<html>\n  <head>\n    <title>Test
+        Page</title>\n  </head>\n  <body>\n    <h1>This is the test page.</h1>\n  </body>\n</html>","data":"","message":"GET
+        http://localhost:9292/index.html AS text/html (duration: 9.859e-06ms)"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Tue, 02 Feb 2016 02:47:05 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 02 Feb 2016 02:47:05 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"message":"Signaled: io.binnacle.models.BinnacleEvent(0b71483e-555c-4913-b88c-44f8c22337bc,
+        bv4sfcz28up6q6bophx4, n7f05b76tr4xsc6slstl, icoc0tnol3obe8pas207, 2016-02-01,
+        , Mon Feb 01 19:47:05 MST 2016, GET http://localhost:9292/index.html, Mon
+        Feb 01 19:47:05 MST 2016, , /0:0:0:0:0:0:0:1, log, null, [], null, {\"url\":\"http://localhost:9292/index.html\",\"method\":\"GET\",\"host\":\"localhost\",\"port\":9292,\"path\":\"/index.html\",\"query\":\"foo=bar&bar=foo\",\"format\":\"text/html\",\"time\":\"2016-02-01
+        19:47:05 -0700\",\"status\":200,\"duration\":9.859E-6,\"headers\":{\"foo\":\"bar\",\"bar\":\"foo\"},\"body\":\"<html>\\n  <head>\\n    <title>Test
+        Page</title>\\n  </head>\\n  <body>\\n    <h1>This is the test page.</h1>\\n  </body>\\n</html>\",\"data\":\"\",\"message\":\"GET
+        http://localhost:9292/index.html AS text/html (duration: 9.859e-06ms)\"})"}'
+    http_version: 
+  recorded_at: Tue, 02 Feb 2016 02:47:05 GMT
+recorded_with: VCR 2.9.3

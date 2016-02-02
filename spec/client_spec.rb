@@ -45,7 +45,7 @@ describe Binnacle::Client do
       client.signal_asynch('icoc0tnol3obe8pas207', 'ASYNCH_TEST_EVT', 'binnacle-rb', 'My Sess', 'INFO')
 
       expect(a_request(:get, 'http://localhost:8080/api/endpoints'))
-      expect(
+      wait_for(
         a_request(:post, "http://localhost:8080/api/events/icoc0tnol3obe8pas207").
         with(body: hash_including({
           "contextId": "icoc0tnol3obe8pas207",
@@ -101,6 +101,7 @@ describe Binnacle::Client do
 
       Binnacle.configure do |config|
         config.error_ctx = 'id0czm8eryfffcgp875c'
+        config.encrypted = false
       end
 
       exception = ZeroDivisionError.new

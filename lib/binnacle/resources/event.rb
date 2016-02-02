@@ -12,18 +12,18 @@ module Binnacle
     attr_accessor :json
     attr_accessor :event_time
 
-    def configure(context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
+    def configure(context_id, event_name, client_id, session_id, log_level, ts = Time.now, tags = [], json = {})
       self.context_id = context_id
       self.event_name = event_name
       self.client_id = client_id
       self.session_id = session_id
-      self.client_event_time = Time.now.strftime("%Y-%m-%dT%H:%M:%S%z")
+      self.timestamp = ts ? ts : Time.now
       self.log_level = log_level
       self.tags = tags
       self.json = json
     end
 
-    def configure_from_logging_progname(progname, context_id, event_name, client_id, session_id, log_level, tags = [], json = {})
+    def configure_from_logging_progname(progname, context_id, event_name, client_id, session_id, log_level, ts = Time.now, tags = [], json = {})
       if progname.is_a?(Hash)
         self.client_id = progname[:client_id] || client_id
         self.session_id = progname[:session_id] || session_id
@@ -36,7 +36,7 @@ module Binnacle
         self.event_name = progname
       end
 
-      self.client_event_time = Time.now.strftime("%Y-%m-%dT%H:%M:%S%z")
+      self.timestamp = ts ? ts : Time.now
       self.log_level = log_level
     end
 
