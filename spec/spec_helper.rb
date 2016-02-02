@@ -1,4 +1,4 @@
-ENV['RAILS_ENV'] ||= 'test'
+ENV['BINNACLE_RB_ENVIRONMENT'] ||= 'test'
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 

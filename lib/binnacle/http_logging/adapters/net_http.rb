@@ -1,4 +1,4 @@
-unless ENV['RAILS_ENV'] == 'test'
+unless ENV['BINNACLE_RB_ENVIRONMENT'] == 'test'
   module Net
     class HTTP
       alias_method(:orig_request, :request) unless method_defined?(:orig_request)
@@ -26,13 +26,13 @@ end
 #
 # Adapt the adapter to allow for testing..
 #
-if ENV['RAILS_ENV'] == 'test' #defined?(Webmock) &&
+if ENV['BINNACLE_RB_ENVIRONMENT'] == 'test' #defined?(Webmock) &&
   require 'webmock'
   web_mock_adapter = WebMock::HttpLibAdapters::NetHttpAdapter.instance_variable_get("@webMockNetHTTP")
   web_mock_adapter.send(:alias_method, :orig_request, :request) unless web_mock_adapter.method_defined?(:orig_request)
   web_mock_adapter.send(:define_method, :request, lambda do |req, body = nil, &block|
     url = "http://#{@address}:#{@port}#{req.path}"
-    
+
     return orig_request(req, body, &block) unless Binnacle::HttpLogger.allow?(url)
 
     uri = URI(url)

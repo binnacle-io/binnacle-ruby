@@ -1,4 +1,4 @@
-unless ENV['RAILS_ENV'] == 'test'
+unless ENV['BINNACLE_RB_ENVIRONMENT'] == 'test'
   if defined?(::HTTPClient)
     class HTTPClient
       private

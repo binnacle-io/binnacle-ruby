@@ -1,4 +1,4 @@
-unless ENV['RAILS_ENV'] == 'test'
+unless ENV['BINNACLE_RB_ENVIRONMENT'] == 'test'
   if defined?(::HTTP::Client) and defined?(::HTTP::Connection)
     require 'uri'
 
@@ -32,7 +32,7 @@ end
 #
 # Adapt the adapter to allow for testing..
 #
-if ENV['RAILS_ENV'] == 'test' #defined?(Webmock) &&
+if ENV['BINNACLE_RB_ENVIRONMENT'] == 'test' #defined?(Webmock) &&
   require 'webmock'
   module HTTP
     class Client
