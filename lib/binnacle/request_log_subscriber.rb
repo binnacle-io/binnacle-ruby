@@ -49,6 +49,7 @@ module Binnacle
         method = payload[:method]
         format = extract_format(payload)
         {
+          direction: :in,
           method: method,
           path: path,
           format: format,

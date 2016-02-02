@@ -11,6 +11,7 @@ module Binnacle
       bm = duration ? (duration * 1000) : 0.0
 
       signal_data = {
+        direction: :out,
         url: url,
         method: method.to_s.upcase,
         host: host,
