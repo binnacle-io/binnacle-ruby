@@ -8,7 +8,7 @@ module Binnacle
     def self.signal(url, method, host, port, path, query, status, duration, headers = {}, body = nil, encoding = nil, content_type = nil, data = nil)
       return if !self.allow?(url)
 
-      bm = duration ? (duration / 1000) : 0.0
+      bm = duration ? (duration * 1000) : 0.0
 
       signal_data = {
         url: url,
