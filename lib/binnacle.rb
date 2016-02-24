@@ -5,7 +5,7 @@ require 'binnacle/errors'
 require 'binnacle/connection'
 require 'binnacle/resource'
 require 'binnacle/client'
-require 'binnacle/logging'
+require 'binnacle/logging/logging'
 require 'binnacle/commands/commands'
 
 require 'binnacle/http_logging/http_logger'
@@ -48,12 +48,12 @@ module Binnacle
     end
   end
 
-  def self.logger
-    @logger ||= defined?(Rails) ? Rails.logger : Logger.new(STDOUT)
+  def self.binnacle_logger
+    @internal_logger ||= defined?(Rails) ? Rails.logger : Logger.new(STDOUT)
   end
 
-  def self.logger=(logger)
-    @logger = logger
+  def self.binnacle_logger=(logger)
+    @internal_logger = logger
   end
 
   def self.set_options(options)
@@ -63,30 +63,32 @@ module Binnacle
   end
 
   def self.create_client
-    logger.info "Instantiating Binnacle Client..."
+    binnacle_logger.info "Instantiating Binnacle Client..."
     begin
       @client = Client.new()
     rescue Faraday::ConnectionFailed => fcf
-      logger.error "Failed to connect to Binnacle. Check your settings!"
+      binnacle_logger.error "Failed to connect to Binnacle. Check your settings!"
     end
   end
 
   def self.setup_logger
     if @client && configuration.can_setup_logger?
       if defined?(Rails)
-        logger.info "Configuring Binnacle Rails logger..."
-        @rails_logger = Logging.new(@client, configuration.logging_ctx, Rails.application.config)
-        @rails_logger.level = 1
-        Rails.logger.extend(ActiveSupport::Logger.broadcast(@rails_logger)) if configuration.rails_verbose_logging?
+        binnacle_logger.info "Configuring Binnacle Rails logger..."
+        @logger = Logging.new(@client, configuration.logging_ctx)
+        @logger.level = Logger::INFO
+        if configuration.rails_verbose_logging?
+          Rails.logger.extend(ActiveSupport::Logger.broadcast(@logger))
+        end
         Rack::Timeout.unregister_state_change_observer(:logger) if Rails.env.development?
       else
-        logger.info "Skipping Binnacle Rails logger configuration..."
+        binnacle_logger.info "Skipping Binnacle Rails logger configuration..."
       end
     end
   end
 
-  def self.rails_logger
-    @rails_logger
+  def self.logger
+    @logger
   end
 
   def self.client
@@ -98,5 +100,5 @@ end
 if defined?(Rails::Railtie)
   require 'binnacle/trap/middleware'
   require 'binnacle/trap/railtie'
-  require 'binnacle/request_log_subscriber'
+  require 'binnacle/logging/request_log_subscriber'
 end

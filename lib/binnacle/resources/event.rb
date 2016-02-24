@@ -23,17 +23,22 @@ module Binnacle
       self.json = json
     end
 
-    def configure_from_logging_progname(progname, context_id, event_name, client_id, session_id, log_level, ts = Time.now, tags = [], json = {})
+    def configure_from_logging_progname(progname, context_id, client_id, session_id, log_level, ts = Time.now, tags = [], json = {})
       if progname.is_a?(Hash)
         self.client_id = progname[:client_id] || client_id
         self.session_id = progname[:session_id] || session_id
         self.context_id = progname[:context_id] || context_id
-        self.event_name =  progname[:event_name] || event_name
+        self.event_name =  progname[:event_name]
         self.tags = progname[:tags] || tags
         self.json = json
         self.json.merge!(progname[:json]) if progname[:json]
       elsif progname.is_a?(String)
+        self.client_id = client_id
+        self.session_id = session_id
+        self.context_id = context_id
         self.event_name = progname
+        self.tags = tags
+        self.json = json
       end
 
       self.timestamp = ts ? ts : Time.now

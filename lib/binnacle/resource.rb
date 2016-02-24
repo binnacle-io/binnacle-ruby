@@ -10,7 +10,7 @@ module Binnacle
         response = response_from_post(@connection, self.route, self.to_json)
 
         if response.status == 401
-          Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
+          Binnacle.binnacle_logger.error("Error communicating with Binnacle: #{response.body}")
         end
       end
     end
@@ -19,7 +19,7 @@ module Binnacle
       response = response_from_post(@connection, self.route, self.to_json)
 
       if response.status == 401
-        Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
+        Binnacle.binnacle_logger.error("Error communicating with Binnacle: #{response.body}")
       else
         JSON.parse(response.body)
       end
@@ -35,7 +35,7 @@ module Binnacle
       end
 
       if response.status == 401
-        Binnacle.logger.error("Error communicating with Binnacle: #{response.body}")
+        Binnacle.binnacle_logger.error("Error communicating with Binnacle: #{response.body}")
       else
         JSON.parse(response.body).map { |r| self.from_hash(r) }
       end

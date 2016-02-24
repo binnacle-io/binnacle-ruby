@@ -4,10 +4,10 @@ describe Binnacle do
   describe 'configure' do
     before do
       reset_env
-      Binnacle.logger.pause
+      Binnacle.binnacle_logger.pause
     end
 
-    after { Binnacle.logger.continue }
+    after { Binnacle.binnacle_logger.continue }
 
     it 'creates a module-level instance of a binnacle client', :vcr do
       Binnacle.configure do |config|

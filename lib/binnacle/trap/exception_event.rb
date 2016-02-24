@@ -142,6 +142,7 @@ module Binnacle
 
       def build_json_payload
         self.json = {
+          path: @request.path,
           exception: event_name,
           message: @exception.message,
           component: @component,

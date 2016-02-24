@@ -59,7 +59,7 @@ module Binnacle
     # to 'pass'. In Rails typically it means route was not found (404 error).
     attr_accessor :ignore_cascade_pass
 
-    # Whether to make the requests over HTTPS, default is HTTP
+    # Whether to make the requests over HTTPS, default is HTTPS
     attr_reader :encrypted
 
     # Whether to log asynchronoushly via the Ruby logger

@@ -1,5 +1,6 @@
 require 'binnacle/resources/event'
 require 'binnacle/trap/exception_event'
+require 'binnacle/logging/formatter'
 require 'socket'
 
 module Binnacle
@@ -24,6 +25,8 @@ module Binnacle
 
       self.client_id = ""
       self.session_id = ""
+
+      @formatter = Binnacle::Logging::Formatter.new(self)
     end
 
     def signal(context_id, event_name, client_id, session_id, log_level, tags = [], json = {}, asynch = false)
@@ -56,22 +59,7 @@ module Binnacle
     #
 
     def formatter
-      proc do |severity, datetime, progname, msg|
-
-        unless assets_log_prefix && msg.start_with?(assets_log_prefix)
-          session_id, client_id = session_and_client_ids
-
-          event = Binnacle::Event.new()
-
-          if progname
-            event.configure_from_logging_progname(progname, logging_context_id, 'log', client_id, session_id, severity, datetime, [], { message: msg })
-          else
-            event.configure(logging_context_id, 'log', client_id, session_id, severity, datetime, [], { message: msg })
-          end
-
-          event
-        end
-      end
+      @formatter
     end
 
     def write(event)
@@ -107,15 +95,9 @@ module Binnacle
       write(event)
     end
 
-    protected
-
-    def assets_log_prefix
-      @assets_log_prefix ||= "Started GET \"#{Rails.application.config.assets.prefix}" if defined?(Rails)
-    end
-
     def session_and_client_ids
       if defined?(ActiveSupport::TaggedLogging) && Thread.current[:activesupport_tagged_logging_tags]
-        session_id, client_id = Thread.current[:activesupport_tagged_logging_tags].last(2)
+        session_id, client_id = Thread.current[:activesupport_tagged_logging_tags].first(2)
       else
         session_id, client_id = self.session_id, self.client_id
       end

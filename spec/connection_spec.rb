@@ -3,13 +3,13 @@ require 'spec_helper'
 describe Binnacle::Connection do
 
   describe 'initialize', :vcr do
-    before { Binnacle.logger = TestLogger.new }
+    before { Binnacle.binnacle_logger = TestLogger.new }
 
     it 'fails with incorrect credentials', :vcr do
       expected_output = "ERROR -- : Error communicating with Binnacle: Credentials are required to access this resource."
       connection = Binnacle::Connection.new('vceth4xcwqfoowpz2esi', '1grttyb8ozbe9axt88ji', 'http://104.131.46.61:8080')
       expect(a_request(:get, 'http://104.131.46.61:8080/api/endpoints'))
-      expect(Binnacle.logger.messages).to include(expected_output)
+      expect(Binnacle.binnacle_logger.messages).to include(expected_output)
     end
 
     it 'retrieves available endpoints upon successful connection', :vcr do
@@ -27,7 +27,7 @@ describe Binnacle::Connection do
       expected_output = %[ERROR -- : Error communicating with Binnacle: Connection refused - connect(2) for "localhost" port 8888 (localhost:8888)]
       connection = Binnacle::Connection.new('vceth4xcwqfoowpz2esi', '1grttyb8ozbe9axt88ji', 'http://localhost:8888')
       expect(a_request(:get, 'http://localhost:8888/api/endpoints'))
-      expect(Binnacle.logger.messages).to include(expected_output)
+      expect(Binnacle.binnacle_logger.messages).to include(expected_output)
     end
   end
 

@@ -26,8 +26,8 @@ describe Binnacle::Client do
   end
 
   describe '#ready?' do
-    before { Binnacle.logger.pause }
-    after  { Binnacle.logger.continue }
+    before { Binnacle.binnacle_logger.pause }
+    after  { Binnacle.binnacle_logger.continue }
 
     it 'returns true if a connection has been successfully established', :vcr do
       Binnacle.configure do |config|
@@ -94,8 +94,8 @@ describe Binnacle::Client do
   end
 
   describe 'report_exception' do
-    before { Binnacle.logger.pause }
-    after  { Binnacle.logger.continue }
+    before { Binnacle.binnacle_logger.pause }
+    after  { Binnacle.binnacle_logger.continue }
 
     it 'invokes the events api signal', :vcr do
 
