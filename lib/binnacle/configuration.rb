@@ -77,6 +77,10 @@ module Binnacle
     def initialize
       if ENV['BINNACLE_ENDPOINT']
         self.endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
+      else
+        if self.endpoint !~ /[^[:space:]]/
+          self.endpoint = (1..6).to_a.sample(3).map { |n| "api#{n}.binnacle-api.io" }
+        end
       end
 
       self.logging_ctx ||= ENV['BINNACLE_APP_LOG_CTX']
@@ -157,7 +161,7 @@ module Binnacle
     end
 
     def set_urls
-      if self.endpoint
+      if self.endpoint && (self.endpoint.is_a?(Array) ? !self.endpoint.empty? : (!self.endpoint !~ /[^[:space:]]/))
         @urls = self.endpoint.is_a?(Array) ? self.endpoint.map { |ep| build_url(ep) } : build_url(endpoint)
       end
     end

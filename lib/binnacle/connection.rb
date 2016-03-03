@@ -32,13 +32,13 @@ module Binnacle
         end
 
         if response.status == 401
-          Binnacle.binnacle_logger.error("Error communicating with Binnacle: #{response.body}")
+          Binnacle.binnacle_logger.error("Error communicating with Binnacle (/api/endpoints): #{response.body}")
           []
         else
           JSON.parse(response.body)
         end
       rescue Faraday::Error::ConnectionFailed => cf
-        Binnacle.binnacle_logger.error("Error communicating with Binnacle: #{cf.message}")
+        Binnacle.binnacle_logger.error("Error communicating with Binnacle (/api/endpoints): #{cf.message}")
         []
       end
     end
