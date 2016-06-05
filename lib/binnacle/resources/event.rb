@@ -66,14 +66,14 @@ module Binnacle
 
     def to_json
       {
-        "contextId": context_id,
-        "sessionId": session_id,
-        "clientEventTime": client_event_time,
-        "eventName": event_name,
-        "clientId": client_id,
-        "logLevel": log_level,
-        "tags": tags,
-        "json": json
+        "contextId" => context_id,
+        "sessionId" => session_id,
+        "clientEventTime" => client_event_time,
+        "eventName" => event_name,
+        "clientId" => client_id,
+        "logLevel" => log_level,
+        "tags" => tags,
+        "json" => json
       }.to_json
     end
 

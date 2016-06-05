@@ -44,9 +44,9 @@ module Binnacle::Commands
   def self.dispatch(opts)
     # tail --follow
     if opts[:follow_given] && opts[:app_given]
-      monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:app], true)
+      monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:app], true, opts[:encrypted])
     elsif opts[:follow_given] && opts[:context_given]
-      monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:context])
+      monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:context], false, opts[:encrypted])
     end
 
     # tail --lines
@@ -60,17 +60,23 @@ module Binnacle::Commands
       Signal.trap("INT")  { EventMachine.stop }
       Signal.trap("TERM") { EventMachine.stop }
 
-      ws = Faye::WebSocket::Client.new(build_ws_url(host, api_key, api_secret, channel, is_app, encrypted))
+      ws_url = build_ws_url(host, api_key, api_secret, channel, is_app, encrypted)
+
+      ws = Faye::WebSocket::Client.new(ws_url)
 
       ws.on :open do |event|
-        puts "Monitoring #{is_app ? 'App' : 'Context'} #{channel}..."
+        puts "Monitoring #{is_app ? 'App' : 'Context'} #{channel} (#{ws_url})..."
       end
 
       ws.on :message do |event|
-        if event.data !~ /\s/
-          data = JSON.parse event.data
-          tags = data['tags'].join(',')
-          puts %[#{data['logLevel']} \[#{Time.at(data['eventTime']/1000)}\] #{data['eventName']} :: clientId=#{data['clientId']}, sessionId=#{data['eventName']}, tags=#{tags}]
+        if event.data !~ /\s/ && event.data != 'X'
+          begin
+            data = JSON.parse event.data
+            tags = data['tags'].join(',')
+            puts %[#{data['logLevel']} \[#{Time.at(data['eventTime']/1000)}\] #{data['eventName']} :: clientId=#{data['clientId']}, sessionId=#{data['eventName']}, tags=#{tags}]
+          rescue
+            # do nothing
+          end
         end
       end
 
@@ -106,12 +112,12 @@ module Binnacle::Commands
 
   def self.build_ws_query(api_key, api_secret)
     {
-      "Authorization": %[Basic #{Base64.encode64("#{api_key}:#{api_secret}").strip}],
-      "X-Atmosphere-tracking-id": "0",
-      "X-Atmosphere-Framework": "2.2.7-jquery",
-      "X-Atmosphere-Transport": "websocket",
-      "Content-Type": "application/json",
-      "X-atmo-protocol": "true"
+      "Authorization" => %[Basic #{Base64.encode64("#{api_key}:#{api_secret}").strip}],
+      "X-Atmosphere-tracking-id" => "0",
+      "X-Atmosphere-Framework" => "2.3.2-javascript",
+      "X-Atmosphere-Transport" => "websocket",
+      "Content-Type" => "application/json",
+      "X-atmo-protocol" => "true"
     }.map { |n,v| "#{n}=#{v}" }.join("&")
   end
 end

@@ -74,6 +74,9 @@ module Binnacle
     attr_reader :url_whitelist_pattern
     attr_reader :url_blacklist_pattern
 
+    attr_accessor :log_binnacle_signals
+
+
     def initialize
       if ENV['BINNACLE_ENDPOINT']
         self.endpoint    ||= ENV['BINNACLE_ENDPOINT'].include?(',') ? ENV['BINNACLE_ENDPOINT'].split(',') : ENV['BINNACLE_ENDPOINT']
@@ -99,6 +102,8 @@ module Binnacle
       self.url_blacklist_patterns ||= ENV['BINNACLE_HTTP_LOGGING_BLACKLIST'] ? ENV['BINNACLE_HTTP_LOGGING_BLACKLIST'].split(',') : []
       @url_whitelist_pattern = /.*/
       @url_blacklist_pattern = nil
+
+      self.log_binnacle_signals = Configuration.set_boolean_flag_for(ENV['BINNACLE_LOG_SIGNALS'])
 
       prepare!
     end
@@ -170,12 +175,14 @@ module Binnacle
       blacklist_patterns = []
 
       # don't log binnacle's posts
-      if @urls.is_a?(Array)
-        @urls.each do |url|
-          blacklist_patterns << /#{url}/ if url
+      unless self.log_binnacle_signals
+        if @urls.is_a?(Array)
+          @urls.each do |url|
+            blacklist_patterns << /#{url}/ if url
+          end
+        elsif @urls
+          blacklist_patterns << /#{@urls}/
         end
-      elsif @urls
-        blacklist_patterns << /#{@urls}/
       end
 
       self.url_blacklist_patterns.each do |pattern|
@@ -238,7 +245,7 @@ module Binnacle
     #  - A single string representing a controller action, e.g. 'users#sign_in'
     #  - An array of strings representing controller actions
     #  - An object that responds to call with an event argument and returns
-    #    true iff the event should be ignored.
+    #    true if the event should be ignored.
     #
     # The action ignores are given to 'ignore_actions'. The callable ignores
     # are given to 'ignore'.  Both methods can be called multiple times, which
