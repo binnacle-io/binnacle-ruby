@@ -149,7 +149,7 @@ module Binnacle
           method: @method,
           environment_level: extract_rails_environment_level,
           hostname: extract_hostname,
-          user: "email",
+          user_agent: @request.user_agent,
           ruby_version: extract_ruby_version,
           framework: extract_framework,
           framework_version: extract_framework_version,
