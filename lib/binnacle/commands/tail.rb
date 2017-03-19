@@ -9,11 +9,11 @@ module Binnacle::Commands
     opts = Trollop::options do
       banner TAIL_BANNER
       opt(:host, "Binnacle Host", type: :string, default: 'localhost')
-      opt(:context, "Binnacle Context", type: :string)
+      opt(:channel, "Binnacle Channel", type: :string)
       opt(:app, "Binnacle App",  type: :string)
       opt(:api_key, "Binnacle API Key", type: :string, short: '-u')
       opt(:api_secret, "Binnacle API Secret", type: :string, short: '-p')
-      opt(:follow, "Monitors a Binnacle Context or App")
+      opt(:follow, "Monitors a Binnacle Channel or App")
       opt(:lines, "Get the last n events on the Channel", type: :int, short: '-n')
       opt(:since, "Number of minutes in the past to search for events", type: :int)
       opt(:encrypted, "Use SSL/HTTPS", default: true)
@@ -25,7 +25,7 @@ module Binnacle::Commands
       puts "The following errors prevented the tail command from executing:"
       errors.each { |e| puts "  - #{e}" }
       puts "\nSUBCOMMAND"
-      puts "      tail -- listen to a Binnacle context or app\n\n"
+      puts "      tail -- listen to a Binnacle channel or app\n\n"
       Trollop::educate unless ENV["TEST_MODE"] == 'true'
     end
   end
@@ -33,10 +33,10 @@ module Binnacle::Commands
   def self.validate(opts)
     errors = []
     errors << "No endpoint given" unless opts[:host_given]
-    errors << "No context or app given" unless (opts[:context_given] || opts[:app_given])
+    errors << "No channel or app given" unless (opts[:channel_given] || opts[:app_given])
     errors << "No authentication information given" unless (opts[:api_key_given] && opts[:api_secret_given])
     errors << "Cannot use both 'follow' and 'lines'" if (opts[:follow_given] && opts[:lines_given])
-    errors << "Cannot use both 'app' and 'context'" if (opts[:context_given] && opts[:app_given])
+    errors << "Cannot use both 'app' and 'channel'" if (opts[:channel_given] && opts[:app_given])
     errors << "Lines subcommand does not support montoring of Apps at this moment" if (opts[:lines_given] && opts[:app_given])
     errors
   end
@@ -45,12 +45,12 @@ module Binnacle::Commands
     # tail --follow
     if opts[:follow_given] && opts[:app_given]
       monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:app], true, opts[:encrypted])
-    elsif opts[:follow_given] && opts[:context_given]
-      monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:context], false, opts[:encrypted])
+    elsif opts[:follow_given] && opts[:channel_given]
+      monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:channel], false, opts[:encrypted])
     end
 
     # tail --lines
-    lines(opts[:host], opts[:api_key], opts[:api_secret], opts[:context], opts[:lines], opts[:since], opts[:encrypted_given] ? opts[:encrypted] : false) if opts[:lines_given]
+    lines(opts[:host], opts[:api_key], opts[:api_secret], opts[:channel], opts[:lines], opts[:since], opts[:encrypted_given] ? opts[:encrypted] : false) if opts[:lines_given]
   end
 
   #
@@ -65,7 +65,7 @@ module Binnacle::Commands
       ws = Faye::WebSocket::Client.new(ws_url)
 
       ws.on :open do |event|
-        puts "Monitoring #{is_app ? 'App' : 'Context'} #{channel} (#{ws_url})..."
+        puts "Monitoring #{is_app ? 'App' : 'Channel'} #{channel} (#{ws_url})..."
       end
 
       ws.on :message do |event|
@@ -88,12 +88,12 @@ module Binnacle::Commands
 
   #
   # tail --lines=50 --since=10 --host=my_host --channel=my_channel
-  def self.lines(host, api_key, api_secret, context, lines, since, encrypted = true)
-    puts "Retrieving last #{lines} lines since #{since} minutes ago from Context #{context} ..."
+  def self.lines(host, api_key, api_secret, channel, lines, since, encrypted = true)
+    puts "Retrieving last #{lines} lines since #{since} minutes ago from Channel #{channel} ..."
     Binnacle.configuration.encrypted = encrypted
     client = Binnacle::Client.new(api_key, api_secret, host)
 
-    client.recents(lines, since, context).each do |e|
+    client.recents(lines, since, channel).each do |e|
       puts %[#{e.log_level} \[#{e.event_time}\] #{e.event_name} :: clientId=#{e.client_id}, sessionId=#{e.session_id}, tags=#{e.tags}]
     end
   end
@@ -105,7 +105,7 @@ module Binnacle::Commands
       host: host,
       port: Binnacle::Configuration::DEFAULT_PORT,
       scheme: encrypted ? 'ws' : 'wss',
-      path: ["/api/subscribe", is_app ? "app" : "ctx", channel].join("/"),
+      path: ["/api/subscribe", is_app ? "app" : "channel", channel].join("/"),
       query: build_ws_query(api_key, api_secret)
     ).to_s
   end

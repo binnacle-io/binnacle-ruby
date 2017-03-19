@@ -75,7 +75,7 @@ module Binnacle
     if @client && configuration.can_setup_logger?
       if defined?(Rails)
         binnacle_logger.info "Configuring Binnacle Rails logger..."
-        @logger = Logging.new(@client, configuration.logging_ctx)
+        @logger = Logging.new(@client, configuration.logging_channel)
         @logger.level = Logger::INFO
         if configuration.rails_verbose_logging?
           Rails.logger.extend(ActiveSupport::Logger.broadcast(@logger))

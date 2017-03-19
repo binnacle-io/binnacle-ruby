@@ -8,8 +8,8 @@ describe Binnacle::Configuration do
     it 'can be configured via ENV variables' do
       ENV['BINNACLE_ENDPOINT'] = '127.0.0.1'
       ENV['BINNACLE_PORT'] = '8080'
-      ENV['BINNACLE_APP_LOG_CTX'] = 'icoc0tnol3obe8pas207'
-      ENV['BINNACLE_APP_ERR_CTX'] = 'id0czm8eryfffcgp875c'
+      ENV['BINNACLE_APP_LOG_CHANNEL'] = 'icoc0tnol3obe8pas207'
+      ENV['BINNACLE_APP_ERR_CHANNEL'] = 'id0czm8eryfffcgp875c'
       ENV['BINNACLE_API_KEY'] = 'vceth4xcwqfoowpz2esi'
       ENV['BINNACLE_API_SECRET'] = '1grttyb8ozbe9axt88ji'
       ENV['BINNACLE_RAILS_LOG'] = 'TRUE'
@@ -22,8 +22,8 @@ describe Binnacle::Configuration do
 
       expect(config.endpoint).to eq '127.0.0.1'
       expect(config.port).to eq '8080'
-      expect(config.logging_ctx).to eq 'icoc0tnol3obe8pas207'
-      expect(config.error_ctx).to eq 'id0czm8eryfffcgp875c'
+      expect(config.logging_channel).to eq 'icoc0tnol3obe8pas207'
+      expect(config.error_channel).to eq 'id0czm8eryfffcgp875c'
       expect(config.api_key).to eq 'vceth4xcwqfoowpz2esi'
       expect(config.api_secret).to eq '1grttyb8ozbe9axt88ji'
       expect(config.intercept_rails_logging).to be true
@@ -83,8 +83,8 @@ describe Binnacle::Configuration do
   describe '#can_setup_logger?' do
     before { reset_env }
 
-    it 'returns true if logging context is set' do
-      ENV['BINNACLE_APP_LOG_CTX'] = 'icoc0tnol3obe8pas207'
+    it 'returns true if logging channel is set' do
+      ENV['BINNACLE_APP_LOG_CHANNEL'] = 'icoc0tnol3obe8pas207'
 
       config = Binnacle::Configuration.new
       expect(config.can_setup_logger?).to be true
@@ -94,8 +94,8 @@ describe Binnacle::Configuration do
   describe '#trap?' do
     before { reset_env }
 
-    it 'return true is log interception and logging context are set' do
-      ENV['BINNACLE_APP_ERR_CTX'] = 'id0czm8eryfffcgp875c'
+    it 'return true is log interception and logging channel are set' do
+      ENV['BINNACLE_APP_ERR_CHANNEL'] = 'id0czm8eryfffcgp875c'
       ENV['BINNACLE_REPORT_EXCEPTIONS'] = 'TRUE'
 
       config = Binnacle::Configuration.new
@@ -116,16 +116,16 @@ describe Binnacle::Configuration do
 
     it 'returns a representation of the config object' do
       ENV['BINNACLE_ENDPOINT'] = '127.0.0.1'
-      ENV['BINNACLE_APP_LOG_CTX'] = 'icoc0tnol3obe8pas207'
-      ENV['BINNACLE_APP_ERR_CTX'] = 'id0czm8eryfffcgp875c'
+      ENV['BINNACLE_APP_LOG_CHANNEL'] = 'icoc0tnol3obe8pas207'
+      ENV['BINNACLE_APP_ERR_CHANNEL'] = 'id0czm8eryfffcgp875c'
       ENV['BINNACLE_API_KEY'] = 'vceth4xcwqfoowpz2esi'
       ENV['BINNACLE_API_SECRET'] = '1grttyb8ozbe9axt88ji'
       ENV['BINNACLE_ENCRYPTED'] = 'FALSE'
 
       config = Binnacle::Configuration.new
       expect(config.to_s).to eq("endpoint: 127.0.0.1,"\
-                                " logging_ctx: icoc0tnol3obe8pas207,"\
-                                " error_ctx: id0czm8eryfffcgp875c,"\
+                                " logging_channel: icoc0tnol3obe8pas207,"\
+                                " error_channel: id0czm8eryfffcgp875c,"\
                                 " api_key: vceth4xcwqfoowpz2esi,"\
                                 " api_secret: 1grttyb8ozbe9axt88ji,"\
                                 " intercept_rails_logging: false,"\

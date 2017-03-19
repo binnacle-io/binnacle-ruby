@@ -40,7 +40,7 @@ http_interactions:
     uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
     body:
       encoding: UTF-8
-      string: '{"contextId":"icoc0tnol3obe8pas207","sessionId":"My Sess","clientEventTime":"2015-10-15T22:12:55-0700","eventName":"ASYNCH_TEST_EVT","clientId":"binnacle-rb","logLevel":"INFO","tags":[],"json":{}}'
+      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"My Sess","clientEventTime":"2015-10-15T22:12:55-0700","eventName":"ASYNCH_TEST_EVT","clientId":"binnacle-rb","logLevel":"INFO","tags":[],"json":{}}'
     headers:
       User-Agent:
       - Faraday v0.9.1

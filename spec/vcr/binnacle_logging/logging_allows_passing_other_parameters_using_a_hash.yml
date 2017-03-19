@@ -44,7 +44,7 @@ http_interactions:
     uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
     body:
       encoding: UTF-8
-      string: '{"contextId":"icoc0tnol3obe8pas207","sessionId":"8675309","clientEventTime":"2015-10-23T12:07:38-0700","eventName":"failed_transfer","clientId":"","logLevel":"INFO","tags":[],"json":{"message":"transfer
+      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"8675309","clientEventTime":"2015-10-23T12:07:38-0700","eventName":"failed_transfer","clientId":"","logLevel":"INFO","tags":[],"json":{"message":"transfer
         failed, bad RTN"}}'
     headers:
       User-Agent:

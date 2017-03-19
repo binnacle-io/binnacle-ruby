@@ -12,7 +12,7 @@ describe Binnacle::Client do
       expect(
         a_request(:post, "http://localhost:8080/api/events/icoc0tnol3obe8pas207").
         with(body: hash_including({
-          "contextId": "icoc0tnol3obe8pas207",
+          "channelId": "icoc0tnol3obe8pas207",
           "sessionId": "My Sess",
           "eventName": "TEST_EVT",
           "clientId": "binnacle-rb",
@@ -48,7 +48,7 @@ describe Binnacle::Client do
       wait_for(
         a_request(:post, "http://localhost:8080/api/events/icoc0tnol3obe8pas207").
         with(body: hash_including({
-          "contextId": "icoc0tnol3obe8pas207",
+          "channelId": "icoc0tnol3obe8pas207",
           "sessionId": "My Sess",
           "eventName": "ASYNCH_TEST_EVT",
           "clientId": "binnacle-rb",
@@ -100,7 +100,7 @@ describe Binnacle::Client do
     it 'invokes the events api signal', :vcr do
 
       Binnacle.configure do |config|
-        config.error_ctx = 'id0czm8eryfffcgp875c'
+        config.error_channel = 'id0czm8eryfffcgp875c'
         config.encrypted = false
       end
 
@@ -112,7 +112,7 @@ describe Binnacle::Client do
       expect(
         a_request(:post, "http://localhost:8080/api/events/id0czm8eryfffcgp875c").
         with(body: hash_including({
-          "contextId": "id0czm8eryfffcgp875c",
+          "channelId": "id0czm8eryfffcgp875c",
           "eventName":"ZeroDivisionError",
           "logLevel":"EXCEPTION"
         }))

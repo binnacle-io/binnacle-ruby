@@ -16,11 +16,11 @@ describe "binnacle command" do
       %[   binnacle tail\n],
       %[where [options] are:],
       %[  -h, --host=<s>                     Binnacle Host (default: localhost)],
-      %[  -c, --context=<s>                  Binnacle Context],
+      %[  -c, --channel=<s>                  Binnacle Channel],
       %[  -a, --app=<s>                      Binnacle App],
       %[  -u, --api-key=<s>                  Binnacle API Key],
       %[  -p, --api-secret=<s>               Binnacle API Secret],
-      %[  -f, --follow                       Monitors a Binnacle Context or App],
+      %[  -f, --follow                       Monitors a Binnacle Channel or App],
       %[  -n, --lines=<i>                    Get the last n events on the Channel],
       %[  -s, --since=<i>                    Number of minutes in the past to search],
       %[                                     for events],
@@ -47,10 +47,10 @@ describe BinnacleCommand do
       expected_output = [
         %[The following errors prevented the tail command from executing:],
         %[  - No endpoint given],
-        %[  - No context or app given],
+        %[  - No channel or app given],
         %[  - No authentication information given\n],
         %[SUBCOMMAND],
-        %[      tail -- listen to a Binnacle context or app\n\n]
+        %[      tail -- listen to a Binnacle channel or app\n\n]
       ].join("\n")
       expect {
       BinnacleCommand.new.run(["tail"])
@@ -58,10 +58,10 @@ describe BinnacleCommand do
     end
 
     it 'with -n flag returns recent events', :vcr do
-      args = ["tail", "-n", "10", "-s", "60", "--host=localhost", "--context=ylhcn28x7skv6av8q93m", "--api-key=jzr5d5kgj4j3l8fm90tr", "--api-secret=bz3e3w44o3323dypp8d7", "--no-encrypted"]
+      args = ["tail", "-n", "10", "-s", "60", "--host=localhost", "--channel=ylhcn28x7skv6av8q93m", "--api-key=jzr5d5kgj4j3l8fm90tr", "--api-secret=bz3e3w44o3323dypp8d7", "--no-encrypted"]
 
       expected_output = [
-        %[Retrieving last 10 lines since 60 minutes ago from Context ylhcn28x7skv6av8q93m ...],
+        %[Retrieving last 10 lines since 60 minutes ago from Channel ylhcn28x7skv6av8q93m ...],
         %[INFO [#{Time.strptime("2015-10-22 13:37:28 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
         %[INFO [#{Time.strptime("2015-10-22 13:37:32 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],
         %[INFO [#{Time.strptime("2015-10-22 13:37:32 -0700", "%Y-%m-%d %H:%M:%S %z").getlocal}] TEST_EVT2 :: clientId=io, sessionId=SESS_01, tags=[\"account\", \"upgrade\"]],

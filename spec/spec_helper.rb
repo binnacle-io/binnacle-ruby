@@ -1,6 +1,6 @@
 ENV['BINNACLE_RB_ENVIRONMENT'] ||= 'test'
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
+require 'simplecov'
+SimpleCov.start
 
 require 'webmock/rspec'
 require 'httpclient'
@@ -105,8 +105,8 @@ end
 def reset_env
  [ 'BINNACLE_ENDPOINT',
    'BINNACLE_PORT',
-   'BINNACLE_APP_LOG_CTX',
-   'BINNACLE_APP_ERR_CTX',
+   'BINNACLE_APP_LOG_CHANNEL',
+   'BINNACLE_APP_ERR_CHANNEL',
    'BINNACLE_API_KEY',
    'BINNACLE_API_SECRET',
    'BINNACLE_RAILS_LOG',
