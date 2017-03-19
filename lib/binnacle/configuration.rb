@@ -31,11 +31,11 @@ module Binnacle
     # The Binnacle Endpoint PORT (BINNACLE_PORT), defaults to 8080 if not encrypted
     attr_accessor :port
 
-    # The application logger Binnacle Context (BINNACLE_APP_LOG_CTX)
-    attr_accessor :logging_ctx
+    # The application logger Binnacle Channel (BINNACLE_APP_LOG_CHANNEL)
+    attr_accessor :logging_channel
 
-    # The application error Binnacle Context (BINNACLE_APP_ERR_CTX)
-    attr_accessor :error_ctx
+    # The application error Binnacle Channel (BINNACLE_APP_ERR_CHANNEL)
+    attr_accessor :error_channel
 
     # An approved publisher API key for the App (BINNACLE_API_KEY)
     attr_accessor :api_key
@@ -86,8 +86,8 @@ module Binnacle
         end
       end
 
-      self.logging_ctx ||= ENV['BINNACLE_APP_LOG_CTX']
-      self.error_ctx   ||= ENV['BINNACLE_APP_ERR_CTX']
+      self.logging_channel ||= ENV['BINNACLE_APP_LOG_CHANNEL']
+      self.error_channel   ||= ENV['BINNACLE_APP_ERR_CHANNEL']
       self.api_key     ||= ENV['BINNACLE_API_KEY']
       self.api_secret  ||= ENV['BINNACLE_API_SECRET']
       self.intercept_rails_logging = Configuration.set_boolean_flag_for(ENV['BINNACLE_RAILS_LOG'])
@@ -134,11 +134,11 @@ module Binnacle
     end
 
     def can_setup_logger?
-      !self.logging_ctx.nil?
+      !self.logging_channel.nil?
     end
 
     def intercept_rails_logging?
-      self.intercept_rails_logging && !self.logging_ctx.nil?
+      self.intercept_rails_logging && !self.logging_channel.nil?
     end
 
     def rails_verbose_logging?
@@ -146,7 +146,7 @@ module Binnacle
     end
 
     def trap?
-      !self.report_exceptions.nil? && !self.error_ctx.nil?
+      !self.report_exceptions.nil? && !self.error_channel.nil?
     end
 
     def ignore_cascade_pass?
@@ -219,8 +219,8 @@ module Binnacle
 
     def to_s
       [ :endpoint,
-        :logging_ctx,
-        :error_ctx,
+        :logging_channel,
+        :error_channel,
         :api_key,
         :api_secret,
         :intercept_rails_logging,

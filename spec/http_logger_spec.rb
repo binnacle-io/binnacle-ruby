@@ -7,7 +7,7 @@ describe Binnacle::HttpLogger do
       config.endpoint = 'localhost'
       config.api_key = 'vceth4xcwqfoowpz2esi'
       config.api_secret = '1grttyb8ozbe9axt88ji'
-      config.logging_ctx = 'icoc0tnol3obe8pas207'
+      config.logging_channel = 'icoc0tnol3obe8pas207'
       config.encrypted = false
       config.asynch_logging = false
     end
@@ -30,7 +30,7 @@ describe Binnacle::HttpLogger do
     ENV['SERVE_TEST_ASSETS'] == 'true' ? EthonAdapter : nil,
     TyphoeusAdapter,
     PatronAdapter,
-    HTTPAdapter 
+    HTTPAdapter
   ].compact
 
   ADAPTERS.each do |adapter_class|
@@ -50,7 +50,7 @@ describe Binnacle::HttpLogger do
             a_request(:post, "http://localhost:8080/api/events/icoc0tnol3obe8pas207").
               with do |request|
                 body_as_json = JSON.parse(request.body)
-                body_as_json["contextId"] == "icoc0tnol3obe8pas207" &&
+                body_as_json["channelId"] == "icoc0tnol3obe8pas207" &&
                 body_as_json["sessionId"] == "" &&
                 body_as_json["clientId"] == "" &&
                 body_as_json["eventName"] == "GET http://localhost:9292/index.html" &&

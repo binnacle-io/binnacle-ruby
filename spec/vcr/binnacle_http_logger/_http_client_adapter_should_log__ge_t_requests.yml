@@ -83,7 +83,7 @@ http_interactions:
     uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
     body:
       encoding: UTF-8
-      string: '{"contextId":"icoc0tnol3obe8pas207","sessionId":"","clientEventTime":"2016-02-01T15:37:15-0700","eventName":"GET
+      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"","clientEventTime":"2016-02-01T15:37:15-0700","eventName":"GET
         http://localhost:9292/index.html","clientId":"","logLevel":"log","tags":[],"json":{"url":"http://localhost:9292/index.html","method":"GET","host":"localhost","port":9292,"path":"/index.html","query":null,"format":"text/html","time":"2016-02-01
         15:37:15 -0700","status":200,"duration":1.2962617038283497e-05,"headers":{"Content-Type":"text/html","Connection":"close","Server":"thin"},"body":"<html>\n  <head>\n    <title>Test
         Page</title>\n  </head>\n  <body>\n    <h1>This is the test page.</h1>\n  </body>\n</html>","data":"","message":"GET
@@ -128,7 +128,7 @@ http_interactions:
     uri: http://localhost:8080/api/events/
     body:
       encoding: UTF-8
-      string: '{"contextId":null,"sessionId":"","clientEventTime":"2016-06-04T13:07:38-0400","eventName":"GET
+      string: '{"channelId":null,"sessionId":"","clientEventTime":"2016-06-04T13:07:38-0400","eventName":"GET
         http://104.131.46.61:8080/api/endpoints","clientId":"","logLevel":"log","tags":[],"json":{"direction":"out","url":"http://104.131.46.61:8080/api/endpoints","method":"GET","host":"104.131.46.61","port":8080,"path":"/api/endpoints","query":null,"format":"application/json","time":"2016-06-04
         13:07:38 -0400","status":200,"duration":4.5197909930720925,"headers":{"Date":"Sun,
         25 Oct 2015 15:43:06 GMT","Content-Type":"application/json","Content-Encoding":"gzip","Vary":"Accept-Encoding","Transfer-Encoding":"chunked"},"body":"[\"104.131.41.123\",\"104.236.110.41\",\"104.131.46.61\",\"104.131.106.113\",\"45.55.141.159\",\"104.131.75.74\"]","data":"","message":"GET

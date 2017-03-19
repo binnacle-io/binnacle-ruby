@@ -15,7 +15,7 @@ describe Binnacle::Logging do
       expect(
         a_request(:post, "http://localhost:8080/api/events/icoc0tnol3obe8pas207").
         with(body: hash_including({
-          "contextId": "icoc0tnol3obe8pas207",
+          "channelId": "icoc0tnol3obe8pas207",
           "eventName": "log",
           "logLevel": "INFO",
           "json": { "message": "This is an info message" }
@@ -31,7 +31,7 @@ describe Binnacle::Logging do
       expect(
         a_request(:post, "http://localhost:8080/api/events/icoc0tnol3obe8pas207").
         with(body: hash_including({
-          "contextId": "icoc0tnol3obe8pas207",
+          "channelId": "icoc0tnol3obe8pas207",
           "eventName": "log",
           "logLevel": "DEBUG",
           "json": { "message": "This is an debug message" }
@@ -47,7 +47,7 @@ describe Binnacle::Logging do
       expect(
         a_request(:post, "http://localhost:8080/api/events/icoc0tnol3obe8pas207").
         with(body: hash_including({
-          "contextId": "icoc0tnol3obe8pas207",
+          "channelId": "icoc0tnol3obe8pas207",
           "sessionId": "8675309",
           "eventName": "failed_transfer",
           "logLevel": "INFO",

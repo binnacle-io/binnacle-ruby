@@ -33,7 +33,7 @@ module Binnacle
         build_json_payload
 
         configure(
-          Binnacle.configuration.error_ctx,
+          Binnacle.configuration.error_channel,
           self.event_name,
           self.client_id,
           self.session_id,

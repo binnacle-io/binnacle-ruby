@@ -1,7 +1,7 @@
 module Binnacle
   class Event < Resource
 
-    attr_accessor :context_id
+    attr_accessor :channel_id
     attr_accessor :event_name
     attr_accessor :client_id
     attr_accessor :session_id
@@ -12,8 +12,8 @@ module Binnacle
     attr_accessor :json
     attr_accessor :event_time
 
-    def configure(context_id, event_name, client_id, session_id, log_level, ts = Time.now, tags = [], json = {})
-      self.context_id = context_id
+    def configure(channel_id, event_name, client_id, session_id, log_level, ts = Time.now, tags = [], json = {})
+      self.channel_id = channel_id
       self.event_name = event_name
       self.client_id = client_id
       self.session_id = session_id
@@ -23,11 +23,11 @@ module Binnacle
       self.json = json
     end
 
-    def configure_from_logging_progname(progname, context_id, client_id, session_id, log_level, ts = Time.now, tags = [], json = {})
+    def configure_from_logging_progname(progname, channel_id, client_id, session_id, log_level, ts = Time.now, tags = [], json = {})
       if progname.is_a?(Hash)
         self.client_id = progname[:client_id] || client_id
         self.session_id = progname[:session_id] || session_id
-        self.context_id = progname[:context_id] || context_id
+        self.channel_id = progname[:channel_id] || channel_id
         self.event_name =  progname[:event_name]
         self.tags = progname[:tags] || tags
         self.json = json
@@ -35,7 +35,7 @@ module Binnacle
       elsif progname.is_a?(String)
         self.client_id = client_id
         self.session_id = session_id
-        self.context_id = context_id
+        self.channel_id = channel_id
         self.event_name = progname
         self.tags = tags
         self.json = json
@@ -51,7 +51,7 @@ module Binnacle
 
     def self.from_hash(h)
       event = self.new()
-      event.context_id = h['contextId']
+      event.channel_id = h['channelId']
       event.event_name = h['eventName']
       event.client_id = h['clientId']
       event.session_id = h['sessionId']
@@ -66,7 +66,7 @@ module Binnacle
 
     def to_json
       {
-        "contextId" => context_id,
+        "channelId" => channel_id,
         "sessionId" => session_id,
         "clientEventTime" => client_event_time,
         "eventName" => event_name,
@@ -78,21 +78,21 @@ module Binnacle
     end
 
     def route
-      "/api/events/#{context_id}"
+      "/api/events/#{channel_id}"
     end
 
-    def self.route(context)
-      "/api/events/#{context}"
+    def self.route(channel)
+      "/api/events/#{channel}"
     end
 
-    def self.recents(connection, lines, since, context)
-      path = [route(context), 'recents'].compact.join('/')
+    def self.recents(connection, lines, since, channel)
+      path = [route(channel), 'recents'].compact.join('/')
 
       get(connection, path, {'limit' => lines, 'since' => since})
     end
 
-    def self.events(connection, context, date, start_hour, end_hour, lines)
-      path = [route(context), date].compact.join('/')
+    def self.events(connection, channel, date, start_hour, end_hour, lines)
+      path = [route(channel), date].compact.join('/')
 
       get(connection, path, {'start_hour' => start_hour, 'end_hour' => end_hour, 'limit' => lines})
     end

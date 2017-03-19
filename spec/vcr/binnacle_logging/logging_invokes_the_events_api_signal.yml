@@ -40,7 +40,7 @@ http_interactions:
     uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
     body:
       encoding: UTF-8
-      string: '{"contextId":"icoc0tnol3obe8pas207","sessionId":"","clientEventTime":"2015-10-17T13:38:50-0700","eventName":"log","clientId":"","logLevel":"INFO","tags":[],"json":{"message":"This
+      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"","clientEventTime":"2015-10-17T13:38:50-0700","eventName":"log","clientId":"","logLevel":"INFO","tags":[],"json":{"message":"This
         is an info message"}}'
     headers:
       User-Agent:

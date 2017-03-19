@@ -16,13 +16,13 @@ module Binnacle
           logging_tags = current_tags.dup
 
           if progname
-            event.configure_from_logging_progname(progname, @client.logging_context_id, client_id, session_id, severity, datetime, [], { message: msg })
+            event.configure_from_logging_progname(progname, @client.logging_channel_id, client_id, session_id, severity, datetime, [], { message: msg })
           elsif defined?(ActiveSupport::TaggedLogging) && logging_tags && !logging_tags.empty? && logging_tags.size > 2
             logging_tags.shift(2)
             event_name = logging_tags.shift
-            event.configure_from_logging_progname(event_name, @client.logging_context_id, client_id, session_id, severity, datetime, logging_tags, { message: msg })
+            event.configure_from_logging_progname(event_name, @client.logging_channel_id, client_id, session_id, severity, datetime, logging_tags, { message: msg })
           else
-            event.configure(@client.logging_context_id, 'log', client_id, session_id, severity, datetime, [], { message: msg })
+            event.configure(@client.logging_channel_id, 'log', client_id, session_id, severity, datetime, [], { message: msg })
           end
 
           event

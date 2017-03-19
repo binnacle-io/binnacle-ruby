@@ -81,7 +81,7 @@ http_interactions:
     uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
     body:
       encoding: UTF-8
-      string: '{"contextId":"icoc0tnol3obe8pas207","sessionId":"","clientEventTime":"2016-02-01T19:47:05-0700","eventName":"GET
+      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"","clientEventTime":"2016-02-01T19:47:05-0700","eventName":"GET
         http://localhost:9292/index.html","clientId":"","logLevel":"log","tags":[],"json":{"url":"http://localhost:9292/index.html","method":"GET","host":"localhost","port":9292,"path":"/index.html","query":"foo=bar&bar=foo","format":"text/html","time":"2016-02-01
         19:47:05 -0700","status":200,"duration":9.859e-06,"headers":{"foo":"bar","bar":"foo"},"body":"<html>\n  <head>\n    <title>Test
         Page</title>\n  </head>\n  <body>\n    <h1>This is the test page.</h1>\n  </body>\n</html>","data":"","message":"GET

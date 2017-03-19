@@ -24,7 +24,7 @@ describe Binnacle::Connection do
     end
 
     it 'fails with bad endpoint', :vcr do
-      expected_output = %[ERROR -- : Error communicating with Binnacle (/api/endpoints): Connection refused - connect(2) for "localhost" port 8888 (localhost:8888)]
+      expected_output = %[ERROR -- : Error communicating with Binnacle (/api/endpoints): Connection refused - Connection refused - connect(2) for "localhost" port 8888 (localhost:8888)]
       connection = Binnacle::Connection.new('vceth4xcwqfoowpz2esi', '1grttyb8ozbe9axt88ji', 'http://localhost:8888')
       expect(a_request(:get, 'http://localhost:8888/api/endpoints'))
       expect(Binnacle.binnacle_logger.messages).to include(expected_output)
