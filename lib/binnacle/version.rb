@@ -1,3 +1,3 @@
 module Binnacle
-  VERSION = "0.4.3"
+  VERSION = "0.4.7"
 end

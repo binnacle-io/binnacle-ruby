@@ -1,7 +1,19 @@
 require_relative 'backtrace'
+require 'json'
 
 module Binnacle
   module Trap
+    HTTP_HEADER_PREFIXES = [
+      'HTTP_'.freeze,
+      'CONTENT_TYPE'.freeze,
+      'CONTENT_LENGTH'.freeze
+    ].freeze
+
+    HTTP_HEADER_SKIPS = [
+      'HTTP_COOKIE'.freeze,
+      'HTTP_X_CSRF_TOKEN'.freeze
+    ]
+
     class ExceptionEvent < ::Binnacle::Event
       attr_reader :exception
       attr_reader :env
@@ -74,21 +86,17 @@ module Binnacle
       end
 
       def extract_headers
-        headers = {}
+        http_headers = {}
 
-        @env.each_pair do |key, value|
-          if key.to_s.start_with?("HTTP_")
-            header_key = key[5..-1]
-          elsif ["CONTENT_TYPE", "CONTENT_LENGTH"].include?(key)
-            header_key = key
-          else
-            next
+        http_headers = @env.map.with_object({}) do |(key, value), headers|
+          if Binnacle::Trap::HTTP_HEADER_PREFIXES.any? { |prefix| key.to_s.start_with?(prefix) } && !HTTP_HEADER_SKIPS.include?(key.to_s)
+            headers[key] = value
           end
 
-          headers[header_key.split("_").map {|s| s.capitalize}.join("-")] = value
+          headers
         end
 
-        headers
+        http_headers
       end
 
       def extract_framework
@@ -119,11 +127,13 @@ module Binnacle
       end
 
       def extract_libraries_loaded
+        libraries = {}
         begin
-          return Hash[*Gem.loaded_specs.map{|name, gem_specification| [name, gem_specification.version.to_s]}.flatten]
+          libraries = Hash[*Gem.loaded_specs.map{|name, gem_specification| [name, gem_specification.version.to_s]}.flatten]
         rescue
         end
-        {}
+
+        libraries
       end
 
       def extract_http_params
@@ -156,7 +166,6 @@ module Binnacle
           framework_params: extract_framework_params,
           http_params: extract_http_params,
           headers: extract_headers,
-          cookies: @request.cookies,
           dependencies: extract_libraries_loaded,
           backtrace: @backtrace
         }

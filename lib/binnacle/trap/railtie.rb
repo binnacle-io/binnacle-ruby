@@ -5,8 +5,8 @@ module Binnacle
         Binnacle.binnacle_logger.info "Installing Rails Binnacle Middleware..."
 
         # Exception Trapping
-        if Rails::VERSION::MAJOR >= 5
-          app.config.middleware.insert_after ActionDispatch::ShowExceptions, Binnacle::Trap::Middleware
+        if ::Rails::VERSION::MAJOR >= 5
+          app.config.middleware.insert_after ActionDispatch::DebugExceptions, Binnacle::Trap::Middleware
         else
           exception_class = defined?(ActionDispatch::DebugExceptions) ? "DebugExceptions" : "ShowExceptions"
           app.config.middleware.insert_after "ActionDispatch::#{exception_class}", "Binnacle::Trap::Middleware"

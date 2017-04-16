@@ -2,10 +2,15 @@ require 'faye/websocket'
 require 'addressable/uri'
 require 'eventmachine'
 require 'json'
+require 'colorize'
 
 module Binnacle::Commands
 
   def self.tail
+    if ENV["TEST_MODE"] == 'true'
+      String.disable_colorization = true
+    end
+
     opts = Trollop::options do
       banner TAIL_BANNER
       opt(:host, "Binnacle Host", type: :string, default: 'localhost')
@@ -32,7 +37,6 @@ module Binnacle::Commands
 
   def self.validate(opts)
     errors = []
-    errors << "No endpoint given" unless opts[:host_given]
     errors << "No channel or app given" unless (opts[:channel_given] || opts[:app_given])
     errors << "No authentication information given" unless (opts[:api_key_given] && opts[:api_secret_given])
     errors << "Cannot use both 'follow' and 'lines'" if (opts[:follow_given] && opts[:lines_given])
@@ -61,22 +65,15 @@ module Binnacle::Commands
       Signal.trap("TERM") { EventMachine.stop }
 
       ws_url = build_ws_url(host, api_key, api_secret, channel, is_app, encrypted)
-
       ws = Faye::WebSocket::Client.new(ws_url)
 
       ws.on :open do |event|
-        puts "Monitoring #{is_app ? 'App' : 'Channel'} #{channel} (#{ws_url})..."
+        puts "Monitoring #{is_app ? 'App' : 'Channel'} #{channel} on #{host}..."
       end
 
       ws.on :message do |event|
         if event.data !~ /\s/ && event.data != 'X'
-          begin
-            data = JSON.parse event.data
-            tags = data['tags'].join(',')
-            puts %[#{data['logLevel']} \[#{Time.at(data['eventTime']/1000)}\] #{data['eventName']} :: clientId=#{data['clientId']}, sessionId=#{data['eventName']}, tags=#{tags}]
-          rescue
-            # do nothing
-          end
+          print_event_from_json(event.data)
         end
       end
 
@@ -94,7 +91,7 @@ module Binnacle::Commands
     client = Binnacle::Client.new(api_key, api_secret, host)
 
     client.recents(lines, since, channel).each do |e|
-      puts %[#{e.log_level} \[#{e.event_time}\] #{e.event_name} :: clientId=#{e.client_id}, sessionId=#{e.session_id}, tags=#{e.tags}]
+      print_event(e)
     end
   end
 
@@ -104,7 +101,7 @@ module Binnacle::Commands
     Addressable::URI.new(
       host: host,
       port: Binnacle::Configuration::DEFAULT_PORT,
-      scheme: encrypted ? 'ws' : 'wss',
+      scheme: encrypted ? 'wss' : 'ws',
       path: ["/api/subscribe", is_app ? "app" : "channel", channel].join("/"),
       query: build_ws_query(api_key, api_secret)
     ).to_s
@@ -120,11 +117,70 @@ module Binnacle::Commands
       "X-atmo-protocol" => "true"
     }.map { |n,v| "#{n}=#{v}" }.join("&")
   end
+
+  def self.print_event(event)
+    message = ""
+
+    level = '%-10.10s' % event.log_level
+
+    level = case
+    when ['INFO', 'EXPORT_JOB'].include?(level)
+      level.colorize(:blue)
+    when ['WARN', 'WARNING', 'OVERAGE'].include?(level)
+      level.colorize(:yellow)
+    when ['ERROR', 'FATAL', 'DELIVERY_FAILURE', 'EXCEPTION', 'OOPS', 'MYBAD'].include?(level)
+      level.colorize(:red)
+    when ['DEBUG'].include?(level)
+      level.colorize(:cyan)
+    when ['UNKNOWN'].include?(level)
+      level.colorize(:magenta)
+    else
+      level.colorize(:blue)
+    end.colorize(mode: :bold)
+
+    message << "#{level} [#{Time.at(event.event_time)}] "
+
+    message << ('%-10.10s' % event.event_name).colorize(color: :green, mode: :bold)
+
+    rest = []
+
+    unless event.client_id.nil? || event.client_id.empty?
+      rest << " #{'client_id'.colorize(mode: :bold)} = #{event.client_id}"
+    end
+
+    unless event.session_id.nil? || event.session_id.empty?
+      rest << "#{'session_id'.colorize(mode: :bold)} = #{event.session_id}"
+    end
+
+    unless event.ip_address.nil? || event.ip_address.empty?
+      rest << "#{'ip'.colorize(mode: :bold)} = #{('%-15.15s' % event.ip_address)}"
+    end
+
+    unless event.tags.empty?
+      tags = event.tags.join(',')
+      rest << "#{'tags'.colorize(mode: :bold)} = [#{event.tags}]"
+    end
+
+    message << " :: ".colorize(mode: :bold) + rest.join(", ") unless rest.empty?
+
+    puts message
+  end
+
+  def self.print_event_from_json(json)
+    begin
+      data = JSON.parse(json)
+      event = Binnacle::Event.from_hash(data)
+      print_event(event)
+    rescue JSON::ParserError => jpe
+      # do nothing!
+    end
+  end
+
 end
 
 TAIL_BANNER = <<-EOS
 Usage:
-   binnacle tail
+   binnacle tail [options]
 
 where [options] are:
 

@@ -95,6 +95,14 @@ module Binnacle
     @client
   end
 
+  #
+  # JS Assets Inclusion
+  #
+  if defined?(Rails)
+    class Engine < ::Rails::Engine
+      # Rails -> use app/assets directory.
+    end
+  end
 end
 
 if defined?(Rails::Railtie)

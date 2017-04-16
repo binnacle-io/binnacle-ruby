@@ -7,9 +7,11 @@ module Binnacle
       end
 
       def call(env)
+        Rails.logger.info ">>>>>>> In call......."
         _, headers, _ = response = @app.call(env)
         response
       rescue Exception => exception
+        Rails.logger.info ">>>>>>>>> In rescue!!!!!!!!!!!!!!!!!"
         if report?(exception, headers)
           begin
             Binnacle.binnacle_logger.debug "Binnacle: reporting exception: #{exception.class.name}"

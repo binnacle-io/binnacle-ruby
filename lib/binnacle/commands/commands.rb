@@ -1,4 +1,5 @@
 require 'trollop'
+require_relative 'help'
 require_relative 'tail'
 
 class BinnacleCommand
@@ -10,7 +11,7 @@ class BinnacleCommand
       if subcommand
         Binnacle::Commands.send(subcommand)
       else
-        puts "The binnacle command requires a subcommand"
+        Binnacle::Commands.send('help')
       end
     rescue NoMethodError => nme
       puts "I don't know the subcommand command '#{subcommand}'"
