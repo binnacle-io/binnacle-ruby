@@ -11,7 +11,7 @@ describe "binnacle command" do
   end
 
   it 'returns the help for the binnacle tail sub command' do
-    expect(`binnacle tail --help`).to eq(BINNACLE_TAIL_HELP)
+    expect(`binnacle tail --help`.gsub("\n",'')).to eq(BINNACLE_TAIL_HELP.gsub("\n",''))
   end
 end
 
