@@ -11,7 +11,7 @@ describe "binnacle command" do
   end
 
   it 'returns the help for the binnacle tail sub command' do
-    expect(`binnacle tail --help`.gsub("\n",'')).to eq(BINNACLE_TAIL_HELP.gsub("\n",''))
+    expect(`binnacle tail --help`).to eq(BINNACLE_TAIL_HELP)
   end
 end
 
@@ -36,15 +36,17 @@ describe BinnacleCommand do
       }.to output(expected_output).to_stdout
     end
 
-    it 'with -n flag returns recent events', :vcr do
-      args = ["tail", "-n", "10", "-s", "60", "--host=localhost", "--channel=ylhcn28x7skv6av8q93m", "--api-key=jzr5d5kgj4j3l8fm90tr", "--api-secret=bz3e3w44o3323dypp8d7", "--no-encrypted"]
+    unless ENV["CI"] == "true"
+      it 'with -n flag returns recent events', :vcr do
+        args = ["tail", "-n", "10", "-s", "60", "--host=localhost", "--channel=ylhcn28x7skv6av8q93m", "--api-key=jzr5d5kgj4j3l8fm90tr", "--api-secret=bz3e3w44o3323dypp8d7", "--no-encrypted"]
 
-      expect { BinnacleCommand.new.run(args) }.to output(TAIL_DASH_L).to_stdout
+        expect { BinnacleCommand.new.run(args) }.to output(TAIL_DASH_L).to_stdout
 
-      expect(a_request(:get, 'http://localhost:8080/api/endpoints'))
-      expect(
-        a_request(:get, "http://localhost:8080/api/events/ylhcn28x7skv6av8q93m/recents?limit=10&since=60")
-      ).to(have_been_made.times(1))
+        expect(a_request(:get, 'http://localhost:8080/api/endpoints'))
+        expect(
+          a_request(:get, "http://localhost:8080/api/events/ylhcn28x7skv6av8q93m/recents?limit=10&since=60")
+        ).to(have_been_made.times(1))
+      end
     end
   end
 end
