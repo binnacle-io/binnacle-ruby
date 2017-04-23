@@ -29,8 +29,8 @@ class BinnacleGenerator < Rails::Generators::Base
       # - report_exceptions: Trap exceptions are log them to error_channel (BINNACLE_REPORT_EXCEPTIONS)
       # #{'=' * 78}
       Binnacle.configure do |config|
-        config.intercept_rails_logging = true
-        config.report_exceptions = true
+        config.intercept_rails_logging = false
+        config.report_exceptions = false
       end
       EOM
     end
@@ -60,7 +60,7 @@ class BinnacleGenerator < Rails::Generators::Base
       routes = <<-ROUTES
   get 'manifest.json', to: redirect(ActionController::Base.helpers.asset_path('manifest.json'))
   get 'firebase-messaging-sw.js', to: -> (env) do
-    [200, { 'Content-Type' => 'application/javascript' }, [Rails.application.assets['firebase-messaging-sw.js'].to_s]]
+    [200, { 'Content-Type' => 'application/javascript' }, [Rails.application.assets_manifest.find_sources('firebase-messaging-sw.js').first]]
   end
        ROUTES
 

@@ -36,7 +36,7 @@ module Binnacle
       asynch ? event.post_asynch : event.post
     end
 
-    def signal_asynch(channel_id, event_name, client_id, session_id, log_level, tags = [], json = {})
+    def signal_asynch(channel_id, event_name, client_id = '', session_id = '', log_level = 'INFO', tags = [], json = {})
       signal(channel_id, event_name, client_id, session_id, log_level, tags, json, true)
     end
 
