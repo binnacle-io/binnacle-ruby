@@ -59,7 +59,9 @@ module Binnacle
       private
 
       def unwrap_exception(exception)
-        if exception.respond_to?(:original_exception)
+        if exception.respond_to?(:cause)
+          exception.cause
+        elsif exception.respond_to?(:original_exception)
           exception.original_exception
         elsif exception.respond_to?(:continued_exception)
           exception.continued_exception
@@ -122,10 +124,6 @@ module Binnacle
         'UNKNOWN'
       end
 
-      def extract_rails_environment_level
-        defined?(Rails) ? Rails.env : "UNKNOWN"
-      end
-
       def extract_libraries_loaded
         libraries = {}
         begin
@@ -157,7 +155,7 @@ module Binnacle
           message: @exception.message,
           component: @component,
           method: @method,
-          environment_level: extract_rails_environment_level,
+          environment_level: Event.rails_env,
           hostname: extract_hostname,
           user_agent: @request.user_agent,
           ruby_version: extract_ruby_version,
