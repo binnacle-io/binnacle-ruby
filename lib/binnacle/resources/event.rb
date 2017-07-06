@@ -11,8 +11,9 @@ module Binnacle
     attr_accessor :tags
     attr_accessor :json
     attr_accessor :event_time
+    attr_accessor :environment
 
-    def configure(channel_id, event_name, client_id, session_id, log_level, ts = Time.now, tags = [], json = {})
+    def configure(channel_id, event_name, client_id, session_id, log_level, environment = Event.rails_env, ts = Time.now, tags = [], json = {})
       self.channel_id = channel_id
       self.event_name = event_name
       self.client_id = client_id
@@ -21,9 +22,10 @@ module Binnacle
       self.log_level = log_level
       self.tags = tags
       self.json = json
+      self.environment = environment || Event.rails_env
     end
 
-    def configure_from_logging_progname(progname, channel_id, client_id, session_id, log_level, ts = Time.now, tags = [], json = {})
+    def configure_from_logging_progname(progname, channel_id, client_id, session_id, log_level, environment =  Event.rails_env, ts = Time.now, tags = [], json = {})
       if progname.is_a?(Hash)
         self.client_id = progname[:client_id] || client_id
         self.session_id = progname[:session_id] || session_id
@@ -32,6 +34,7 @@ module Binnacle
         self.tags = progname[:tags] || tags
         self.json = json
         self.json.merge!(progname[:json]) if progname[:json]
+        self.environment = environment || Event.rails_env
       elsif progname.is_a?(String)
         self.client_id = client_id
         self.session_id = session_id
@@ -39,10 +42,12 @@ module Binnacle
         self.event_name = progname
         self.tags = tags
         self.json = json
+        self.environment = environment || Event.rails_env
       end
 
       self.timestamp = ts ? ts : Time.now
       self.log_level = log_level
+      self.environment = environment || Event.rails_env
     end
 
     def timestamp=(ts)
@@ -60,6 +65,7 @@ module Binnacle
       event.event_time = Time.at(h['eventTime']/1000)
       event.tags = h['tags']
       event.json = h['json']
+      event.environment = h['environment']
 
       event
     end
@@ -73,6 +79,7 @@ module Binnacle
         "clientId" => client_id,
         "logLevel" => log_level,
         "tags" => tags,
+        "environment" => environment,
         "json" => json
       }.to_json
     end
@@ -85,16 +92,22 @@ module Binnacle
       "/api/events/#{channel}"
     end
 
-    def self.recents(connection, lines, since, channel)
-      path = [route(channel), 'recents'].compact.join('/')
+    def self.recents(connection, lines, since, channel, environment = rails_env)
+      path = [route(channel), environment, 'recents'].compact.join('/')
 
       get(connection, path, {'limit' => lines, 'since' => since})
     end
 
-    def self.events(connection, channel, date, start_hour, end_hour, lines)
-      path = [route(channel), date].compact.join('/')
+    def self.events(connection, channel, date, start_hour, end_hour, lines, environment = rails_env)
+      path = [route(channel), environment, date].compact.join('/')
 
       get(connection, path, {'start_hour' => start_hour, 'end_hour' => end_hour, 'limit' => lines})
+    end
+
+    protected
+
+    def self.rails_env
+      defined?(Rails) ? Rails.env : "production"
     end
   end
 end

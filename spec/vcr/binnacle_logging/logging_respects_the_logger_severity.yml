@@ -8,13 +8,13 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.12.1
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 23 Oct 2015 19:04:40 GMT
+      - Thu, 06 Jul 2017 19:23:03 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 23 Oct 2015 19:04:40 GMT
+      - Thu, 06 Jul 2017 19:23:03 GMT
       Content-Type:
       - application/json
       Content-Encoding:
@@ -36,25 +36,24 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '["68.2.239.31"]'
+      string: '["127.0.0.1"]'
     http_version: 
-  recorded_at: Fri, 23 Oct 2015 19:04:40 GMT
+  recorded_at: Thu, 06 Jul 2017 19:23:03 GMT
 - request:
-    method: post
-    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
+    method: get
+    uri: http://localhost:8080/api/endpoints
     body:
       encoding: UTF-8
-      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"","clientEventTime":"2015-10-23T12:04:40-0700","eventName":"log","clientId":"","logLevel":"DEBUG","tags":[],"json":{"message":"This
-        is an debug message"}}'
+      string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.12.1
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 23 Oct 2015 19:04:40 GMT
+      - Thu, 06 Jul 2017 19:23:03 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -65,17 +64,57 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 23 Oct 2015 19:04:40 GMT
+      - Thu, 06 Jul 2017 19:23:03 GMT
+      Content-Type:
+      - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '["127.0.0.1"]'
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 19:23:03 GMT
+- request:
+    method: post
+    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
+    body:
+      encoding: UTF-8
+      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"","clientEventTime":"2017-07-06T15:23:03-0400","eventName":"log","clientId":"","logLevel":"DEBUG","tags":[],"environment":"production","json":{"message":"This
+        is an debug message"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 06 Jul 2017 19:23:03 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 06 Jul 2017 19:23:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"message":"Signaled: io.binnacle.models.BinnacleEvent(df4f0000-f65d-4016-bb9b-aa26e4009dde,
-        bv4sfcz28up6q6bophx4, n7f05b76tr4xsc6slstl, icoc0tnol3obe8pas207, 2015-10-23,
-        , Fri Oct 23 12:04:40 MST 2015, log, Fri Oct 23 12:04:40 MST 2015, , /0:0:0:0:0:0:0:1,
-        DEBUG, null, [], null, {\"message\":\"This is an debug message\"})"}'
+      string: '{"message":"Signaled: io.binnacle.models.BinnacleEvent(b26af3d4-92e5-44d2-9f0b-45e9d9a51ab3,
+        bv4sfcz28up6q6bophx4, n7f05b76tr4xsc6slstl, icoc0tnol3obe8pas207, 2017-07-06,
+        , Thu Jul 06 15:23:03 EDT 2017, log, Thu Jul 06 15:23:03 EDT 2017, , /0:0:0:0:0:0:0:1,
+        DEBUG, production, [], null, {\"message\":\"This is an debug message\"})"}'
     http_version: 
-  recorded_at: Fri, 23 Oct 2015 19:04:40 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 06 Jul 2017 19:23:03 GMT
+recorded_with: VCR 3.0.3

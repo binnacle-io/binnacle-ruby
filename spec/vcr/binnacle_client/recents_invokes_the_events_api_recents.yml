@@ -8,11 +8,13 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.1
+      - Faraday v0.12.1
       Accept:
       - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
       Date:
-      - Fri, 16 Oct 2015 05:12:55 GMT
+      - Thu, 06 Jul 2017 15:10:41 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -23,31 +25,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Oct 2015 05:12:55 GMT
+      - Thu, 06 Jul 2017 15:10:41 GMT
       Content-Type:
       - application/json
+      Content-Encoding:
+      - gzip
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '["68.2.239.31"]'
+      string: '["127.0.0.1"]'
     http_version: 
-  recorded_at: Fri, 16 Oct 2015 05:12:55 GMT
+  recorded_at: Thu, 06 Jul 2017 15:10:41 GMT
 - request:
     method: get
-    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207/recents?limit=10&since=500
+    uri: http://localhost:8080/api/endpoints
     body:
       encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.1
+      - Faraday v0.12.1
       Accept:
       - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
       Date:
-      - Fri, 16 Oct 2015 05:12:55 GMT
+      - Thu, 06 Jul 2017 15:10:41 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -58,26 +64,57 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Oct 2015 05:12:55 GMT
+      - Thu, 06 Jul 2017 15:10:41 GMT
       Content-Type:
       - application/json
+      Content-Encoding:
+      - gzip
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/\" for 127.0.0.1 at 2015-10-15 15:29:50 -0700"},"id":"0649929e-081b-4242-aece-5af865ffa556","channelId":"icoc0tnol3obe8pas207","date":"2015-10-15","sessionId":"bbc09810-c675-4e2b-b79b-4883f7c63ac0","eventTime":1444948191100,"eventName":"log","clientEventTime":1444948190000,"clientId":"127.0.0.1","ipAddress":"127.0.0.1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Processing
-        by HomeController#index as HTML"},"id":"9f48b581-c467-4dbb-bc1d-3bb36796804b","channelId":"icoc0tnol3obe8pas207","date":"2015-10-15","sessionId":"bbc09810-c675-4e2b-b79b-4883f7c63ac0","eventTime":1444948191333,"eventName":"log","clientEventTime":1444948191000,"clientId":"127.0.0.1","ipAddress":"127.0.0.1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        home/index.html.erb within layouts/home (4.0ms)"},"id":"2d83c39a-c4ce-4c18-b32f-2ce25d164e62","channelId":"icoc0tnol3obe8pas207","date":"2015-10-15","sessionId":"bbc09810-c675-4e2b-b79b-4883f7c63ac0","eventTime":1444948192428,"eventName":"log","clientEventTime":1444948192000,"clientId":"127.0.0.1","ipAddress":"127.0.0.1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_menu.html.erb (17.9ms)"},"id":"1b6957c9-3e60-4101-b48d-625c5f4e99fb","channelId":"icoc0tnol3obe8pas207","date":"2015-10-15","sessionId":"bbc09810-c675-4e2b-b79b-4883f7c63ac0","eventTime":1444948193887,"eventName":"log","clientEventTime":1444948193000,"clientId":"127.0.0.1","ipAddress":"127.0.0.1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Completed
-        200 OK in 2785ms (Views: 1922.7ms | ActiveRecord: 110.4ms)"},"id":"50a5cc3d-be19-4f98-b192-aa07bbeb1c1d","channelId":"icoc0tnol3obe8pas207","date":"2015-10-15","sessionId":"bbc09810-c675-4e2b-b79b-4883f7c63ac0","eventTime":1444948194120,"eventName":"log","clientEventTime":1444948194000,"clientId":"127.0.0.1","ipAddress":"127.0.0.1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        home/_try_binnacle.html.erb (0.3ms)"},"id":"cd2848bc-a292-40f8-9476-597227d8d86c","channelId":"icoc0tnol3obe8pas207","date":"2015-10-15","sessionId":"bbc09810-c675-4e2b-b79b-4883f7c63ac0","eventTime":1444948194212,"eventName":"log","clientEventTime":1444948194000,"clientId":"127.0.0.1","ipAddress":"127.0.0.1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/users/sign_in\" for 127.0.0.1 at 2015-10-15 15:29:58 -0700"},"id":"ee0af607-e9da-4ce2-8431-099adcff4429","channelId":"icoc0tnol3obe8pas207","date":"2015-10-15","sessionId":"332880dc-b31b-4e39-9e20-94106a359089","eventTime":1444948198856,"eventName":"log","clientEventTime":1444948198000,"clientId":"127.0.0.1","ipAddress":"127.0.0.1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Processing
-        by SessionsController#new as HTML"},"id":"ef53df3d-1d92-4e17-aaaa-c55f01eadb89","channelId":"icoc0tnol3obe8pas207","date":"2015-10-15","sessionId":"332880dc-b31b-4e39-9e20-94106a359089","eventTime":1444948198951,"eventName":"log","clientEventTime":1444948198000,"clientId":"127.0.0.1","ipAddress":"127.0.0.1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        devise/sessions/new.html.erb within layouts/login_and_registration (142.3ms)"},"id":"eabb0981-55bd-4b8b-bb3b-4d4b33834771","channelId":"icoc0tnol3obe8pas207","date":"2015-10-15","sessionId":"332880dc-b31b-4e39-9e20-94106a359089","eventTime":1444948199235,"eventName":"log","clientEventTime":1444948199000,"clientId":"127.0.0.1","ipAddress":"127.0.0.1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Completed
-        200 OK in 2064ms (Views: 1976.0ms | ActiveRecord: 5.5ms)"},"id":"da43fab0-8d7d-4f10-b1dd-b495d6d1d20e","channelId":"icoc0tnol3obe8pas207","date":"2015-10-15","sessionId":"332880dc-b31b-4e39-9e20-94106a359089","eventTime":1444948201012,"eventName":"log","clientEventTime":1444948200000,"clientId":"127.0.0.1","ipAddress":"127.0.0.1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null}]'
+      string: '["127.0.0.1"]'
     http_version: 
-  recorded_at: Fri, 16 Oct 2015 05:12:55 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 06 Jul 2017 15:10:41 GMT
+- request:
+    method: get
+    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207/production/recents?limit=10&since=500
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 06 Jul 2017 15:10:41 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 06 Jul 2017 15:10:41 GMT
+      Content-Type:
+      - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 15:10:42 GMT
+recorded_with: VCR 3.0.3

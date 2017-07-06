@@ -8,11 +8,13 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.1
+      - Faraday v0.12.1
       Accept:
       - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
       Date:
-      - Fri, 16 Oct 2015 05:12:55 GMT
+      - Thu, 06 Jul 2017 15:10:41 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -23,31 +25,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Oct 2015 05:12:55 GMT
+      - Thu, 06 Jul 2017 15:10:41 GMT
       Content-Type:
       - application/json
+      Content-Encoding:
+      - gzip
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '["68.2.239.31"]'
-    http_version:
-  recorded_at: Fri, 16 Oct 2015 05:12:55 GMT
+      string: '["127.0.0.1"]'
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 15:10:41 GMT
 - request:
-    method: post
-    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
+    method: get
+    uri: http://localhost:8080/api/endpoints
     body:
       encoding: UTF-8
-      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"My Sess","clientEventTime":"2015-10-15T22:12:55-0700","eventName":"ASYNCH_TEST_EVT","clientId":"binnacle-rb","logLevel":"INFO","tags":[],"json":{}}'
+      string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.1
+      - Faraday v0.12.1
       Accept:
       - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
       Date:
-      - Fri, 16 Oct 2015 05:12:55 GMT
+      - Thu, 06 Jul 2017 15:10:41 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -58,17 +64,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Oct 2015 05:12:55 GMT
+      - Thu, 06 Jul 2017 15:10:41 GMT
       Content-Type:
       - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"message":"Signaled: io.binnacle.models.BinnacleEvent(8184dc08-fa21-44ea-af5a-0b857f76c78c,
-        bv4sfcz28up6q6bophx4, n7f05b76tr4xsc6slstl, icoc0tnol3obe8pas207, 2015-10-15,
-        My Sess, Thu Oct 15 22:12:55 MST 2015, ASYNCH_TEST_EVT, Thu Oct 15 22:12:55 MST 2015,
-        binnacle-rb, /0:0:0:0:0:0:0:1, INFO, null, [], null, {})"}'
-    http_version:
-  recorded_at: Fri, 16 Oct 2015 05:12:55 GMT
-recorded_with: VCR 2.9.3
+      string: '["127.0.0.1"]'
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 15:10:41 GMT
+recorded_with: VCR 3.0.3

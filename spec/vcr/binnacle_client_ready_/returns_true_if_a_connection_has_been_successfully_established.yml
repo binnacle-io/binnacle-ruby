@@ -8,13 +8,13 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.12.1
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Sat, 24 Oct 2015 18:00:00 GMT
+      - Thu, 06 Jul 2017 19:25:14 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 24 Oct 2015 18:00:00 GMT
+      - Thu, 06 Jul 2017 19:25:14 GMT
       Content-Type:
       - application/json
       Content-Encoding:
@@ -36,7 +36,46 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '["68.2.239.31"]'
+      string: '["127.0.0.1"]'
     http_version: 
-  recorded_at: Sat, 24 Oct 2015 18:00:00 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 06 Jul 2017 19:25:14 GMT
+- request:
+    method: get
+    uri: http://localhost:8080/api/endpoints
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 06 Jul 2017 19:25:14 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 06 Jul 2017 19:25:14 GMT
+      Content-Type:
+      - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '["127.0.0.1"]'
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 19:25:14 GMT
+recorded_with: VCR 3.0.3

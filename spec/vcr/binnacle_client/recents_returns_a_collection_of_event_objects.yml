@@ -1,6 +1,44 @@
 ---
 http_interactions:
 - request:
+    method: post
+    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
+    body:
+      encoding: UTF-8
+      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"My Sess","clientEventTime":"2017-07-06T11:10:41-0400","eventName":"ASYNCH_TEST_EVT","clientId":"binnacle-rb","logLevel":"INFO","tags":[],"environment":"production","json":{}}'
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 06 Jul 2017 15:10:41 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 06 Jul 2017 15:10:41 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"message":"Signaled: io.binnacle.models.BinnacleEvent(a1458959-18c0-42e3-aa26-e41d752eb339,
+        bv4sfcz28up6q6bophx4, n7f05b76tr4xsc6slstl, icoc0tnol3obe8pas207, 2017-07-06,
+        My Sess, Thu Jul 06 11:10:41 EDT 2017, ASYNCH_TEST_EVT, Thu Jul 06 11:10:41
+        EDT 2017, binnacle-rb, /0:0:0:0:0:0:0:1, INFO, production, [], null, {})"}'
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 15:10:42 GMT
+- request:
     method: get
     uri: http://localhost:8080/api/endpoints
     body:
@@ -8,11 +46,13 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.1
+      - Faraday v0.12.1
       Accept:
       - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
       Date:
-      - Thu, 22 Oct 2015 04:04:44 GMT
+      - Thu, 06 Jul 2017 15:10:42 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -23,31 +63,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 22 Oct 2015 04:04:44 GMT
+      - Thu, 06 Jul 2017 15:10:42 GMT
       Content-Type:
       - application/json
+      Content-Encoding:
+      - gzip
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '["98.174.197.28"]'
+      string: '["127.0.0.1"]'
     http_version: 
-  recorded_at: Thu, 22 Oct 2015 04:04:44 GMT
+  recorded_at: Thu, 06 Jul 2017 15:10:42 GMT
 - request:
     method: get
-    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207/recents?limit=10&since=500
+    uri: http://localhost:8080/api/endpoints
     body:
       encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.1
+      - Faraday v0.12.1
       Accept:
       - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
       Date:
-      - Thu, 22 Oct 2015 04:04:44 GMT
+      - Thu, 06 Jul 2017 15:10:42 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -58,26 +102,58 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 22 Oct 2015 04:04:44 GMT
+      - Thu, 06 Jul 2017 15:10:42 GMT
       Content-Type:
       - application/json
+      Content-Encoding:
+      - gzip
       Vary:
       - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/\" for 127.0.0.1 at 2015-10-21 14:02:44 -0700"},"id":"564502a3-99bd-4e59-b158-ff6e81286047","channelId":"icoc0tnol3obe8pas207","date":"2015-10-21","sessionId":"4e1f948b-ffab-4c88-8755-81ae23d88a79","eventTime":1445461365173,"eventName":"log","clientEventTime":1445461364000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Processing
-        by DashboardController#index as HTML"},"id":"87fb0c3a-7681-45c7-b104-28895b1e5f7e","channelId":"icoc0tnol3obe8pas207","date":"2015-10-21","sessionId":"4e1f948b-ffab-4c88-8755-81ae23d88a79","eventTime":1445461365305,"eventName":"log","clientEventTime":1445461365000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/\" for 127.0.0.1 at 2015-10-21 14:02:45 -0700"},"id":"e360b98d-6355-4daf-8af6-49500ccb5cf7","channelId":"icoc0tnol3obe8pas207","date":"2015-10-21","sessionId":"bd2d0144-5f6f-4b4c-ab82-840d462ba2b6","eventTime":1445461365368,"eventName":"log","clientEventTime":1445461365000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Processing
-        by DashboardController#index as HTML"},"id":"9f85d600-ef0a-464b-9a72-13446c297df9","channelId":"icoc0tnol3obe8pas207","date":"2015-10-21","sessionId":"bd2d0144-5f6f-4b4c-ab82-840d462ba2b6","eventTime":1445461366331,"eventName":"log","clientEventTime":1445461366000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        dashboard/index.html.erb within layouts/application (1126.0ms)"},"id":"20d9d0b6-936b-414e-ab8e-a42e32df3b2d","channelId":"icoc0tnol3obe8pas207","date":"2015-10-21","sessionId":"4e1f948b-ffab-4c88-8755-81ae23d88a79","eventTime":1445461371031,"eventName":"log","clientEventTime":1445461370000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        dashboard/index.html.erb within layouts/application (1013.6ms)"},"id":"5fcda44f-1bde-4cf9-850c-159e8ef2c023","channelId":"icoc0tnol3obe8pas207","date":"2015-10-21","sessionId":"bd2d0144-5f6f-4b4c-ab82-840d462ba2b6","eventTime":1445461371324,"eventName":"log","clientEventTime":1445461370000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_notifications.html.erb (219.5ms)"},"id":"a054fc11-7cbc-4504-a4b2-a6b20a799dc7","channelId":"icoc0tnol3obe8pas207","date":"2015-10-21","sessionId":"bd2d0144-5f6f-4b4c-ab82-840d462ba2b6","eventTime":1445461373075,"eventName":"log","clientEventTime":1445461373000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_menu.html.erb (24.7ms)"},"id":"0a5c5a0d-0814-4922-97a1-df98afa221db","channelId":"icoc0tnol3obe8pas207","date":"2015-10-21","sessionId":"bd2d0144-5f6f-4b4c-ab82-840d462ba2b6","eventTime":1445461373163,"eventName":"log","clientEventTime":1445461373000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_notifications.html.erb (234.8ms)"},"id":"1ffaeacc-e3b4-40c5-a245-1f4b37b1ab20","channelId":"icoc0tnol3obe8pas207","date":"2015-10-21","sessionId":"4e1f948b-ffab-4c88-8755-81ae23d88a79","eventTime":1445461373164,"eventName":"log","clientEventTime":1445461373000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_menu.html.erb (25.8ms)"},"id":"a8ec00d2-1c75-452d-82bc-d8104d19239b","channelId":"icoc0tnol3obe8pas207","date":"2015-10-21","sessionId":"4e1f948b-ffab-4c88-8755-81ae23d88a79","eventTime":1445461373165,"eventName":"log","clientEventTime":1445461373000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null}]'
+      string: '["127.0.0.1"]'
     http_version: 
-  recorded_at: Thu, 22 Oct 2015 04:04:44 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 06 Jul 2017 15:10:42 GMT
+- request:
+    method: get
+    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207/production/recents?limit=10&since=500
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 06 Jul 2017 15:10:42 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 06 Jul 2017 15:10:42 GMT
+      Content-Type:
+      - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"@class":"io.binnacle.models.BinnacleEvent","accountId":"bv4sfcz28up6q6bophx4","json":{},"id":"a1458959-18c0-42e3-aa26-e41d752eb339","appId":"n7f05b76tr4xsc6slstl","channelId":"icoc0tnol3obe8pas207","date":"2017-07-06","sessionId":"My
+        Sess","eventTime":1499353841843,"eventName":"ASYNCH_TEST_EVT","clientEventTime":1499353841000,"clientId":"binnacle-rb","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":"production","tags":[],"dismissed":null}]'
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 15:10:42 GMT
+recorded_with: VCR 3.0.3
