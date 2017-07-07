@@ -8,13 +8,13 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.12.1
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 01 Jan 2016 18:00:31 GMT
+      - Thu, 06 Jul 2017 15:10:42 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Jan 2016 18:00:31 GMT
+      - Thu, 06 Jul 2017 15:10:42 GMT
       Content-Type:
       - application/json
       Content-Encoding:
@@ -36,24 +36,24 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '["ip68-2-239-31.ph.ph.cox.net"]'
+      string: '["127.0.0.1"]'
     http_version: 
-  recorded_at: Fri, 01 Jan 2016 18:00:31 GMT
+  recorded_at: Thu, 06 Jul 2017 15:10:42 GMT
 - request:
     method: get
-    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207/2015-12-29?end_hour=9&limit=500&start_hour=8
+    uri: http://localhost:8080/api/endpoints
     body:
       encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.12.1
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 01 Jan 2016 18:00:31 GMT
+      - Thu, 06 Jul 2017 15:10:42 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -64,7 +64,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Jan 2016 18:00:31 GMT
+      - Thu, 06 Jul 2017 15:10:42 GMT
       Content-Type:
       - application/json
       Content-Encoding:
@@ -75,50 +75,47 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/accounts/1\" for 127.0.0.1 at 2015-12-29 08:19:00 -0700"},"id":"7a787845-2067-4c37-a67c-b25cc320c2a0","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"fcd86193-dc07-4c71-a901-a277ae7f3d30","eventTime":1451402340642,"eventName":"log","clientEventTime":1451402340000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Parameters:
-        {\"id\"=>\"1\"}"},"id":"eb740e63-a335-4e38-9c95-385c53fff2e6","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"fcd86193-dc07-4c71-a901-a277ae7f3d30","eventTime":1451402340686,"eventName":"log","clientEventTime":1451402340000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Processing
-        by AccountsController#show as HTML"},"id":"fe909f02-5f9c-4d6a-bde8-16a560d0cb5d","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"fcd86193-dc07-4c71-a901-a277ae7f3d30","eventTime":1451402340693,"eventName":"log","clientEventTime":1451402340000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        collaborators/_table.html.erb (15.5ms)"},"id":"31a85d29-3d46-489d-b8b6-1e3723570a72","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"fcd86193-dc07-4c71-a901-a277ae7f3d30","eventTime":1451402341394,"eventName":"log","clientEventTime":1451402341000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        accounts/show.html.erb within layouts/application (129.6ms)"},"id":"5af44757-e03b-44ef-a60b-edf597a74736","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"fcd86193-dc07-4c71-a901-a277ae7f3d30","eventTime":1451402341426,"eventName":"log","clientEventTime":1451402341000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_notifications.html.erb (192.8ms)"},"id":"cabae909-172a-47b8-8f96-4718caf167bc","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"fcd86193-dc07-4c71-a901-a277ae7f3d30","eventTime":1451402342813,"eventName":"log","clientEventTime":1451402342000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_menu.html.erb (18.8ms)"},"id":"766929cd-f6ca-4ca0-abbd-704a40ecb1de","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"fcd86193-dc07-4c71-a901-a277ae7f3d30","eventTime":1451402342814,"eventName":"log","clientEventTime":1451402342000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_search_form.html.erb (3.3ms)"},"id":"ca659b78-e1b2-4cd5-8d5c-3170b6517d36","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"fcd86193-dc07-4c71-a901-a277ae7f3d30","eventTime":1451402342837,"eventName":"log","clientEventTime":1451402342000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_side_bar_menu_item.html.erb (33.2ms)"},"id":"ee1cd6d2-8e55-49f1-836d-c7745b39eeba","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"fcd86193-dc07-4c71-a901-a277ae7f3d30","eventTime":1451402342944,"eventName":"log","clientEventTime":1451402342000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Completed
-        200 OK in 2338ms (Views: 1672.1ms | ActiveRecord: 35.3ms)"},"id":"b6b30f96-5876-4ce6-adb7-b1f2bea05edf","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"fcd86193-dc07-4c71-a901-a277ae7f3d30","eventTime":1451402342947,"eventName":"log","clientEventTime":1451402342000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/fonts/fontawesome-webfont.woff?v=4.5.0\" for 127.0.0.1 at 2015-12-29
-        08:19:03 -0700"},"id":"ae9090b4-d6d2-450d-88e8-17816fb06c81","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"76fc1637-388c-47a8-87f3-42687cb0b7c9","eventTime":1451402343378,"eventName":"log","clientEventTime":1451402343000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/\" for 127.0.0.1 at 2015-12-29 08:19:03 -0700"},"id":"7434c507-e018-4e42-b6a4-51f75869d210","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"f7f842db-23f3-4492-81bb-60849e45b45a","eventTime":1451402343420,"eventName":"log","clientEventTime":1451402343000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Processing
-        by DashboardController#index as */*"},"id":"eddf5025-953e-4ad4-872e-ef6b12a1704f","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"f7f842db-23f3-4492-81bb-60849e45b45a","eventTime":1451402343450,"eventName":"log","clientEventTime":1451402343000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_this_week_counts.html.erb (0.9ms)"},"id":"16af3aba-05c0-494b-9a85-7c7215125b78","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"f7f842db-23f3-4492-81bb-60849e45b45a","eventTime":1451402345231,"eventName":"log","clientEventTime":1451402345000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        dashboard/index.html.erb within layouts/application (638.6ms)"},"id":"7924ae67-d259-4fa7-a4b1-e7057942ccb3","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"f7f842db-23f3-4492-81bb-60849e45b45a","eventTime":1451402345816,"eventName":"log","clientEventTime":1451402345000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_notifications.html.erb (182.9ms)"},"id":"a13fef12-46c5-4bfe-844c-d5b63da0e646","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"f7f842db-23f3-4492-81bb-60849e45b45a","eventTime":1451402347002,"eventName":"log","clientEventTime":1451402346000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_menu.html.erb (21.1ms)"},"id":"8df87ba2-6096-4d93-ab0b-5268c6b9e048","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"f7f842db-23f3-4492-81bb-60849e45b45a","eventTime":1451402347007,"eventName":"log","clientEventTime":1451402346000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_search_form.html.erb (3.2ms)"},"id":"abb6707b-52dd-4287-b821-13d8cc74c57e","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"f7f842db-23f3-4492-81bb-60849e45b45a","eventTime":1451402347080,"eventName":"log","clientEventTime":1451402347000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_side_bar_menu_item.html.erb (31.1ms)"},"id":"77059499-0cdb-4463-8992-deb1411762e6","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"f7f842db-23f3-4492-81bb-60849e45b45a","eventTime":1451402347219,"eventName":"log","clientEventTime":1451402347000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Completed
-        200 OK in 3796ms (Views: 2045.5ms | ActiveRecord: 13.6ms)"},"id":"60f6fd20-3ba6-4d05-9f90-915b01e8e296","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"f7f842db-23f3-4492-81bb-60849e45b45a","eventTime":1451402347230,"eventName":"log","clientEventTime":1451402347000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/fonts/fontawesome-webfont.ttf?v=4.5.0\" for 127.0.0.1 at 2015-12-29
-        08:19:07 -0700"},"id":"5cf501f1-0ce1-4348-a820-42a31b263564","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"3b68af95-de27-48eb-aaaa-6e435ea29f2f","eventTime":1451402347335,"eventName":"log","clientEventTime":1451402347000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/\" for 127.0.0.1 at 2015-12-29 08:19:07 -0700"},"id":"442d649c-0100-4323-b78d-cf2d3ded30c9","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"37339480-e435-4cc7-af26-57690da6a6e6","eventTime":1451402347375,"eventName":"log","clientEventTime":1451402347000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Processing
-        by DashboardController#index as */*"},"id":"59118f80-dc64-459d-8469-10ac2fe34624","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"37339480-e435-4cc7-af26-57690da6a6e6","eventTime":1451402347387,"eventName":"log","clientEventTime":1451402347000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_this_week_counts.html.erb (0.8ms)"},"id":"8dfe7c87-0359-4874-8fe6-533486edadd1","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"37339480-e435-4cc7-af26-57690da6a6e6","eventTime":1451402348968,"eventName":"log","clientEventTime":1451402348000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        dashboard/index.html.erb within layouts/application (625.9ms)"},"id":"7e4c902f-f88f-470c-817d-c1425c8e7c71","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"37339480-e435-4cc7-af26-57690da6a6e6","eventTime":1451402349547,"eventName":"log","clientEventTime":1451402349000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_menu.html.erb (17.2ms)"},"id":"48812718-a690-4005-b48d-067efe19b539","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"37339480-e435-4cc7-af26-57690da6a6e6","eventTime":1451402350730,"eventName":"log","clientEventTime":1451402350000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_notifications.html.erb (184.7ms)"},"id":"e3d98919-97dd-464c-bc34-7aacb7f46632","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"37339480-e435-4cc7-af26-57690da6a6e6","eventTime":1451402350732,"eventName":"log","clientEventTime":1451402350000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_search_form.html.erb (3.1ms)"},"id":"439f2cfd-e7a8-4c60-92cc-f51141e0e684","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"37339480-e435-4cc7-af26-57690da6a6e6","eventTime":1451402350742,"eventName":"log","clientEventTime":1451402350000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Completed
-        200 OK in 3477ms (Views: 1934.5ms | ActiveRecord: 20.2ms)"},"id":"1f843290-47e3-4bc6-9fb5-d94d457c75f4","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"37339480-e435-4cc7-af26-57690da6a6e6","eventTime":1451402350865,"eventName":"log","clientEventTime":1451402350000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_side_bar_menu_item.html.erb (30.7ms)"},"id":"24d0d2a9-43af-4de8-85bd-64f4c51b9f6a","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"37339480-e435-4cc7-af26-57690da6a6e6","eventTime":1451402350865,"eventName":"log","clientEventTime":1451402350000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/fonts/fontawesome-webfont.svg?v=4.5.0\" for 127.0.0.1 at 2015-12-29
-        08:19:10 -0700"},"id":"df081e5d-dd90-4ccd-8587-5bb28ad26ef3","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"1b3d2d28-ba67-4d7e-9d13-8551e30b44f7","eventTime":1451402350944,"eventName":"log","clientEventTime":1451402350000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Started
-        GET \"/\" for 127.0.0.1 at 2015-12-29 08:19:10 -0700"},"id":"9db29809-54fd-4d90-845a-e7a605ce24db","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"2f572cff-3e7b-4084-b884-76a4b50d82ae","eventTime":1451402350975,"eventName":"log","clientEventTime":1451402350000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Processing
-        by DashboardController#index as */*"},"id":"69563d1d-9618-4bc7-9579-808e51211004","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"2f572cff-3e7b-4084-b884-76a4b50d82ae","eventTime":1451402350987,"eventName":"log","clientEventTime":1451402350000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_this_week_counts.html.erb (1.0ms)"},"id":"424877cb-d8d0-441b-86a5-45bbdef64ed9","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"2f572cff-3e7b-4084-b884-76a4b50d82ae","eventTime":1451402352578,"eventName":"log","clientEventTime":1451402352000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        dashboard/index.html.erb within layouts/application (614.6ms)"},"id":"589b1859-7e40-4bad-8fa3-7bb1d3f963c1","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"2f572cff-3e7b-4084-b884-76a4b50d82ae","eventTime":1451402353146,"eventName":"log","clientEventTime":1451402353000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_notifications.html.erb (171.7ms)"},"id":"45807fe3-b4e5-4c3a-8674-4ff6fa24959b","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"2f572cff-3e7b-4084-b884-76a4b50d82ae","eventTime":1451402354305,"eventName":"log","clientEventTime":1451402354000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_menu.html.erb (15.7ms)"},"id":"e95319bb-9aeb-4753-967b-88054c6dca44","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"2f572cff-3e7b-4084-b884-76a4b50d82ae","eventTime":1451402354348,"eventName":"log","clientEventTime":1451402354000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_search_form.html.erb (3.5ms)"},"id":"2546896d-7927-44f0-a1be-8f9ef3b05907","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"2f572cff-3e7b-4084-b884-76a4b50d82ae","eventTime":1451402354370,"eventName":"log","clientEventTime":1451402354000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"  Rendered
-        application/_docs_side_bar_menu_item.html.erb (28.1ms)"},"id":"42260f3c-2cb1-4e7e-9b6b-45f3665ac334","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"2f572cff-3e7b-4084-b884-76a4b50d82ae","eventTime":1451402354491,"eventName":"log","clientEventTime":1451402354000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"n7f05b76tr4xsc6slstl","json":{"message":"Completed
-        200 OK in 3508ms (Views: 1962.3ms | ActiveRecord: 12.0ms)"},"id":"d732760b-195c-4733-ba42-efeec8d0a4d5","channelId":"icoc0tnol3obe8pas207","date":"2015-12-29","sessionId":"2f572cff-3e7b-4084-b884-76a4b50d82ae","eventTime":1451402354491,"eventName":"log","clientEventTime":1451402354000,"clientId":"127.0.0.1","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":[],"dismissed":null}]'
+      string: '["127.0.0.1"]'
     http_version: 
-  recorded_at: Fri, 01 Jan 2016 18:00:31 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 06 Jul 2017 15:10:42 GMT
+- request:
+    method: get
+    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207/production/2017-07-06?end_hour=12&limit=500&start_hour=11
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 06 Jul 2017 15:10:42 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 06 Jul 2017 15:10:42 GMT
+      Content-Type:
+      - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"@class":"io.binnacle.models.BinnacleEvent","accountId":"bv4sfcz28up6q6bophx4","json":{},"id":"a1458959-18c0-42e3-aa26-e41d752eb339","appId":"n7f05b76tr4xsc6slstl","channelId":"icoc0tnol3obe8pas207","date":"2017-07-06","sessionId":"My
+        Sess","eventTime":1499353841843,"eventName":"ASYNCH_TEST_EVT","clientEventTime":1499353841000,"clientId":"binnacle-rb","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":"production","tags":[],"dismissed":null}]'
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 15:10:42 GMT
+recorded_with: VCR 3.0.3

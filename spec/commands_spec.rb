@@ -16,14 +16,20 @@ describe "binnacle command" do
 end
 
 describe BinnacleCommand do
-  before { ENV["TEST_MODE"] = 'true' }
+  before do
+    reset_env
+    ENV["TEST_MODE"] = 'true' 
+    Binnacle.configure do |config|
+      config.encrypted = false
+    end
+  end
 
-  it 'requires a known subcommand argument' do
+  it 'requires a known subcommand argument', :vcr do
     expect { BinnacleCommand.new.run(['foobar'])}.to output("I don't know the subcommand command 'foobar'\n").to_stdout
   end
 
   describe 'tail command' do
-    it 'validates the passed params before executing' do
+    it 'validates the passed params before executing', :vcr do
       expected_output = [
         %[The following errors prevented the tail command from executing:],
         %[  - No channel or app given],
@@ -32,19 +38,19 @@ describe BinnacleCommand do
         %[      tail -- listen to a Binnacle channel or app\n\n]
       ].join("\n")
       expect {
-      BinnacleCommand.new.run(["tail"])
+        BinnacleCommand.new.run(["tail"])
       }.to output(expected_output).to_stdout
     end
 
     unless ENV["CI"] == "true"
       it 'with -n flag returns recent events', :vcr do
-        args = ["tail", "-n", "10", "-s", "60", "--host=localhost", "--channel=ylhcn28x7skv6av8q93m", "--api-key=jzr5d5kgj4j3l8fm90tr", "--api-secret=bz3e3w44o3323dypp8d7", "--no-encrypted"]
+        args = ["tail", "-n", "10", "-s", "60", "--host=localhost", "--channel=icoc0tnol3obe8pas207", "--api-key=vceth4xcwqfoowpz2esi", "--api-secret=1grttyb8ozbe9axt88ji", "--environment=development", "--no-encrypted"]
 
         expect { BinnacleCommand.new.run(args) }.to output(TAIL_DASH_L).to_stdout
 
         expect(a_request(:get, 'http://localhost:8080/api/endpoints'))
         expect(
-          a_request(:get, "http://localhost:8080/api/events/ylhcn28x7skv6av8q93m/recents?limit=10&since=60")
+          a_request(:get, "http://localhost:8080/api/events/icoc0tnol3obe8pas207/production/recents?limit=10&since=60")
         ).to(have_been_made.times(1))
       end
     end
@@ -78,14 +84,18 @@ where [options] are:
   -s, --since=<i>                    Number of minutes in the past to search
                                      for events
   -e, --encrypted, --no-encrypted    Use SSL/HTTPS (default: true)
+  -v, --environment=<s>              The target environment (Rails.env)
+                                     (default: production)
+  -y, --payload                      Show JSON Payload
   -l, --help                         Show this message
 EOS
 
 TAIL_DASH_L = <<-EOS
-Retrieving last 10 lines since 60 minutes ago from Channel ylhcn28x7skv6av8q93m ...
-INFO       [2015-10-22 13:37:28 -0700] TEST_EVT2  ::  client_id = io, session_id = SESS_01, ip = 0:0:0:0:0:0:0:1, tags = [["account", "upgrade"]]
-INFO       [2015-10-22 13:37:32 -0700] TEST_EVT2  ::  client_id = io, session_id = SESS_01, ip = 0:0:0:0:0:0:0:1, tags = [["account", "upgrade"]]
-INFO       [2015-10-22 13:37:32 -0700] TEST_EVT2  ::  client_id = io, session_id = SESS_01, ip = 0:0:0:0:0:0:0:1, tags = [["account", "upgrade"]]
-INFO       [2015-10-22 13:37:33 -0700] TEST_EVT2  ::  client_id = io, session_id = SESS_01, ip = 0:0:0:0:0:0:0:1, tags = [["account", "upgrade"]]
-INFO       [2015-10-22 13:37:36 -0700] TEST_EVT2  ::  client_id = io, session_id = SESS_01, ip = 0:0:0:0:0:0:0:1, tags = [["account", "upgrade"]]
+Retrieving last 10 lines since 60 minutes ago from Channel icoc0tnol3obe8pas207 ...
+production::INFO       [2017-07-06 14:59:36 -0400] log        :: ip = 0:0:0:0:0:0:0:1
+production::DEBUG      [2017-07-06 14:59:37 -0400] log        :: ip = 0:0:0:0:0:0:0:1
+production::INFO       [2017-07-06 15:21:31 -0400] failed_tra :: session_id = 8675309, ip = 0:0:0:0:0:0:0:1
+production::INFO       [2017-07-06 15:22:45 -0400] failed_tra :: session_id = 8675309, ip = 0:0:0:0:0:0:0:1
+production::DEBUG      [2017-07-06 15:23:03 -0400] log        :: ip = 0:0:0:0:0:0:0:1
+production::INFO       [2017-07-06 15:23:21 -0400] log        :: ip = 0:0:0:0:0:0:0:1
 EOS

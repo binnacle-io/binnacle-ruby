@@ -8,13 +8,13 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.12.1
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 23 Oct 2015 19:07:38 GMT
+      - Thu, 06 Jul 2017 19:22:45 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 23 Oct 2015 19:07:38 GMT
+      - Thu, 06 Jul 2017 19:22:45 GMT
       Content-Type:
       - application/json
       Content-Encoding:
@@ -36,25 +36,24 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '["68.2.239.31"]'
+      string: '["127.0.0.1"]'
     http_version: 
-  recorded_at: Fri, 23 Oct 2015 19:07:38 GMT
+  recorded_at: Thu, 06 Jul 2017 19:22:45 GMT
 - request:
-    method: post
-    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
+    method: get
+    uri: http://localhost:8080/api/endpoints
     body:
       encoding: UTF-8
-      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"8675309","clientEventTime":"2015-10-23T12:07:38-0700","eventName":"failed_transfer","clientId":"","logLevel":"INFO","tags":[],"json":{"message":"transfer
-        failed, bad RTN"}}'
+      string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.12.1
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Fri, 23 Oct 2015 19:07:38 GMT
+      - Thu, 06 Jul 2017 19:22:45 GMT
       Content-Type:
       - application/json
       Authorization:
@@ -65,55 +64,58 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 23 Oct 2015 19:07:38 GMT
+      - Thu, 06 Jul 2017 19:22:45 GMT
       Content-Type:
       - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"message":"Signaled: io.binnacle.models.BinnacleEvent(5790b9f3-dfb2-4a68-b75d-d972fe938d5a,
-        bv4sfcz28up6q6bophx4, n7f05b76tr4xsc6slstl, icoc0tnol3obe8pas207, 2015-10-23,
-        8675309, Fri Oct 23 12:07:38 MST 2015, failed_transfer, Fri Oct 23 12:07:38
-        MST 2015, , /0:0:0:0:0:0:0:1, INFO, null, [], null, {\"message\":\"transfer
-        failed, bad RTN\"})"}'
+      string: '["127.0.0.1"]'
     http_version: 
-  recorded_at: Fri, 23 Oct 2015 19:07:38 GMT
+  recorded_at: Thu, 06 Jul 2017 19:22:45 GMT
 - request:
     method: post
-    uri: http://localhost:8080/api/events/
+    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207
     body:
       encoding: UTF-8
-      string: '{"channelId":null,"sessionId":"","clientEventTime":"2017-03-19T13:12:13-0700","eventName":"GET
-        http://104.131.46.61:8080/api/endpoints","clientId":"","logLevel":"log","tags":[],"json":{"direction":"out","url":"http://104.131.46.61:8080/api/endpoints","method":"GET","host":"104.131.46.61","port":8080,"path":"/api/endpoints","query":null,"format":"application/json","time":"2017-03-19
-        13:12:13 -0700","status":200,"duration":3.939591988455504,"headers":{"Date":"Sun,
-        25 Oct 2015 15:43:06 GMT","Content-Type":"application/json","Content-Encoding":"gzip","Vary":"Accept-Encoding","Transfer-Encoding":"chunked"},"body":"[\"104.131.41.123\",\"104.236.110.41\",\"104.131.46.61\",\"104.131.106.113\",\"45.55.141.159\",\"104.131.75.74\"]","data":"","message":"GET
-        http://104.131.46.61:8080/api/endpoints AS application/json (duration: 3.939591988455504ms)"}}'
+      string: '{"channelId":"icoc0tnol3obe8pas207","sessionId":"8675309","clientEventTime":"2017-07-06T15:22:45-0400","eventName":"failed_transfer","clientId":"","logLevel":"INFO","tags":[],"environment":"production","json":{"message":"transfer
+        failed, bad RTN"}}'
     headers:
       User-Agent:
-      - Faraday v0.11.0
+      - Faraday v0.12.1
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Sun, 19 Mar 2017 20:12:13 GMT
+      - Thu, 06 Jul 2017 19:22:45 GMT
       Content-Type:
       - application/json
       Authorization:
       - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
   response:
     status:
-      code: 404
-      message: Not Found
+      code: 200
+      message: OK
     headers:
       Date:
-      - Sun, 19 Mar 2017 20:12:13 GMT
-      Content-Length:
-      - '0'
+      - Thu, 06 Jul 2017 19:22:45 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: ''
+      string: '{"message":"Signaled: io.binnacle.models.BinnacleEvent(1a0fdd39-2344-4446-b652-bbebc3ef6dd5,
+        bv4sfcz28up6q6bophx4, n7f05b76tr4xsc6slstl, icoc0tnol3obe8pas207, 2017-07-06,
+        8675309, Thu Jul 06 15:22:45 EDT 2017, failed_transfer, Thu Jul 06 15:22:45
+        EDT 2017, , /0:0:0:0:0:0:0:1, INFO, production, [], null, {\"message\":\"transfer
+        failed, bad RTN\"})"}'
     http_version: 
-  recorded_at: Sun, 19 Mar 2017 20:12:13 GMT
+  recorded_at: Thu, 06 Jul 2017 19:22:45 GMT
 recorded_with: VCR 3.0.3

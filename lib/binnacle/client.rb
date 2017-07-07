@@ -29,15 +29,19 @@ module Binnacle
       @formatter = Binnacle::Logging::Formatter.new(self)
     end
 
-    def signal(channel_id, event_name, client_id, session_id, log_level, tags = [], json = {}, asynch = false)
+    def signal(channel_id, event_name, client_id, session_id, log_level, environment = Event.rails_env, tags = [], json = {}, asynch = false)
       event = Binnacle::Event.new()
-      event.configure(channel_id, event_name, client_id, session_id, log_level, nil, tags, json)
+      event.configure(channel_id, event_name, client_id, session_id, log_level, environment, nil, tags, json)
       event.connection = connection
       asynch ? event.post_asynch : event.post
     end
 
-    def signal_asynch(channel_id, event_name, client_id = '', session_id = '', log_level = 'INFO', tags = [], json = {})
-      signal(channel_id, event_name, client_id, session_id, log_level, tags, json, true)
+    def signal_asynch(channel_id, event_name, client_id = '', session_id = '', log_level = 'INFO', environment = Event.rails_env, tags = [], json = {})
+      signal(channel_id, event_name, client_id, session_id, log_level, environment, tags, json, true)
+    end
+
+    def broadcast(channel_id, event_name, json)
+      signal(channel_id, event_name, "", "", 'CABLE', nil, [], json, true)
     end
 
     def recents(lines, since, channel)
@@ -82,7 +86,7 @@ module Binnacle
       event_name = %[#{data[:method]} #{data[:path]}]
 
       event = Binnacle::Event.new()
-      event.configure(logging_channel_id, event_name, client_id, session_id, 'log', data[:time], [], data)
+      event.configure(logging_channel_id, event_name, client_id, session_id, 'log', nil, data[:time], [], data)
       write(event)
     end
 
@@ -91,7 +95,7 @@ module Binnacle
       event_name = %[#{data[:method]} #{data[:url]}]
 
       event = Binnacle::Event.new()
-      event.configure(logging_channel_id, event_name, client_id, session_id, 'log', data[:time], [], data)
+      event.configure(logging_channel_id, event_name, client_id, session_id, 'log', nil, data[:time], [], data)
       write(event)
     end
 

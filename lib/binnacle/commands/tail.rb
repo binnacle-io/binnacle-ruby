@@ -22,6 +22,8 @@ module Binnacle::Commands
       opt(:lines, "Get the last n events on the Channel", type: :int, short: '-n')
       opt(:since, "Number of minutes in the past to search for events", type: :int)
       opt(:encrypted, "Use SSL/HTTPS", default: true)
+      opt(:environment, "The target environment (Rails.env)", type: :string, default: 'production')
+      opt(:payload, "Show JSON Payload", default: false)
     end
 
     if (errors = validate(opts)).empty?
@@ -48,23 +50,23 @@ module Binnacle::Commands
   def self.dispatch(opts)
     # tail --follow
     if opts[:follow_given] && opts[:app_given]
-      monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:app], true, opts[:encrypted])
+      monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:app], opts[:environment], true, opts[:encrypted], opts[:payload])
     elsif opts[:follow_given] && opts[:channel_given]
-      monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:channel], false, opts[:encrypted])
+      monitor(opts[:host], opts[:api_key], opts[:api_secret], opts[:channel], opts[:environment], false, opts[:encrypted], opts[:payload])
     end
 
     # tail --lines
-    lines(opts[:host], opts[:api_key], opts[:api_secret], opts[:channel], opts[:lines], opts[:since], opts[:encrypted_given] ? opts[:encrypted] : false) if opts[:lines_given]
+    lines(opts[:host], opts[:api_key], opts[:api_secret], opts[:channel], opts[:lines], opts[:since], opts[:environment], opts[:encrypted]) if opts[:lines_given]
   end
 
   #
   # tail --follow --host=my_host --channel=my_channel
-  def self.monitor(host, api_key, api_secret, channel, is_app = false, encrypted = true)
+  def self.monitor(host, api_key, api_secret, channel, environment, is_app = false, encrypted = true, payload = false)
     EM.run do
       Signal.trap("INT")  { EventMachine.stop }
       Signal.trap("TERM") { EventMachine.stop }
 
-      ws_url = build_ws_url(host, api_key, api_secret, channel, is_app, encrypted)
+      ws_url = build_ws_url(host, api_key, api_secret, channel, environment, is_app, encrypted)
       ws = Faye::WebSocket::Client.new(ws_url)
 
       ws.on :open do |event|
@@ -73,7 +75,7 @@ module Binnacle::Commands
 
       ws.on :message do |event|
         if event.data !~ /\s/ && event.data != 'X'
-          print_event_from_json(event.data)
+          print_event_from_json(event.data, payload)
         end
       end
 
@@ -85,24 +87,24 @@ module Binnacle::Commands
 
   #
   # tail --lines=50 --since=10 --host=my_host --channel=my_channel
-  def self.lines(host, api_key, api_secret, channel, lines, since, encrypted = true)
+  def self.lines(host, api_key, api_secret, channel, lines, since, environment = 'production', encrypted = true, payload = false)
     puts "Retrieving last #{lines} lines since #{since} minutes ago from Channel #{channel} ..."
     Binnacle.configuration.encrypted = encrypted
     client = Binnacle::Client.new(api_key, api_secret, host)
 
     client.recents(lines, since, channel).each do |e|
-      print_event(e)
+      print_event(e, payload)
     end
   end
 
   protected
 
-  def self.build_ws_url(host, api_key, api_secret, channel, is_app = false, encrypted = true)
+  def self.build_ws_url(host, api_key, api_secret, channel, environment, is_app = false, encrypted = Binnacle.configuration.encrypted)
     Addressable::URI.new(
       host: host,
       port: Binnacle::Configuration::DEFAULT_PORT,
       scheme: encrypted ? 'wss' : 'ws',
-      path: ["/api/subscribe", is_app ? "app" : "channel", channel].join("/"),
+      path: ["/api/subscribe", is_app ? "app" : "channel", channel, environment].join("/"),
       query: build_ws_query(api_key, api_secret)
     ).to_s
   end
@@ -118,7 +120,7 @@ module Binnacle::Commands
     }.map { |n,v| "#{n}=#{v}" }.join("&")
   end
 
-  def self.print_event(event)
+  def self.print_event(event, payload = false)
     message = ""
 
     level = '%-10.10s' % event.log_level
@@ -138,7 +140,9 @@ module Binnacle::Commands
       level.colorize(:blue)
     end.colorize(mode: :bold)
 
-    message << "#{level} [#{Time.at(event.event_time)}] "
+    env = event.environment.colorize(mode: :bold)
+
+    message << "#{env}::#{level} [#{Time.at(event.event_time)}] "
 
     message << ('%-10.10s' % event.event_name).colorize(color: :green, mode: :bold)
 
@@ -158,19 +162,23 @@ module Binnacle::Commands
 
     unless event.tags.empty?
       tags = event.tags.join(',')
-      rest << "#{'tags'.colorize(mode: :bold)} = [#{event.tags}]"
+      rest << "#{'tags'.colorize(mode: :bold)} = [#{tags}]"
     end
 
     message << " :: ".colorize(mode: :bold) + rest.join(", ") unless rest.empty?
 
+    if payload && event.json
+      message << "\n\t ==> #{event.json}"
+    end
+
     puts message
   end
 
-  def self.print_event_from_json(json)
+  def self.print_event_from_json(json, payload = false)
     begin
       data = JSON.parse(json)
       event = Binnacle::Event.from_hash(data)
-      print_event(event)
+      print_event(event, payload)
     rescue JSON::ParserError => jpe
       # do nothing!
     end

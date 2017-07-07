@@ -8,24 +8,24 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.12.1
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Thu, 22 Oct 2015 21:32:41 GMT
+      - Thu, 06 Jul 2017 19:23:53 GMT
       Content-Type:
       - application/json
       Authorization:
-      - Basic anpyNWQ1a2dqNGozbDhmbTkwdHI6YnozZTN3NDRvMzMyM2R5cHA4ZDc=
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Thu, 22 Oct 2015 21:32:41 GMT
+      - Thu, 06 Jul 2017 19:23:53 GMT
       Content-Type:
       - application/json
       Content-Encoding:
@@ -36,35 +36,35 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '["98.174.197.28"]'
-    http_version:
-  recorded_at: Thu, 22 Oct 2015 21:32:41 GMT
+      string: '["127.0.0.1"]'
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 19:23:53 GMT
 - request:
     method: get
-    uri: http://localhost:8080/api/events/ylhcn28x7skv6av8q93m/recents?limit=10&since=60
+    uri: http://localhost:8080/api/endpoints
     body:
       encoding: UTF-8
       string: ''
     headers:
       User-Agent:
-      - Faraday v0.9.2
+      - Faraday v0.12.1
       Accept:
       - "*/*"
       Accept-Encoding:
       - gzip,deflate
       Date:
-      - Thu, 22 Oct 2015 21:32:41 GMT
+      - Thu, 06 Jul 2017 19:23:53 GMT
       Content-Type:
       - application/json
       Authorization:
-      - Basic anpyNWQ1a2dqNGozbDhmbTkwdHI6YnozZTN3NDRvMzMyM2R5cHA4ZDc=
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Thu, 22 Oct 2015 21:32:41 GMT
+      - Thu, 06 Jul 2017 19:23:53 GMT
       Content-Type:
       - application/json
       Content-Encoding:
@@ -75,7 +75,52 @@ http_interactions:
       - chunked
     body:
       encoding: UTF-8
-      string: '[{"accountId":"bv4sfcz28up6q6bophx4","appId":"qaq3df9nl4qafv5aqcyh","json":{},"id":"5ddc41ea-ccaf-4a5b-aa0f-592d70572276","channelId":"ylhcn28x7skv6av8q93m","date":"2015-10-22","sessionId":"SESS_01","eventTime":1445546248199,"eventName":"TEST_EVT2","clientEventTime":1445546248000,"clientId":"io","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":["account","upgrade"],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"qaq3df9nl4qafv5aqcyh","json":{},"id":"4315e33e-353b-475b-b986-0bfe01de21c4","channelId":"ylhcn28x7skv6av8q93m","date":"2015-10-22","sessionId":"SESS_01","eventTime":1445546252140,"eventName":"TEST_EVT2","clientEventTime":1445546252000,"clientId":"io","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":["account","upgrade"],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"qaq3df9nl4qafv5aqcyh","json":{},"id":"04897a77-a162-4fea-8da7-bb6ce37d196b","channelId":"ylhcn28x7skv6av8q93m","date":"2015-10-22","sessionId":"SESS_01","eventTime":1445546252956,"eventName":"TEST_EVT2","clientEventTime":1445546252000,"clientId":"io","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":["account","upgrade"],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"qaq3df9nl4qafv5aqcyh","json":{},"id":"128692e0-ecd6-47f2-9b8b-60f81e99d503","channelId":"ylhcn28x7skv6av8q93m","date":"2015-10-22","sessionId":"SESS_01","eventTime":1445546253754,"eventName":"TEST_EVT2","clientEventTime":1445546253000,"clientId":"io","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":["account","upgrade"],"dismissed":null},{"accountId":"bv4sfcz28up6q6bophx4","appId":"qaq3df9nl4qafv5aqcyh","json":{},"id":"70684ef0-51e7-4a19-b0c0-cf1009c479e8","channelId":"ylhcn28x7skv6av8q93m","date":"2015-10-22","sessionId":"SESS_01","eventTime":1445546256540,"eventName":"TEST_EVT2","clientEventTime":1445546256000,"clientId":"io","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":{},"tags":["account","upgrade"],"dismissed":null}]'
-    http_version:
-  recorded_at: Thu, 22 Oct 2015 21:32:41 GMT
-recorded_with: VCR 2.9.3
+      string: '["127.0.0.1"]'
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 19:23:53 GMT
+- request:
+    method: get
+    uri: http://localhost:8080/api/events/icoc0tnol3obe8pas207/production/recents?limit=10&since=60
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.12.1
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip,deflate
+      Date:
+      - Thu, 06 Jul 2017 19:23:53 GMT
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic dmNldGg0eGN3cWZvb3dwejJlc2k6MWdydHR5YjhvemJlOWF4dDg4amk=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 06 Jul 2017 19:23:53 GMT
+      Content-Type:
+      - application/json
+      Content-Encoding:
+      - gzip
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '[{"@class":"io.binnacle.models.BinnacleEvent","accountId":"bv4sfcz28up6q6bophx4","json":{"message":"This
+        is an info message"},"id":"a0119d69-6a45-4304-ac06-8150ef824154","appId":"n7f05b76tr4xsc6slstl","channelId":"icoc0tnol3obe8pas207","date":"2017-07-06","sessionId":"","eventTime":1499367576575,"eventName":"log","clientEventTime":1499367576000,"clientId":"","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":"production","tags":[],"dismissed":null},{"@class":"io.binnacle.models.BinnacleEvent","accountId":"bv4sfcz28up6q6bophx4","json":{"message":"This
+        is an debug message"},"id":"b8cbd6e3-a0af-4e69-92db-e3739e2612c2","appId":"n7f05b76tr4xsc6slstl","channelId":"icoc0tnol3obe8pas207","date":"2017-07-06","sessionId":"","eventTime":1499367577624,"eventName":"log","clientEventTime":1499367577000,"clientId":"","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"DEBUG","environment":"production","tags":[],"dismissed":null},{"@class":"io.binnacle.models.BinnacleEvent","accountId":"bv4sfcz28up6q6bophx4","json":{"message":"transfer
+        failed, bad RTN"},"id":"87c208a3-5ae7-4681-94de-e266b9b85b7e","appId":"n7f05b76tr4xsc6slstl","channelId":"icoc0tnol3obe8pas207","date":"2017-07-06","sessionId":"8675309","eventTime":1499368891651,"eventName":"failed_transfer","clientEventTime":1499368891000,"clientId":"","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":"production","tags":[],"dismissed":null},{"@class":"io.binnacle.models.BinnacleEvent","accountId":"bv4sfcz28up6q6bophx4","json":{"message":"transfer
+        failed, bad RTN"},"id":"1a0fdd39-2344-4446-b652-bbebc3ef6dd5","appId":"n7f05b76tr4xsc6slstl","channelId":"icoc0tnol3obe8pas207","date":"2017-07-06","sessionId":"8675309","eventTime":1499368965567,"eventName":"failed_transfer","clientEventTime":1499368965000,"clientId":"","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":"production","tags":[],"dismissed":null},{"@class":"io.binnacle.models.BinnacleEvent","accountId":"bv4sfcz28up6q6bophx4","json":{"message":"This
+        is an debug message"},"id":"b26af3d4-92e5-44d2-9f0b-45e9d9a51ab3","appId":"n7f05b76tr4xsc6slstl","channelId":"icoc0tnol3obe8pas207","date":"2017-07-06","sessionId":"","eventTime":1499368983761,"eventName":"log","clientEventTime":1499368983000,"clientId":"","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"DEBUG","environment":"production","tags":[],"dismissed":null},{"@class":"io.binnacle.models.BinnacleEvent","accountId":"bv4sfcz28up6q6bophx4","json":{"message":"This
+        is an info message"},"id":"93b1ef01-8524-43fd-9f1f-c91c0a23de86","appId":"n7f05b76tr4xsc6slstl","channelId":"icoc0tnol3obe8pas207","date":"2017-07-06","sessionId":"","eventTime":1499369001477,"eventName":"log","clientEventTime":1499369001000,"clientId":"","ipAddress":"0:0:0:0:0:0:0:1","logLevel":"INFO","environment":"production","tags":[],"dismissed":null}]'
+    http_version: 
+  recorded_at: Thu, 06 Jul 2017 19:23:53 GMT
+recorded_with: VCR 3.0.3

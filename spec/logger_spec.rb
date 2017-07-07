@@ -1,7 +1,12 @@
 require 'spec_helper'
 
 describe Binnacle::Logging do
-  before { Binnacle.configuration.asynch_logging = false }
+  before { 
+    Binnacle.configure do |config|
+      config.encrypted = false
+      config.asynch_logging = false
+    end
+  }
 
   let(:logger) {
     Binnacle::Logging.build('vceth4xcwqfoowpz2esi', '1grttyb8ozbe9axt88ji', 'localhost', 'icoc0tnol3obe8pas207')
