@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    binnacle (0.4.8)
+    binnacle (0.4.9)
       addressable (~> 2.5)
       colorize (~> 0.8.1)
       faraday (~> 0.11)
