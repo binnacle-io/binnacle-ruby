@@ -92,10 +92,10 @@ EOS
 
 TAIL_DASH_L = <<-EOS
 Retrieving last 10 lines since 60 minutes ago from Channel icoc0tnol3obe8pas207 ...
-production::INFO       [2017-07-06 14:59:36 -0400] log        :: ip = 0:0:0:0:0:0:0:1
-production::DEBUG      [2017-07-06 14:59:37 -0400] log        :: ip = 0:0:0:0:0:0:0:1
-production::INFO       [2017-07-06 15:21:31 -0400] failed_tra :: session_id = 8675309, ip = 0:0:0:0:0:0:0:1
-production::INFO       [2017-07-06 15:22:45 -0400] failed_tra :: session_id = 8675309, ip = 0:0:0:0:0:0:0:1
-production::DEBUG      [2017-07-06 15:23:03 -0400] log        :: ip = 0:0:0:0:0:0:0:1
-production::INFO       [2017-07-06 15:23:21 -0400] log        :: ip = 0:0:0:0:0:0:0:1
+production::INFO       [2017-07-06 11:59:36 -0700] log        :: ip = 0:0:0:0:0:0:0:1
+production::DEBUG      [2017-07-06 11:59:37 -0700] log        :: ip = 0:0:0:0:0:0:0:1
+production::INFO       [2017-07-06 12:21:31 -0700] failed_tra :: session_id = 8675309, ip = 0:0:0:0:0:0:0:1
+production::INFO       [2017-07-06 12:22:45 -0700] failed_tra :: session_id = 8675309, ip = 0:0:0:0:0:0:0:1
+production::DEBUG      [2017-07-06 12:23:03 -0700] log        :: ip = 0:0:0:0:0:0:0:1
+production::INFO       [2017-07-06 12:23:21 -0700] log        :: ip = 0:0:0:0:0:0:0:1
 EOS
