@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Brian Sam-Bodden"]
   spec.email         = ["brian@binnacle.com"]
   spec.summary       = %q{ Ruby client for the Binnacle API }
-  spec.description   = %q{ Binnacle Distributed Logging and Push Service. See http://binnacle.io }
+  spec.description   = %q{ Ruby Client for the RESTful Multi-channel Push Service Binnacle. See http://binnacle.io }
   spec.homepage      = "http://binnacle.io/api"
   spec.license       = "MIT"
 
